@@ -92,3 +92,17 @@ class UserAchievement(models.Model):
 
     def __str__(self):
         return f"{self.user.username} unlocked {self.achievement.name}"
+
+
+class QuizAttempt(models.Model):
+    """
+    Records a user's attempt at an AI-generated topic quiz.
+    """
+    user            = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quiz_attempts')
+    topic           = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='quiz_attempts')
+    score           = models.IntegerField(default=0) # 0 to 5
+    codepoints_earned = models.IntegerField(default=0)
+    attempted_at    = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} — {self.topic.title} ({self.score}/5)"

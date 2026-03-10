@@ -24,5 +24,6 @@ urlpatterns = [
     path('cc-manage/', admin.site.urls),   # Admin panel — keep this URL private!
     path('auth/', include('users.urls')),
     path('dashboard/', include('courses.urls')),
+    path('coding-arena/', include('arena.urls')),
     path('', RedirectView.as_view(url='/dashboard/', permanent=False)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

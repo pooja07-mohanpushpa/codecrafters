@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, Topic, UserProgress, Achievement, UserAchievement
+from .models import Course, Topic, UserProgress, Achievement, UserAchievement, QuizAttempt
 
 
 class TopicInline(admin.TabularInline):
@@ -37,3 +37,10 @@ class AchievementAdmin(admin.ModelAdmin):
 @admin.register(UserAchievement)
 class UserAchievementAdmin(admin.ModelAdmin):
     list_display = ('user', 'achievement', 'unlocked_at')
+
+
+@admin.register(QuizAttempt)
+class QuizAttemptAdmin(admin.ModelAdmin):
+    list_display = ('user', 'topic', 'score', 'codepoints_earned', 'attempted_at')
+    list_filter = ('score', 'topic__course')
+    search_fields = ('user__username', 'topic__title')

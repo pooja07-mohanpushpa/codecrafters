@@ -1,135 +1,744 @@
 {% extends 'base.html' %}
 {% block title %}My Profile | CodeCrafters{% endblock %}
 
+{% block extra_head %}
+<style>
+    /* Profile Hero Banner */
+    .profile-banner {
+        height: 160px;
+        background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 50%, #8b5cf6 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    .profile-banner::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: 
+            radial-gradient(ellipse at 20% 80%, rgba(255,255,255,0.15) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
+    }
+    .profile-banner::after {
+        content: '{ } function() => { } class Module < > const let async await';
+        position: absolute;
+        inset: 0;
+        font-family: 'Fira Code', monospace;
+        font-size: 11px;
+        color: rgba(255,255,255,0.06);
+        line-height: 2.5;
+        word-spacing: 40px;
+        letter-spacing: 3px;
+        padding: 20px;
+        overflow: hidden;
+        white-space: pre-wrap;
+    }
+
+    /* Avatar Glow */
+    .avatar-ring {
+        background: conic-gradient(from 0deg, #f59e0b, #eab308, #f59e0b, #d97706, #f59e0b);
+        padding: 4px;
+        border-radius: 20px;
+        animation: ring-pulse 4s ease-in-out infinite;
+    }
+    @keyframes ring-pulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.15); }
+        50% { box-shadow: 0 0 20px 6px rgba(245, 158, 11, 0.2); }
+    }
+
+    /* Streak & Level Bar */
+    .streak-level-bar {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 20px 28px;
+        display: flex;
+        align-items: center;
+        gap: 32px;
+    }
+    .streak-badge {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+    }
+    .streak-fire {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #fff7ed, #ffedd5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+    }
+    .streak-fire.active {
+        animation: fire-glow 2s ease-in-out infinite;
+    }
+    @keyframes fire-glow {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(251, 146, 60, 0); }
+        50% { box-shadow: 0 0 16px 4px rgba(251, 146, 60, 0.2); }
+    }
+    .xp-bar-track { flex: 1; min-width: 0; }
+    .xp-bar-bg {
+        height: 10px;
+        background: #f1f5f9;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .xp-bar-fill {
+        height: 100%;
+        border-radius: 10px;
+        background: linear-gradient(90deg, #6366f1, #8b5cf6, #a78bfa);
+        transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Stat Pod Card */
+    .stat-pod {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 24px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    .stat-pod:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    }
+    .stat-pod .stat-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .stat-pod .stat-value {
+        font-size: 36px;
+        font-weight: 900;
+        background: linear-gradient(135deg, #d97706, #f59e0b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+    }
+
+    /* Heatmap */
+    .heatmap-wrapper {
+        overflow-x: auto;
+        padding-bottom: 4px;
+    }
+    .heatmap-grid {
+        display: flex;
+        gap: 3px;
+    }
+    .heatmap-col {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+    .heatmap-cell {
+        width: 13px;
+        height: 13px;
+        border-radius: 3px;
+        background: #eef2f7;
+        transition: all 0.15s;
+        cursor: default;
+    }
+    .heatmap-cell:hover { transform: scale(1.4); }
+    .heatmap-cell.l1 { background: #bfdbfe; }
+    .heatmap-cell.l2 { background: #60a5fa; }
+    .heatmap-cell.l3 { background: #3b82f6; }
+    .heatmap-cell.l4 { background: #1d4ed8; }
+
+    /* Rank Card */
+    .rank-card {
+        background: linear-gradient(135deg, #f8fafc 0%, #eef2f7 100%);
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 24px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    .rank-circle {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f59e0b, #eab308);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-shadow: 0 4px 20px rgba(245, 158, 11, 0.2);
+    }
+    .rank-bar-bg {
+        height: 8px;
+        background: #e2e8f0;
+        border-radius: 10px;
+        overflow: hidden;
+        flex: 1;
+    }
+    .rank-bar-fill {
+        height: 100%;
+        border-radius: 10px;
+        background: linear-gradient(90deg, #f59e0b, #eab308);
+        transition: width 1.5s ease;
+    }
+
+    /* Activity Timeline */
+    .timeline-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 14px 0;
+        position: relative;
+    }
+    .timeline-item:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        left: 19px;
+        top: 52px;
+        bottom: -2px;
+        width: 2px;
+        background: #e2e8f0;
+    }
+    .timeline-dot {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    /* Achievement Orbs */
+    .achievement-orb {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(14,165,233,0.08) 60%, rgba(99,102,241,0.1));
+        border: 2px solid rgba(14,165,233,0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+        position: relative;
+    }
+    .achievement-orb:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 25px rgba(14,165,233,0.15);
+    }
+    .achievement-orb .orb-glow {
+        position: absolute;
+        inset: -3px;
+        border-radius: 50%;
+        background: conic-gradient(from 0deg, transparent 80%, rgba(14,165,233,0.2));
+        animation: orb-spin 6s linear infinite;
+    }
+    @keyframes orb-spin { to { transform: rotate(360deg); } }
+
+    /* Bio Section */
+    .bio-form textarea {
+        resize: none;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 14px;
+        width: 100%;
+        transition: border-color 0.2s;
+        background: #f8fafc;
+    }
+    .bio-form textarea:focus {
+        outline: none;
+        border-color: #0ea5e9;
+        box-shadow: 0 0 0 3px rgba(14,165,233,0.08);
+    }
+    .status-pill {
+        padding: 6px 14px;
+        border-radius: 20px;
+        border: 2px solid #e2e8f0;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: white;
+        font-size: 14px;
+    }
+    .status-pill:hover { border-color: #bae6fd; }
+    .status-pill.active {
+        border-color: #0ea5e9;
+        background: #f0f9ff;
+        box-shadow: 0 0 0 3px rgba(14,165,233,0.08);
+    }
+
+    /* Account Section */
+    .account-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 0;
+        border-bottom: 1px solid #f1f5f9;
+    }
+    .account-row:last-child { border-bottom: none; }
+
+    /* Arena-style Sub-header */
+    .profile-subheader {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 24px;
+        border-bottom: 1px solid #e2e8f0;
+        background: white;
+    }
+    .back-circle {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: 1px solid #e2e8f0;
+        color: #475569;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+    .back-circle:hover {
+        background: #e2e8f0;
+        transform: translateX(-2px);
+    }
+</style>
+{% endblock %}
+
+{% block sidebar %}{% endblock %}
+
 {% block content %}
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+<!-- Arena-style Sub-header -->
+<div class="profile-subheader">
+    <a href="{% url 'dashboard' %}" class="back-circle" title="Back to Dashboard">
+        <i class="fa-solid fa-arrow-left text-sm"></i>
+    </a>
+    <span class="text-lg font-bold text-slate-800">Profile</span>
+</div>
 
-    <!-- Profile Header -->
-    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-6">
-        <!-- Cover gradient -->
-        <div class="h-28 bg-gradient-to-r from-brand-600 to-indigo-500 relative">
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_white/10,_transparent_70%)]"></div>
-        </div>
-        <!-- Avatar + Info -->
-        <div class="px-6 pb-6 -mt-12 flex flex-col sm:flex-row items-start sm:items-end gap-4">
-            <div class="w-24 h-24 rounded-2xl bg-white ring-4 ring-white shadow-lg flex-shrink-0 overflow-hidden">
-                <img src="https://api.dicebear.com/7.x/bottts/svg?seed={{ user.username }}" alt="Avatar" class="w-full h-full">
-            </div>
-            <div class="flex-1 pt-14 sm:pt-0">
-                <h1 class="text-2xl font-extrabold text-slate-900">{{ user.username }}</h1>
-                <p class="text-slate-500 text-sm">{{ user.email }}</p>
-                <div class="mt-2 flex flex-wrap gap-2">
-                    <span class="px-2 py-0.5 bg-brand-50 text-brand-700 text-xs font-bold rounded-full border border-brand-100">
-                        <i class="fa-solid fa-user-astronaut mr-1"></i>Beginner Crafter
-                    </span>
-                    <span class="px-2 py-0.5 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">
-                        <i class="fa-regular fa-calendar mr-1"></i>Joined {{ user.date_joined|date:"F Y" }}
-                    </span>
-                </div>
-            </div>
-            <a href="{% url 'dashboard' %}" class="self-start sm:self-auto mt-2 sm:mt-0 text-sm text-brand-600 hover:text-brand-800 font-medium flex items-center gap-1 transition-colors">
-                <i class="fa-solid fa-arrow-left text-xs"></i> Back to Dashboard
-            </a>
-        </div>
-    </div>
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
 
-    <!-- Stats Row -->
-    <div class="grid grid-cols-3 gap-4 mb-6">
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
-                <i class="fa-solid fa-coins text-amber-500 text-xl"></i>
-            </div>
-            <div>
-                <p class="text-xs text-slate-500 uppercase tracking-wider font-medium">CodePoints</p>
-                <p class="text-3xl font-black text-amber-600">{{ profile.code_points }}</p>
-            </div>
+    <!-- ═══════════ HERO BANNER ═══════════ -->
+    <div class="bg-white rounded-[24px] shadow-sm border border-slate-200 overflow-hidden mb-7">
+        <div class="profile-banner">
+            <div class="absolute top-6 right-10 w-20 h-20 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"></div>
+            <div class="absolute bottom-4 right-32 w-10 h-10 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 rotate-12"></div>
+            <div class="absolute top-10 left-1/3 text-white/10 text-xs font-mono font-bold tracking-wider">CodeCrafters.dev</div>
         </div>
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center flex-shrink-0">
-                <i class="fa-solid fa-star text-amber-400 text-xl"></i>
-            </div>
-            <div>
-                <p class="text-xs text-slate-500 uppercase tracking-wider font-medium">Stars Earned</p>
-                <p class="text-3xl font-black text-amber-500">{{ profile.stars_earned }}</p>
-            </div>
-        </div>
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                <i class="fa-solid fa-terminal text-brand-500 text-xl"></i>
-            </div>
-            <div>
-                <p class="text-xs text-slate-500 uppercase tracking-wider font-medium">Challenges</p>
-                <p class="text-3xl font-black text-brand-600">{{ profile.challenges_solved }}</p>
-            </div>
-        </div>
-    </div>
 
-    <!-- Course Progress -->
-    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
-        <h2 class="text-lg font-bold text-slate-800 mb-5 flex items-center gap-2">
-            <i class="fa-solid fa-chart-line text-brand-500"></i> My Learning Progress
-        </h2>
-        <div class="space-y-5">
-            {% for cd in course_data %}
-            <div>
-                <div class="flex items-center gap-3 mb-2">
-                    <img src="{{ cd.course.icon_url }}" alt="{{ cd.course.title }}" class="h-8 w-8">
-                    <div class="flex-1">
-                        <div class="flex justify-between items-center">
-                            <span class="font-semibold text-slate-800 text-sm">{{ cd.course.title }}</span>
-                            <span class="text-xs font-bold {% if cd.pct == 100 %}text-green-600{% elif cd.pct > 0 %}text-brand-600{% else %}text-slate-400{% endif %}">
-                                {{ cd.done }}/{{ cd.total }} topics &mdash; {{ cd.pct }}%
-                            </span>
-                        </div>
+        <!-- Avatar + Info Row -->
+        <div class="px-8 pb-7 -mt-14 flex flex-col sm:flex-row items-start sm:items-end gap-5">
+            <div class="relative flex-shrink-0">
+                <div class="avatar-ring">
+                    <div class="w-28 h-28 rounded-[16px] bg-white overflow-hidden shadow-lg">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed={{ user.username }}" alt="Avatar" class="w-full h-full p-1">
                     </div>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
-                    <div class="bg-gradient-to-r from-brand-400 to-brand-600 h-full rounded-full transition-all duration-500" style="width:{{ cd.pct }}%"></div>
-                </div>
-                <div class="flex gap-0.5 mt-2">
-                    {% for s in cd.stars_range %}<i class="fa-solid fa-star text-amber-400 text-xs"></i>{% endfor %}
-                    {% for e in cd.empty_range %}<i class="fa-regular fa-star text-slate-300 text-xs"></i>{% endfor %}
-                    {% if cd.pct == 100 %}<i class="fa-solid fa-certificate text-yellow-400 text-sm ml-1"></i>{% endif %}
+                <!-- Status Emoji Badge -->
+                {% if profile.status_emoji %}
+                <span class="absolute -bottom-1 -right-1 w-9 h-9 bg-white rounded-full border-2 border-slate-200 flex items-center justify-center text-lg shadow-sm z-10">
+                    {{ profile.status_emoji }}
+                </span>
+                {% endif %}
+            </div>
+            <div class="flex-1 pt-16 sm:pt-0">
+                <h1 class="text-2xl font-black text-slate-900 tracking-tight">{{ user.username }}</h1>
+                <p class="text-slate-400 text-sm font-medium">{{ user.email }}</p>
+                {% if profile.bio %}
+                <p class="text-slate-500 text-sm mt-1 italic">"{{ profile.bio }}"</p>
+                {% endif %}
+                <div class="mt-2.5 flex flex-wrap gap-2">
+                    <span class="px-3 py-1 text-xs font-black uppercase tracking-wider rounded-full
+                        {% if profile.code_points >= 1000 %}bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 border border-amber-200
+                        {% elif profile.code_points >= 500 %}bg-blue-50 text-blue-700 border border-blue-100
+                        {% else %}bg-brand-50 text-brand-700 border border-brand-100{% endif %}">
+                        <i class="fa-solid fa-user-astronaut mr-1"></i>
+                        {% if profile.code_points >= 1000 %}Elite Crafter
+                        {% elif profile.code_points >= 500 %}Rising Star
+                        {% elif profile.code_points >= 100 %}Active Learner
+                        {% else %}Beginner Crafter{% endif %}
+                    </span>
+                    <span class="px-3 py-1 bg-slate-50 text-slate-500 text-xs font-bold rounded-full border border-slate-100">
+                        <i class="fa-regular fa-calendar mr-1"></i>Joined {{ user.date_joined|date:"F Y" }}
+                    </span>
+                    <span class="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-full border border-emerald-100">
+                        <i class="fa-solid fa-ranking-star mr-1"></i>Rank #{{ profile.global_rank }}
+                    </span>
                 </div>
             </div>
-            {% empty %}
-            <p class="text-slate-400 text-sm text-center py-4">No courses available yet.</p>
-            {% endfor %}
         </div>
     </div>
 
-    <!-- Account Settings -->
-    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <h2 class="text-lg font-bold text-slate-800 mb-5 flex items-center gap-2">
-            <i class="fa-solid fa-gear text-slate-400"></i> Account
+    <!-- ═══════════ STREAK & LEVEL BAR ═══════════ -->
+    <div class="streak-level-bar mb-7">
+        <div class="streak-badge">
+            <div class="streak-fire {% if streak > 0 %}active{% endif %}">🔥</div>
+            <div>
+                <p class="text-2xl font-black text-slate-800 leading-none">{{ streak }}</p>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold mt-0.5">Day{% if streak != 1 %}s{% endif %} Streak</p>
+            </div>
+        </div>
+        <div class="xp-bar-track">
+            <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                    <span class="px-2.5 py-0.5 bg-indigo-50 text-indigo-700 text-[10px] font-black uppercase tracking-wider rounded-full border border-indigo-100">Level {{ xp_level }}</span>
+                    <span class="text-xs font-bold text-slate-400">{{ xp_in_level }} / {{ xp_per_level }} XP</span>
+                </div>
+                <span class="px-2.5 py-0.5 bg-slate-50 text-slate-400 text-[10px] font-black uppercase tracking-wider rounded-full border border-slate-100">Level {{ xp_level|add:1 }}</span>
+            </div>
+            <div class="xp-bar-bg">
+                <div class="xp-bar-fill" style="width: {{ xp_pct }}%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ RANK COMPARISON CARD ═══════════ -->
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-7">
+        <div class="rank-card lg:col-span-3">
+            <div class="rank-circle">
+                <span class="text-white font-black text-xl">#{{ profile.global_rank }}</span>
+            </div>
+            <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                    <p class="text-lg font-black text-slate-800">Leaderboard Position</p>
+                    <span class="px-2 py-0.5 bg-amber-50 text-amber-600 text-[9px] font-black uppercase tracking-wider rounded-full border border-amber-100">
+                        Top {{ profile.rank_percentile }}%
+                    </span>
+                </div>
+                <p class="text-xs text-slate-400 font-medium mb-3">
+                    {{ profile.code_points }} pts · #1 has {{ top_points }} pts
+                </p>
+                <div class="flex items-center gap-3">
+                    <span class="text-[10px] font-bold text-slate-300">You</span>
+                    <div class="rank-bar-bg">
+                        <div class="rank-bar-fill" style="width: {% if top_points > 0 %}{{ profile.code_points|floatformat:0 }}{% else %}0{% endif %}%"
+                             data-my="{{ profile.code_points }}" data-top="{{ top_points }}"></div>
+                    </div>
+                    <span class="text-[10px] font-bold text-slate-300">#1</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats Summary -->
+        <div class="lg:col-span-2 grid grid-cols-2 gap-3">
+            <div class="bg-white border border-slate-200 rounded-[16px] p-4 flex flex-col items-center justify-center text-center">
+                <p class="text-2xl font-black text-brand-500 leading-none" data-count="{{ total_active_days }}">0</p>
+                <p class="text-[9px] text-slate-400 uppercase tracking-widest font-black mt-1">Active Days</p>
+            </div>
+            <div class="bg-white border border-slate-200 rounded-[16px] p-4 flex flex-col items-center justify-center text-center">
+                <p class="text-2xl font-black text-emerald-500 leading-none" data-count="{{ courses_completed }}">0</p>
+                <p class="text-[9px] text-slate-400 uppercase tracking-widest font-black mt-1">Courses Done</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ STAT PODS (animated counters) ═══════════ -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-7">
+        <div class="stat-pod">
+            <div class="relative z-10">
+                <div class="stat-icon bg-amber-50 mb-3"><i class="fa-solid fa-coins text-amber-500 text-xl"></i></div>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-black mb-1">CodePoints</p>
+                <p class="stat-value" data-count="{{ profile.code_points }}">0</p>
+            </div>
+        </div>
+        <div class="stat-pod">
+            <div class="relative z-10">
+                <div class="stat-icon bg-yellow-50 mb-3"><i class="fa-solid fa-star text-yellow-400 text-xl"></i></div>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-black mb-1">Stars Earned</p>
+                <p class="stat-value" data-count="{{ profile.stars_earned }}">0</p>
+            </div>
+        </div>
+        <div class="stat-pod">
+            <div class="relative z-10">
+                <div class="stat-icon bg-blue-50 mb-3"><i class="fa-solid fa-terminal text-brand-500 text-xl"></i></div>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-black mb-1">Challenges</p>
+                <p class="stat-value" data-count="{{ profile.challenges_solved }}" style="background:linear-gradient(135deg,#0ea5e9,#6366f1);-webkit-background-clip:text;background-clip:text;">0</p>
+            </div>
+        </div>
+        <div class="stat-pod">
+            <div class="relative z-10">
+                <div class="stat-icon bg-emerald-50 mb-3"><i class="fa-solid fa-book-open text-emerald-500 text-xl"></i></div>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-black mb-1">Topics Done</p>
+                <p class="stat-value" data-count="{{ total_topics_done }}" style="background:linear-gradient(135deg,#10b981,#059669);-webkit-background-clip:text;background-clip:text;">0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ ACTIVITY HEATMAP ═══════════ -->
+    <div class="bg-white rounded-[20px] shadow-sm border border-slate-200 p-7 mb-7">
+        <div class="flex items-center justify-between mb-5">
+            <h2 class="text-lg font-black text-slate-800 flex items-center gap-2.5">
+                <div class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-calendar-check text-emerald-500 text-sm"></i>
+                </div>
+                Activity
+            </h2>
+            <div class="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold">
+                <span>Less</span>
+                <span class="heatmap-cell inline-block" style="width:11px;height:11px;"></span>
+                <span class="heatmap-cell l1 inline-block" style="width:11px;height:11px;"></span>
+                <span class="heatmap-cell l2 inline-block" style="width:11px;height:11px;"></span>
+                <span class="heatmap-cell l3 inline-block" style="width:11px;height:11px;"></span>
+                <span class="heatmap-cell l4 inline-block" style="width:11px;height:11px;"></span>
+                <span>More</span>
+            </div>
+        </div>
+        <div class="heatmap-wrapper">
+            <div class="heatmap-grid" id="heatmapGrid"></div>
+        </div>
+        <p class="text-xs text-slate-400 font-medium mt-3">
+            <span class="font-bold text-slate-600">{{ total_active_days }}</span> active day{{ total_active_days|pluralize }} in the last year
+        </p>
+    </div>
+
+    <!-- ═══════════ RECENT ACTIVITY TIMELINE ═══════════ -->
+    <div class="bg-white rounded-[20px] shadow-sm border border-slate-200 p-7 mb-7">
+        <h2 class="text-lg font-black text-slate-800 flex items-center gap-2.5 mb-5">
+            <div class="w-8 h-8 bg-brand-50 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-clock-rotate-left text-brand-500 text-sm"></i>
+            </div>
+            Recent Activity
         </h2>
-        <div class="space-y-3">
-            <div class="flex items-center justify-between py-3 border-b border-slate-100">
+
+        {% if recent_activities %}
+        <div>
+            {% for act in recent_activities %}
+            <div class="timeline-item">
+                <div class="timeline-dot {{ act.bg }}">
+                    <i class="{{ act.icon }} {{ act.color }} text-sm"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-bold text-slate-700 truncate">{{ act.text }}</p>
+                    <div class="flex items-center gap-2 mt-0.5">
+                        <span class="text-[11px] text-slate-400 font-medium">{{ act.sub }}</span>
+                        <span class="text-slate-200">•</span>
+                        <span class="text-[11px] text-slate-400 font-medium">{{ act.time|timesince }} ago</span>
+                    </div>
+                </div>
+                {% if act.type == 'arena' %}
+                <span class="px-2 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-full
+                    {% if 'Solved' in act.text %}bg-emerald-50 text-emerald-600 border border-emerald-100{% else %}bg-red-50 text-red-400 border border-red-100{% endif %}">
+                    {% if 'Solved' in act.text %}Passed{% else %}Failed{% endif %}
+                </span>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-12 opacity-50">
+            <i class="fa-solid fa-clock text-3xl text-slate-300 mb-3"></i>
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">No activity yet</p>
+            <p class="text-[11px] text-slate-400 mt-1">Start learning or solve challenges to see your timeline!</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- ═══════════ BADGES ═══════════ -->
+    <div class="bg-white rounded-[20px] shadow-sm border border-slate-200 p-7 mb-7">
+        <h2 class="text-lg font-black text-slate-800 flex items-center gap-2.5 mb-6">
+            <div class="w-8 h-8 bg-amber-50 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-trophy text-amber-500 text-sm"></i>
+            </div>
+            Badges
+        </h2>
+        {% if user_achievements %}
+        <div class="flex flex-wrap gap-4 justify-center">
+            {% for ua in user_achievements %}
+            <div class="flex flex-col items-center gap-2 group" title="{{ ua.achievement.name }}">
+                <div class="achievement-orb">
+                    <div class="orb-glow"></div>
+                    <i class="fa-solid fa-award text-brand-500 text-2xl relative z-10"></i>
+                </div>
+                <span class="text-[10px] font-bold text-slate-500 text-center max-w-[70px] truncate">{{ ua.achievement.name }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="flex flex-col items-center justify-center py-12 text-center opacity-50">
+            <div class="achievement-orb mb-4" style="opacity:0.4">
+                <i class="fa-solid fa-lock text-slate-300 text-xl"></i>
+            </div>
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">No badges earned yet</p>
+            <p class="text-[11px] text-slate-400 mt-1">Complete courses and challenges to unlock!</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- ═══════════ EDIT BIO & STATUS ═══════════ -->
+    <div class="bg-white rounded-[20px] shadow-sm border border-slate-200 p-7 mb-7" x-data="{ editing: false }">
+        <div class="flex items-center justify-between mb-5">
+            <h2 class="text-lg font-black text-slate-800 flex items-center gap-2.5">
+                <div class="w-8 h-8 bg-violet-50 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-pen-fancy text-violet-500 text-sm"></i>
+                </div>
+                About Me
+            </h2>
+            <button @click="editing = !editing" class="px-3 py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-500 text-xs font-bold rounded-lg border border-slate-200 transition-all">
+                <i class="fa-solid fa-pen text-[10px] mr-1"></i>
+                <span x-text="editing ? 'Cancel' : 'Edit'"></span>
+            </button>
+        </div>
+
+        <!-- Display Mode -->
+        <div x-show="!editing">
+            <div class="flex items-center gap-3 mb-3">
+                <span class="text-2xl">{{ profile.status_emoji|default:"🚀" }}</span>
+                <span class="text-sm font-bold text-slate-600">{{ profile.get_status_emoji_display|default:"Coding" }}</span>
+            </div>
+            {% if profile.bio %}
+            <p class="text-slate-600 text-sm leading-relaxed">{{ profile.bio }}</p>
+            {% else %}
+            <p class="text-slate-400 text-sm italic">No bio yet — click Edit to add one!</p>
+            {% endif %}
+        </div>
+
+        <!-- Edit Mode -->
+        <form x-show="editing" method="POST" class="bio-form" x-cloak>
+            {% csrf_token %}
+            <input type="hidden" name="update_bio" value="1">
+
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Status</p>
+            <div class="flex flex-wrap gap-2 mb-4" x-data="{ selected: '{{ profile.status_emoji|default:"🚀" }}' }">
+                {% for emoji, label in status_choices %}
+                <label class="status-pill" :class="{ 'active': selected === '{{ emoji }}' }" @click="selected = '{{ emoji }}'">
+                    <input type="radio" name="status_emoji" value="{{ emoji }}" class="hidden" :checked="selected === '{{ emoji }}'">
+                    {{ emoji }} <span class="text-xs font-bold text-slate-600 ml-1">{{ label }}</span>
+                </label>
+                {% endfor %}
+            </div>
+
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Bio</p>
+            <textarea name="bio" maxlength="120" rows="2" placeholder="Python enthusiast | Building cool things...">{{ profile.bio }}</textarea>
+            <div class="flex items-center justify-between mt-3">
+                <span class="text-[10px] text-slate-400 font-medium">Max 120 characters</span>
+                <button type="submit" class="px-5 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all flex items-center gap-2 active:scale-95 shadow-sm">
+                    <i class="fa-solid fa-check text-[10px]"></i> Save
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ═══════════ ACCOUNT SETTINGS ═══════════ -->
+    <div class="bg-white rounded-[20px] shadow-sm border border-slate-200 p-7">
+        <h2 class="text-lg font-black text-slate-800 flex items-center gap-2.5 mb-5">
+            <div class="w-8 h-8 bg-slate-50 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-gear text-slate-400 text-sm"></i>
+            </div>
+            Account
+        </h2>
+        <div>
+            <div class="account-row">
                 <div>
-                    <p class="text-sm font-medium text-slate-700">Username</p>
-                    <p class="text-xs text-slate-400">{{ user.username }}</p>
+                    <p class="text-sm font-bold text-slate-700">Username</p>
+                    <p class="text-xs text-slate-400 font-medium">{{ user.username }}</p>
+                </div>
+                <span class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Member</span>
+            </div>
+            <div class="account-row">
+                <div>
+                    <p class="text-sm font-bold text-slate-700">Email</p>
+                    <p class="text-xs text-slate-400 font-medium">{{ user.email }}</p>
                 </div>
             </div>
-            <div class="flex items-center justify-between py-3 border-b border-slate-100">
+            <div class="account-row" style="border-bottom: none;">
                 <div>
-                    <p class="text-sm font-medium text-slate-700">Email</p>
-                    <p class="text-xs text-slate-400">{{ user.email }}</p>
-                </div>
-            </div>
-            <div class="flex items-center justify-between py-3">
-                <div>
-                    <p class="text-sm font-medium text-red-600">Sign Out</p>
-                    <p class="text-xs text-slate-400">Log out from your current session</p>
+                    <p class="text-sm font-bold text-red-500">Sign Out</p>
+                    <p class="text-xs text-slate-400">End your current session</p>
                 </div>
                 <form method="POST" action="{% url 'logout' %}">
                     {% csrf_token %}
-                    <button type="submit" class="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 text-sm font-medium rounded-lg border border-red-200 transition-colors flex items-center gap-2">
-                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    <button type="submit" class="px-5 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-black uppercase tracking-wider rounded-xl border border-red-200 transition-all flex items-center gap-2 active:scale-95">
+                        <i class="fa-solid fa-right-from-bracket text-[10px]"></i> Logout
                     </button>
                 </form>
             </div>
         </div>
     </div>
-
 </div>
+
+<!-- Scripts -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // ── Animated Stat Counters ──
+    const counters = document.querySelectorAll('[data-count]');
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const target = parseInt(el.getAttribute('data-count'), 10) || 0;
+                if (target === 0) { el.textContent = '0'; observer.unobserve(el); return; }
+                const duration = 1200;
+                const start = performance.now();
+                function tick(now) {
+                    const elapsed = now - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    el.textContent = Math.round(eased * target);
+                    if (progress < 1) requestAnimationFrame(tick);
+                }
+                requestAnimationFrame(tick);
+                observer.unobserve(el);
+            }
+        });
+    }, { threshold: 0.3 });
+    counters.forEach(function(c) { observer.observe(c); });
+
+    // ── Activity Heatmap ──
+    const heatmapData = {{ heatmap_json|safe }};
+    const grid = document.getElementById('heatmapGrid');
+    if (grid && heatmapData.length) {
+        // Group into weeks (columns)
+        let weeks = [];
+        let currentWeek = [];
+        heatmapData.forEach(function(d, i) {
+            currentWeek.push(d);
+            if (d.dow === 6 || i === heatmapData.length - 1) {
+                weeks.push(currentWeek);
+                currentWeek = [];
+            }
+        });
+
+        weeks.forEach(function(week) {
+            const col = document.createElement('div');
+            col.className = 'heatmap-col';
+            // Pad first week if it doesn't start on Monday
+            if (week === weeks[0]) {
+                for (let p = 0; p < week[0].dow; p++) {
+                    const spacer = document.createElement('div');
+                    spacer.style.width = '13px';
+                    spacer.style.height = '13px';
+                    col.appendChild(spacer);
+                }
+            }
+            week.forEach(function(d) {
+                const cell = document.createElement('div');
+                cell.className = 'heatmap-cell';
+                if (d.count >= 4) cell.classList.add('l4');
+                else if (d.count >= 3) cell.classList.add('l3');
+                else if (d.count >= 2) cell.classList.add('l2');
+                else if (d.count >= 1) cell.classList.add('l1');
+                cell.title = d.date + ': ' + d.count + ' activit' + (d.count === 1 ? 'y' : 'ies');
+                col.appendChild(cell);
+            });
+            grid.appendChild(col);
+        });
+    }
+
+    // ── Rank Bar Width ──
+    const rankFill = document.querySelector('.rank-bar-fill');
+    if (rankFill) {
+        const my = parseInt(rankFill.getAttribute('data-my'), 10) || 0;
+        const top = parseInt(rankFill.getAttribute('data-top'), 10) || 1;
+        const pct = top > 0 ? Math.min(100, Math.round((my / top) * 100)) : 0;
+        rankFill.style.width = pct + '%';
+    }
+});
+</script>
 {% endblock %}

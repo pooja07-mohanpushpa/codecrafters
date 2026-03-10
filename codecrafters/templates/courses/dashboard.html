@@ -1,145 +1,225 @@
 {% extends 'base.html' %}
 {% block title %}Dashboard | CodeCrafters{% endblock %}
 
-{% block content %}
-<div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex gap-8">
-
+{% block sidebar %}
     <!-- ─── Left Sidebar Navigation ──────────────────────────────────── -->
-    <aside class="w-64 flex-shrink-0 hidden md:block">
-        <nav class="sticky top-24 space-y-2">
-            <a href="{% url 'dashboard' %}" class="flex items-center gap-3 px-4 py-3 bg-brand-50 text-brand-700 rounded-xl font-bold transition-colors border border-brand-100 shadow-sm">
-                <i class="fa-solid fa-house w-5 text-center"></i>
-                Home
-            </a>
-            <a href="{% url 'courses' %}" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-xl font-medium transition-colors">
-                <i class="fa-solid fa-layer-group w-5 text-center"></i>
-                Courses
-            </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-xl font-medium transition-colors">
-                <i class="fa-solid fa-code text-slate-400 w-5 text-center"></i>
-                My Snippets
-            </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-xl font-medium transition-colors">
-                <i class="fa-solid fa-bookmark text-slate-400 w-5 text-center"></i>
-                Saved Topics
-            </a>
-        </nav>
-    </aside>
-
-    <!-- ─── Main Content Area ──────────────────────────────────────── -->
-    <div class="flex-1 min-w-0">
-
-    <!-- ─── Main Grid ──────────────────────────────────────────────────── -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-        <!-- LEFT: Current Course -->
-        <div class="lg:col-span-2 space-y-6">
-            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                <i class="fa-solid fa-bolt text-amber-400"></i> Continue Learning
-            </h2>
-
-            {% if current_course %}
-            <div class="grid grid-cols-1 gap-5">
-                <a href="{% url 'course_detail' current_course.course.id %}" class="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 block">
-                    <div class="h-36 bg-gradient-to-br {{ current_course.course.gradient_from }} {{ current_course.course.gradient_to }} flex items-center justify-center relative overflow-hidden">
-                        <img src="{{ current_course.course.icon_url }}" alt="{{ current_course.course.title }}" class="h-16 w-16 drop-shadow-xl group-hover:scale-110 transition-transform duration-500 z-10">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex items-start justify-between">
-                            <h3 class="font-bold text-slate-900 group-hover:text-brand-600 transition-colors">{{ current_course.course.title }}</h3>
-                            <span class="text-xs bg-green-50 text-green-600 border border-green-100 px-2 py-0.5 rounded-full font-medium ml-2 flex-shrink-0">Free</span>
-                        </div>
-                        <p class="text-slate-500 text-xs mt-1">{{ current_course.done }} / {{ current_course.total }} topics completed</p>
-                        <div class="mt-3">
-                            <div class="flex justify-between text-xs font-semibold mb-1">
-                                {% if current_course.pct == 0 %}<span class="text-slate-400">Not Started</span>
-                                {% elif current_course.pct == 100 %}<span class="text-green-600">Completed!</span>
-                                {% else %}<span class="text-slate-600">In Progress</span>{% endif %}
-                                <span class="{% if current_course.pct > 0 %}text-brand-600{% else %}text-slate-400{% endif %}">{{ current_course.pct }}%</span>
-                            </div>
-                            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                                <div class="bg-gradient-to-r from-brand-400 to-brand-600 h-full rounded-full transition-all duration-500" style="width:{{ current_course.pct }}%"></div>
-                            </div>
-                        </div>
-                        <div class="mt-3 flex items-center justify-between">
-                            <div class="flex gap-0.5">
-                                {% for s in current_course.stars_range %}<i class="fa-solid fa-star text-amber-400 text-xs"></i>{% endfor %}
-                                {% for e in current_course.empty_range %}<i class="fa-regular fa-star text-slate-300 text-xs"></i>{% endfor %}
-                            </div>
-                            <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-coins mr-1"></i>{{ current_course.course.points_available }} pts</span>
-                        </div>
-                    </div>
+    <aside class="w-72 flex-shrink-0 hidden md:block border-r border-slate-200 bg-white">
+        <nav class="space-y-8 h-[calc(100vh-4rem)] flex flex-col justify-between py-8 px-4 overflow-y-auto scrollbar-none">
+            <div class="space-y-1">
+                <p class="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 pl-3 mb-5">Menu</p>
+                
+                <a href="{% url 'dashboard' %}"
+                    class="flex items-center gap-4 px-4 py-3 bg-brand-500 text-white rounded-2xl font-black transition-all shadow-lg shadow-brand-500/25">
+                    <i class="fa-solid fa-house w-5 text-center text-sm"></i>
+                    <span>Home</span>
+                </a>
+                
+                <a href="{% url 'arena_home' %}"
+                    class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
+                    <i class="fa-solid fa-terminal w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
+                    <span>Arena</span>
+                </a>
+                
+                <a href="{% url 'courses' %}"
+                    class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
+                    <i class="fa-solid fa-layer-group w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
+                    <span>Courses</span>
+                </a>
+                
+                <a href="{% url 'leaderboard' %}"
+                    class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
+                    <i class="fa-solid fa-trophy w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
+                    <span>Ranks</span>
                 </a>
             </div>
-            {% else %}
-            <div class="p-8 text-center text-slate-500 bg-white rounded-2xl border border-slate-200">
-                You haven't started any courses yet. Check out the <a href="{% url 'courses' %}" class="text-brand-600 font-semibold hover:underline border-b border-brand-200 pb-0.5">Courses</a> tab to begin your journey!
+
+            <div class="space-y-1">
+                <p class="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 pl-3 mb-5">System</p>
+                <a href="#"
+                    class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
+                    <i class="fa-solid fa-gear w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
+                    <span>Settings</span>
+                </a>
             </div>
-            {% endif %}
-        </div>
+        </nav>
+    </aside>
+{% endblock %}
 
-        <!-- RIGHT: Sidebar -->
-        <div class="space-y-6">
+{% block content %}
+<div class="p-8 w-full">
+    <div class="flex-1 min-w-0">
 
-            <!-- Leaderboard from DB -->
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                <div class="px-5 py-4 border-b border-slate-100 flex justify-between items-center">
-                    <h2 class="font-bold text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-ranking-star text-amber-400"></i> Leaderboard
+        <!-- ─── Main Grid ──────────────────────────────────────────────────── -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- LEFT: Current Course -->
+            <div class="lg:col-span-2 space-y-8">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-black text-slate-900 flex items-center gap-3">
+                        <i class="fa-solid fa-bolt text-amber-500 animate-pulse"></i> Continue Learning
                     </h2>
-                    <a href="{% url 'leaderboard' %}" class="text-xs font-bold text-brand-600 hover:text-brand-800 hover:underline">View more</a>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Active Path</span>
                 </div>
-                {% if leaderboard %}
-                <div class="divide-y divide-slate-50">
-                    {% for entry in leaderboard %}
-                    <div class="flex items-center gap-3 px-5 py-3 {% if entry.user == user %}bg-brand-50 border-l-4 border-brand-400{% endif %}">
-                        <span class="w-6 text-center font-bold text-sm {% if forloop.counter == 1 %}text-2xl{% endif %}">
-                            {% if forloop.counter == 1 %}🥇
-                            {% elif forloop.counter == 2 %}🥈
-                            {% elif forloop.counter == 3 %}🥉
-                            {% else %}{{ forloop.counter }}{% endif %}
-                        </span>
-                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed={{ entry.user.username }}" alt="" class="h-8 w-8 rounded-full bg-slate-100 {% if entry.user == user %}ring-2 ring-brand-400{% endif %}">
-                        <div class="flex-1 min-w-0">
-                            <p class="text-sm font-bold text-slate-900 truncate">
-                                {{ entry.user.username }}{% if entry.user == user %} <span class="text-xs text-brand-500">(You)</span>{% endif %}
-                            </p>
+
+                {% if current_course %}
+                <div class="grid grid-cols-1">
+                    <div class="group relative bg-white rounded-[32px] border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-2xl hover:border-brand-200/50 transition-all duration-500 transform hover:-translate-y-1.5 flex flex-col md:flex-row">
+                        <!-- Left Image/Gradient Part -->
+                        <div class="w-full md:w-64 h-48 md:h-auto bg-gradient-to-br {{ current_course.course.gradient_from }} {{ current_course.course.gradient_to }} flex items-center justify-center relative overflow-hidden flex-shrink-0">
+                            <div class="absolute inset-0 bg-black/5"></div>
+                            <img src="{{ current_course.course.icon_url }}" alt="{{ current_course.course.title }}"
+                                class="h-24 w-24 drop-shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-transform duration-700 z-10">
+                            <!-- Background Accent -->
+                            <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
                         </div>
-                        <span class="text-sm font-black {% if forloop.counter == 1 %}text-amber-600{% else %}text-slate-600{% endif %}">{{ entry.code_points }}</span>
+
+                        <!-- Content Part -->
+                        <div class="p-8 flex-1 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="px-2.5 py-1 bg-brand-50 text-brand-600 rounded-lg text-[10px] font-black uppercase tracking-wider border border-brand-100/50">Free Beginner</span>
+                                    <div class="flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 rounded-lg border border-amber-100/50">
+                                        <i class="fa-solid fa-coins text-amber-500 text-[10px]"></i>
+                                        <span class="text-[10px] font-black text-amber-700">{{ current_course.course.points_available }} PTS</span>
+                                    </div>
+                                </div>
+                                <h3 class="text-2xl font-black text-slate-900 mb-1 leading-tight group-hover:text-brand-600 transition-colors">{{ current_course.course.title }}</h3>
+                                <p class="text-slate-500 text-sm font-medium">{{ current_course.done }} of {{ current_course.total }} topics mastered</p>
+                            </div>
+
+                            <div class="mt-8 space-y-4">
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-end">
+                                        <span class="text-xs font-black text-slate-900 uppercase tracking-widest">Current Progress</span>
+                                        <span class="text-xl font-black text-brand-600">{{ current_course.pct }}%</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden p-0.5 border border-slate-200/50">
+                                        <div class="bg-gradient-to-r from-brand-400 to-brand-600 h-full rounded-full transition-all duration-1000 ease-out"
+                                            style="width:{{ current_course.pct }}%"></div>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-4">
+                                    <a href="{% url 'course_detail' current_course.course.id %}" class="flex-1 py-3.5 bg-slate-900 text-white rounded-[20px] font-black text-center shadow-lg shadow-slate-900/20 hover:shadow-xl hover:bg-slate-800 transition-all active:scale-95 flex items-center justify-center gap-2">
+                                        Resume Learning <i class="fa-solid fa-arrow-right text-xs"></i>
+                                    </a>
+                                    <div class="flex -space-x-1.5">
+                                        {% for s in current_course.stars_range %}
+                                            <div class="w-8 h-8 rounded-full bg-amber-50 border-2 border-white flex items-center justify-center shadow-sm">
+                                                <i class="fa-solid fa-star text-amber-400 text-[10px]"></i>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    {% endfor %}
                 </div>
                 {% else %}
-                <div class="px-5 py-8 flex flex-col items-center text-center">
-                    <i class="fa-solid fa-trophy text-slate-200 text-3xl mb-2"></i>
-                    <p class="text-slate-500 text-sm font-medium">No rankings yet</p>
+                <div class="p-12 text-center bg-white rounded-[32px] border border-slate-200 border-dashed">
+                    <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-4 text-slate-300">
+                        <i class="fa-solid fa-book-open text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-black text-slate-900 mb-2">No active courses</h3>
+                    <p class="text-slate-500 mb-6 max-w-xs mx-auto">Explore our curriculum and start your first coding journey today!</p>
+                    <a href="{% url 'courses' %}" class="inline-flex items-center gap-2 px-6 py-3 bg-brand-600 text-white rounded-xl font-black shadow-lg shadow-brand-600/20 hover:bg-brand-700 transition-all">
+                        Browse Courses <i class="fa-solid fa-compass"></i>
+                    </a>
                 </div>
                 {% endif %}
             </div>
 
-            <!-- Daily Practice Problems -->
-            <div class="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-2xl border border-indigo-500 shadow-lg overflow-hidden relative group">
-                <div class="absolute right-0 top-0 w-32 h-32 bg-white rounded-full mix-blend-overlay filter blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none"></div>
-                <div class="px-5 py-5 relative z-10 flex flex-col justify-between h-full">
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="bg-indigo-500/30 text-indigo-50 text-xs font-bold px-2 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm border border-indigo-400/30 flex items-center gap-1.5">
-                                <i class="fa-solid fa-calendar-day"></i> Daily Practice
-                            </span>
-                            <span class="text-white/80 text-xs font-medium"><i class="fa-solid fa-fire text-amber-400 mr-1"></i> Streak: 3</span>
-                        </div>
-                        <h3 class="text-xl font-black text-white leading-tight mb-2">Master Python Loops</h3>
-                        <p class="text-indigo-100/80 text-sm mb-4 line-clamp-2">Complete today's challenge to earn 50 CodePoints and keep your streak alive!</p>
-                    </div>
-                    <a href="#" class="w-full bg-white text-indigo-700 font-bold py-2.5 px-4 rounded-xl text-center shadow-md hover:bg-slate-50 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2">
-                        Start Challenge <i class="fa-solid fa-arrow-right text-sm"></i>
-                    </a>
-                </div>
-            </div>
+            <!-- RIGHT: Sidebar -->
+            <div class="space-y-8">
 
+                <!-- Leaderboard Card -->
+                <div class="bg-white rounded-[28px] border border-slate-200/60 shadow-sm overflow-hidden flex flex-col h-fit">
+                    <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                        <h2 class="font-black text-slate-900 flex items-center gap-2 text-sm uppercase tracking-widest">
+                            <i class="fa-solid fa-ranking-star text-amber-500"></i> Global Rank
+                        </h2>
+                        <a href="{% url 'leaderboard' %}" class="text-[10px] font-black text-brand-600 uppercase tracking-wider hover:text-brand-800">Full View</a>
+                    </div>
+                    
+                    {% if leaderboard %}
+                    <div class="p-2 space-y-1">
+                        {% for entry in leaderboard %}
+                        <div class="flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 {% if entry.user == user %}bg-brand-600 text-white shadow-lg shadow-brand-600/30 scale-[1.02] z-10{% else %}hover:bg-slate-50{% endif %}">
+                            <!-- Rank -->
+                            <div class="w-8 flex-shrink-0 flex justify-center">
+                                {% if forloop.counter == 1 %}
+                                    <div class="w-6 h-6 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center text-xs font-black shadow-sm">1</div>
+                                {% elif forloop.counter == 2 %}
+                                    <div class="w-6 h-6 bg-slate-100 text-slate-600 rounded-lg flex items-center justify-center text-xs font-black shadow-sm">2</div>
+                                {% elif forloop.counter == 3 %}
+                                    <div class="w-6 h-6 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center text-xs font-black shadow-sm">3</div>
+                                {% else %}
+                                    <span class="text-xs font-bold {% if entry.user == user %}text-white{% else %}text-slate-400{% endif %}">#{{ forloop.counter }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Avatar -->
+                            <div class="relative flex-shrink-0">
+                                <img src="https://api.dicebear.com/7.x/bottts/svg?seed={{ entry.user.username }}" alt=""
+                                    class="h-9 w-9 rounded-xl {% if entry.user == user %}bg-white/20 p-0.5{% else %}bg-slate-100{% endif %}">
+                                {% if forloop.counter == 1 %}
+                                    <div class="absolute -top-1 -right-1 text-[10px] drop-shadow-md">👑</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Username -->
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-black truncate {% if entry.user == user %}text-white{% else %}text-slate-900{% endif %}">
+                                    {{ entry.user.username }}
+                                </p>
+                            </div>
+
+                            <!-- Points -->
+                            <div class="text-right">
+                                <p class="text-sm font-black {% if entry.user == user %}text-white{% else %}text-brand-600{% endif %}">{{ entry.code_points }}</p>
+                                <p class="text-[9px] font-black uppercase tracking-tighter {% if entry.user == user %}text-white/70{% else %}text-slate-400{% endif %}">PTS</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="px-5 py-10 flex flex-col items-center text-center opacity-40">
+                        <i class="fa-solid fa-ghost text-4xl mb-3"></i>
+                        <p class="text-xs font-black uppercase tracking-widest text-slate-500">No contestants yet</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Modern Practice Card -->
+                <div class="group relative bg-[#1c1c1e] rounded-[32px] overflow-hidden shadow-2xl p-7 transition-all duration-500 hover:scale-[1.02]">
+                    <!-- Abstract Background -->
+                    <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-48 h-48 bg-brand-500 rounded-full blur-[80px] opacity-20 pointer-events-none"></div>
+                    
+                    <div class="relative z-10 flex flex-col h-full">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="bg-brand-500/10 text-brand-400 text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest border border-brand-500/20 backdrop-blur-sm">
+                                Daily Challenge
+                            </span>
+                            <div class="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500/10 rounded-full border border-orange-500/20">
+                                <i class="fa-solid fa-fire text-orange-500 text-xs"></i>
+                                <span class="text-xs font-black text-orange-100">STREAK: 3</span>
+                            </div>
+                        </div>
+
+                        <h3 class="text-2xl font-black text-white mb-2 leading-tight">Master Python<br/>Complex Loops</h3>
+                        <p class="text-slate-400 text-sm mb-8 leading-relaxed">
+                            Maintain your momentum. Complete today's special session to unlock extra rewards!
+                        </p>
+
+                        <a href="#" class="w-full py-4 bg-brand-600 text-white rounded-2xl font-black shadow-lg shadow-brand-600/30 hover:bg-brand-500 hover:shadow-brand-600/50 transition-all active:scale-95 flex items-center justify-center gap-2">
+                            Start Session <i class="fa-solid fa-play text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </div>
-    <!-- ─── End Main Grid ──────────────────────────────────────────────── -->
+        <!-- ─── End Main Grid ──────────────────────────────────────────────── -->
 
     </div>
 </div>
