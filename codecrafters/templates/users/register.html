@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block title %}Join CodeCrafters{% endblock %}
+
+{% block content %}
+<div class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <!-- Decorative background elements -->
+    <div
+        class="absolute top-0 right-0 w-96 h-96 bg-brand-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob">
+    </div>
+    <div
+        class="absolute top-40 left-20 w-72 h-72 bg-accent-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000">
+    </div>
+    <div
+        class="absolute -bottom-20 right-40 w-80 h-80 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000">
+    </div>
+
+    <div class="max-w-md w-full space-y-8 glass-panel p-8 rounded-2xl relative z-10 border border-white/40">
+        <div>
+            <div
+                class="mx-auto w-16 h-16 bg-gradient-to-br from-brand-400 to-brand-600 rounded-2xl flex items-center justify-center transform -rotate-12 transition-transform hover:rotate-0 duration-300 shadow-lg border border-brand-300">
+                <i class="fa-solid fa-user-astronaut text-white text-3xl"></i>
+            </div>
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-slate-900 tracking-tight">
+                Start Your Journey
+            </h2>
+            <p class="mt-2 text-center text-sm text-slate-500">
+                Join thousands tracing their path from beginner to <span
+                    class="font-bold text-brand-600">CodeCrafter</span>.
+            </p>
+        </div>
+
+        <form class="mt-8 space-y-5" action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+            <div class="space-y-4">
+                <div>
+                    <label for="username" class="block text-sm font-medium text-slate-700">Choose a Username</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-gamepad text-slate-400"></i>
+                        </div>
+                        <input id="username" name="username" type="text" autocomplete="username" required
+                            class="appearance-none rounded-lg relative block w-full px-3 py-3 pl-10 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-brand-500 focus:border-brand-500 focus:z-10 sm:text-sm transition-colors bg-white/50 focus:bg-white"
+                            placeholder="e.g. CodeNinja99">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-slate-700">Email Address</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-envelope text-slate-400"></i>
+                        </div>
+                        <input id="email" name="email" type="email" autocomplete="email" required
+                            class="appearance-none rounded-lg relative block w-full px-3 py-3 pl-10 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-brand-500 focus:border-brand-500 focus:z-10 sm:text-sm transition-colors bg-white/50 focus:bg-white"
+                            placeholder="you@example.com">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-slate-700">Password</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-lock text-slate-400"></i>
+                        </div>
+                        <input id="password" name="password" type="password" autocomplete="new-password" required
+                            class="appearance-none rounded-lg relative block w-full px-3 py-3 pl-10 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-brand-500 focus:border-brand-500 focus:z-10 sm:text-sm transition-colors bg-white/50 focus:bg-white"
+                            placeholder="Create a strong password">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password_confirm" class="block text-sm font-medium text-slate-700">Confirm
+                        Password</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-lock text-slate-400"></i>
+                        </div>
+                        <input id="password_confirm" name="password_confirm" type="password" autocomplete="new-password"
+                            required
+                            class="appearance-none rounded-lg relative block w-full px-3 py-3 pl-10 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-brand-500 focus:border-brand-500 focus:z-10 sm:text-sm transition-colors bg-white/50 focus:bg-white"
+                            placeholder="Repeat password">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit"
+                    class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                        <i class="fa-solid fa-user-plus text-brand-200 group-hover:text-white transition-colors"></i>
+                    </span>
+                    Create My Account
+                </button>
+            </div>
+        </form>
+
+        <div class="mt-6 text-center">
+            <p class="text-sm text-slate-600">
+                Already part of the crew?
+                <a href="{% url 'login' %}"
+                    class="font-medium text-brand-600 hover:text-brand-500 transition-colors">Log in instead</a>.
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes blob {
+        0% {
+            transform: translate(0px, 0px) scale(1);
+        }
+
+        33% {
+            transform: translate(30px, -50px) scale(1.1);
+        }
+
+        66% {
+            transform: translate(-20px, 20px) scale(0.9);
+        }
+
+        100% {
+            transform: translate(0px, 0px) scale(1);
+        }
+    }
+
+    .animate-blob {
+        animation: blob 7s infinite;
+    }
+
+    .animation-delay-2000 {
+        animation-delay: 2s;
+    }
+
+    .animation-delay-4000 {
+        animation-delay: 4s;
+    }
+</style>
+{% endblock %}

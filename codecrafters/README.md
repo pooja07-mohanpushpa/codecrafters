@@ -28,7 +28,8 @@ We provide structured learning paths starting from beginner concepts (Variables,
 - **Initially supported languages:** 🐍 Python | 🟨 C programming
 
 ### 2. 🤖 AI-Generated Lecture Videos
-Each topic includes a short **AI-generated lecture video**. A virtual AI teacher explains the concept in a simple, visual manner—perfect for visual and auditory learners who prefer watching explanations instead of reading long documentation.
+Each topic includes a short **AI-generated lecture video**. A virtual AI teacher explains the concept in a simple, visual manner—perfect for visual and auditory learners.
+- 🎬 **Pre-Generated Content:** To ensure high quality and fast loading times, each lesson features a carefully curated, pre-generated AI instructional video that perfectly aligns with the topic.
 
 ### 3. 🤔 Interactive Coding Sessions
 A dedicated arena to solve programming-related questions in real-time.
@@ -36,8 +37,9 @@ A dedicated arena to solve programming-related questions in real-time.
 - 🎁 **Reward system:** Earn **CodePoints** for successfully passing all test cases on a coding problem!
 
 ### 4. 📝 Interactive Quiz Section
-A separate quiz module allows users to test their knowledge using targeted multiple-choice questions (MCQs) designed to evaluate understanding of the lessons covered.
-- 🎁 **Reward system:** Earn **CodePoints** for correctly answering quiz questions! 
+A separate quiz module allows users to test their knowledge using targeted multiple-choice questions (MCQs).
+- 🧠 **Dynamic Generation:** Quizzes are generated on-the-fly using the **Google Gemini API**, adapting to the lesson content to provide fresh, relevant questions every time.
+- 🎁 **Reward system:** Earn **CodePoints** for correctly answering quiz questions!
 
 ### 5. 🏆 Global Leaderboard
 Rankings based on total accumulated `CodePoints` earned from both the **Coding Sessions** and the **Quiz Section**. This gamified system creates a competitive learning environment and encourages learners to practice and test their knowledge frequently!
@@ -59,17 +61,19 @@ The certificate includes:
 
 ## 🛠️ Technology Stack
 
-### 🎨 Frontend
-- **Framework**: React.js
+### 🎨 Frontend/UI
+- **Template Engine**: Django Templates (HTML/CSS)
 - **Styling**: Tailwind CSS
 
-### ⚙️ Backend (Optional/Future Scope)
-- **Runtime**: Node.js
-- **Framework**: Express.js
+### ⚙️ Backend Framework
+- **Core**: Python
+- **Framework**: Django (Full-Stack)
+- **Database**: SQLite (Development) / PostgreSQL (Production)
 
 ### 🔧 Auxiliary Tools
-- **AI Integration**: AI Video Generation APIs
-- **Practice Area**: Integrated web-based code editor
+- **Code Execution**: Judge0 API / Piston API
+- **Code Editor UI**: CodeMirror or Monaco Editor injected via CDN
+- **AI Integration**: **Google Gemini API** (Quiz/Content Generation)
 
 ---
 
@@ -83,6 +87,45 @@ Our primary objective is to create a modern learning platform that combines:
 * 🏆 Competitive leaderboards
 
 This approach helps learners stay engaged while developing programming skills effectively.
+
+
+
+
+
+---
+
+## 🏃‍♂️ How to Run Locally
+
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repo-url>
+   ```
+
+2. **Navigate to the directory:**
+   ```bash
+   cd codecrafters
+   ```
+
+3. **Create a virtual environment:**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   ```
+
+4. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+5. **Apply database migrations:**
+   ```bash
+   python manage.py migrate
+   ```
+
+6. **Start the development server:**
+   ```bash
+   python manage.py runserver 
+   ```
 
 ---
 *Built with ❤️ for [Hackathon Name]*

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCrafters - {% block title %}Gamified Learning{% endblock %}</title>
+    <!-- Tailwind CSS (CDN for rapid prototyping) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        accent: {
+                            500: '#f59e0b', // CodePoints Gold
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for gamified feel */
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="min-h-screen flex flex-col text-slate-800">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center gap-2">
+                        <i class="fa-solid fa-code text-brand-600 text-2xl"></i>
+                        <span class="font-bold text-xl tracking-tight text-slate-900">Code<span class="text-brand-600">Crafters</span></span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    {% if user.is_authenticated %}
+                        <div class="flex items-center gap-2 px-3 py-1 bg-amber-50 rounded-full border border-amber-200">
+                            <i class="fa-solid fa-coins text-accent-500"></i>
+                            <span class="font-bold text-amber-700">1,250 <span class="text-xs font-normal">pts</span></span>
+                        </div>
+                        <a href="#" class="text-slate-600 hover:text-brand-600 font-medium transition-colors">Courses</a>
+                        <a href="#" class="text-slate-600 hover:text-brand-600 font-medium transition-colors">Arena</a>
+                        <a href="#" class="text-slate-600 hover:text-brand-600 font-medium transition-colors">Leaderboard</a>
+                        <div class="ml-4 flex items-center md:ml-6">
+                            <div class="h-8 w-8 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold">
+                                {{ user.username|make_list|first|upper }}
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="text-slate-600 hover:text-brand-600 font-medium transition-colors">Log in</a>
+                        <a href="{% url 'register' %}" class="ml-4 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-colors">
+                            Sign up
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col">
+        {% if messages %}
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
+                {% for message in messages %}
+                    <div class="p-4 rounded-md mb-4 {% if message.tags == 'error' %}bg-red-50 text-red-700 border border-red-200{% else %}bg-green-50 text-green-700 border border-green-200{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer removed per user request -->
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
