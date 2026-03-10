@@ -15,6 +15,7 @@ To encourage continuous learning and healthy competition, the platform also feat
 * Leaderboards for each programming language
 * Performance-based ranking system
 * Simple and user-friendly learning interface
+* certification
 
  Objective
  
