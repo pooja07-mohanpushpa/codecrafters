@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}{{ course.title }} | CodeCrafters{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="mb-10 text-center">
+        <div class="inline-flex items-center justify-center h-24 w-24 rounded-3xl bg-gradient-to-br {{ course.gradient_from }} {{ course.gradient_to }} shadow-2xl mb-6">
+            <img src="{{ course.icon_url }}" alt="{{ course.title }}" class="h-12 w-12 drop-shadow-lg">
+        </div>
+        <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight">{{ course.title }}</h1>
+        <p class="text-slate-500 mt-3 text-lg">{{ course.description }}</p>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+        <div class="px-8 py-6 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
+            <h2 class="text-xl font-bold text-slate-800">Learning Path</h2>
+            <span class="px-4 py-1.5 bg-brand-50 text-brand-600 rounded-full text-sm font-bold border border-brand-100">
+                {{ course.total_topics }} Topics
+            </span>
+        </div>
+        
+        <div class="divide-y divide-slate-100">
+            {% for item in topics %}
+            <div class="p-8 flex items-center gap-6 hover:bg-slate-50 transition-colors group">
+                <div class="h-14 w-14 rounded-2xl flex-shrink-0 flex items-center justify-center font-black text-xl 
+                    {% if item.is_completed %}
+                        bg-green-100 text-green-600 border-2 border-green-200
+                    {% else %}
+                        bg-slate-100 text-slate-400 border-2 border-slate-200
+                    {% endif %}">
+                    {% if item.is_completed %}
+                        <i class="fa-solid fa-check"></i>
+                    {% else %}
+                        {{ forloop.counter }}
+                    {% endif %}
+                </div>
+                
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold {% if item.is_completed %}text-slate-500 line-through{% else %}text-slate-900 group-hover:text-brand-600{% endif %} transition-colors">
+                        {{ item.topic.title }}
+                    </h3>
+                    <div class="flex items-center gap-4 mt-1.5">
+                        <span class="text-sm font-medium text-slate-400 flex items-center gap-1.5">
+                            <i class="fa-solid fa-star text-amber-400"></i> {{ item.topic.points_reward }} CodePoints
+                        </span>
+                    </div>
+                </div>
+
+                <div>
+                    {% if item.is_completed %}
+                        <button class="px-6 py-2.5 bg-slate-100 text-slate-500 rounded-xl font-bold cursor-default">
+                            Completed
+                        </button>
+                    {% else %}
+                        <button class="px-6 py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-xl font-bold shadow-lg shadow-brand-500/20 active:scale-95 transition-all">
+                            Start Topic
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="p-20 text-center">
+                <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-300">
+                    <i class="fa-solid fa-book-open text-3xl"></i>
+                </div>
+                <p class="text-slate-400 font-medium">No topics added to this path yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="mt-8 text-center">
+        <a href="{% url 'dashboard' %}" class="inline-flex items-center gap-2 text-slate-400 hover:text-brand-500 font-bold transition-colors">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block title %}My Profile | CodeCrafters{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+
+    <!-- Profile Header -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-6">
+        <!-- Cover gradient -->
+        <div class="h-28 bg-gradient-to-r from-brand-600 to-indigo-500 relative">
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_white/10,_transparent_70%)]"></div>
+        </div>
+        <!-- Avatar + Info -->
+        <div class="px-6 pb-6 -mt-12 flex flex-col sm:flex-row items-start sm:items-end gap-4">
+            <div class="w-24 h-24 rounded-2xl bg-white ring-4 ring-white shadow-lg flex-shrink-0 overflow-hidden">
+                <img src="https://api.dicebear.com/7.x/bottts/svg?seed={{ user.username }}" alt="Avatar" class="w-full h-full">
+            </div>
+            <div class="flex-1 pt-14 sm:pt-0">
+                <h1 class="text-2xl font-extrabold text-slate-900">{{ user.username }}</h1>
+                <p class="text-slate-500 text-sm">{{ user.email }}</p>
+                <div class="mt-2 flex flex-wrap gap-2">
+                    <span class="px-2 py-0.5 bg-brand-50 text-brand-700 text-xs font-bold rounded-full border border-brand-100">
+                        <i class="fa-solid fa-user-astronaut mr-1"></i>Beginner Crafter
+                    </span>
+                    <span class="px-2 py-0.5 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">
+                        <i class="fa-regular fa-calendar mr-1"></i>Joined {{ user.date_joined|date:"F Y" }}
+                    </span>
+                </div>
+            </div>
+            <a href="{% url 'dashboard' %}" class="self-start sm:self-auto mt-2 sm:mt-0 text-sm text-brand-600 hover:text-brand-800 font-medium flex items-center gap-1 transition-colors">
+                <i class="fa-solid fa-arrow-left text-xs"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="grid grid-cols-3 gap-4 mb-6">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-coins text-amber-500 text-xl"></i>
+            </div>
+            <div>
+                <p class="text-xs text-slate-500 uppercase tracking-wider font-medium">CodePoints</p>
+                <p class="text-3xl font-black text-amber-600">{{ profile.code_points }}</p>
+            </div>
+        </div>
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-star text-amber-400 text-xl"></i>
+            </div>
+            <div>
+                <p class="text-xs text-slate-500 uppercase tracking-wider font-medium">Stars Earned</p>
+                <p class="text-3xl font-black text-amber-500">{{ profile.stars_earned }}</p>
+            </div>
+        </div>
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-terminal text-brand-500 text-xl"></i>
+            </div>
+            <div>
+                <p class="text-xs text-slate-500 uppercase tracking-wider font-medium">Challenges</p>
+                <p class="text-3xl font-black text-brand-600">{{ profile.challenges_solved }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Course Progress -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+        <h2 class="text-lg font-bold text-slate-800 mb-5 flex items-center gap-2">
+            <i class="fa-solid fa-chart-line text-brand-500"></i> My Learning Progress
+        </h2>
+        <div class="space-y-5">
+            {% for cd in course_data %}
+            <div>
+                <div class="flex items-center gap-3 mb-2">
+                    <img src="{{ cd.course.icon_url }}" alt="{{ cd.course.title }}" class="h-8 w-8">
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-semibold text-slate-800 text-sm">{{ cd.course.title }}</span>
+                            <span class="text-xs font-bold {% if cd.pct == 100 %}text-green-600{% elif cd.pct > 0 %}text-brand-600{% else %}text-slate-400{% endif %}">
+                                {{ cd.done }}/{{ cd.total }} topics &mdash; {{ cd.pct }}%
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                    <div class="bg-gradient-to-r from-brand-400 to-brand-600 h-full rounded-full transition-all duration-500" style="width:{{ cd.pct }}%"></div>
+                </div>
+                <div class="flex gap-0.5 mt-2">
+                    {% for s in cd.stars_range %}<i class="fa-solid fa-star text-amber-400 text-xs"></i>{% endfor %}
+                    {% for e in cd.empty_range %}<i class="fa-regular fa-star text-slate-300 text-xs"></i>{% endfor %}
+                    {% if cd.pct == 100 %}<i class="fa-solid fa-certificate text-yellow-400 text-sm ml-1"></i>{% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-slate-400 text-sm text-center py-4">No courses available yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Account Settings -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <h2 class="text-lg font-bold text-slate-800 mb-5 flex items-center gap-2">
+            <i class="fa-solid fa-gear text-slate-400"></i> Account
+        </h2>
+        <div class="space-y-3">
+            <div class="flex items-center justify-between py-3 border-b border-slate-100">
+                <div>
+                    <p class="text-sm font-medium text-slate-700">Username</p>
+                    <p class="text-xs text-slate-400">{{ user.username }}</p>
+                </div>
+            </div>
+            <div class="flex items-center justify-between py-3 border-b border-slate-100">
+                <div>
+                    <p class="text-sm font-medium text-slate-700">Email</p>
+                    <p class="text-xs text-slate-400">{{ user.email }}</p>
+                </div>
+            </div>
+            <div class="flex items-center justify-between py-3">
+                <div>
+                    <p class="text-sm font-medium text-red-600">Sign Out</p>
+                    <p class="text-xs text-slate-400">Log out from your current session</p>
+                </div>
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 text-sm font-medium rounded-lg border border-red-200 transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

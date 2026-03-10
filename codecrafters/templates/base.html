@@ -60,16 +60,14 @@
                 <div class="flex items-center space-x-4">
                     {% if user.is_authenticated %}
                         <div class="flex items-center gap-2 px-3 py-1 bg-amber-50 rounded-full border border-amber-200">
-                            <i class="fa-solid fa-coins text-accent-500"></i>
+                            <i class="fa-solid fa-copyright text-accent-500"></i>
                             <span class="font-bold text-amber-700">1,250 <span class="text-xs font-normal">pts</span></span>
                         </div>
-                        <a href="#" class="text-slate-600 hover:text-brand-600 font-medium transition-colors">Courses</a>
-                        <a href="#" class="text-slate-600 hover:text-brand-600 font-medium transition-colors">Arena</a>
-                        <a href="#" class="text-slate-600 hover:text-brand-600 font-medium transition-colors">Leaderboard</a>
-                        <div class="ml-4 flex items-center md:ml-6">
-                            <div class="h-8 w-8 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold">
+                        <div class="ml-4 flex items-center gap-3 md:ml-6">
+                            <span class="text-slate-700 font-medium">{{ user.username }}</span>
+                            <a href="{% url 'profile' %}" class="h-8 w-8 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-sm hover:bg-brand-600 transition-colors ring-2 ring-brand-200 hover:ring-brand-400" title="View Profile">
                                 {{ user.username|make_list|first|upper }}
-                            </div>
+                            </a>
                         </div>
                     {% else %}
                         <a href="{% url 'login' %}" class="text-slate-600 hover:text-brand-600 font-medium transition-colors">Log in</a>

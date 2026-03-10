@@ -1,3 +1,94 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
+
+class Course(models.Model):
+    """
+    A learning path (e.g., Python Masterclass, C Foundations).
+    """
+    title           = models.CharField(max_length=200)
+    description     = models.TextField(blank=True)
+    icon_url        = models.URLField(blank=True)
+    gradient_from   = models.CharField(max_length=60, default='from-blue-500')
+    gradient_to     = models.CharField(max_length=60, default='to-indigo-700')
+    points_available = models.IntegerField(default=500)
+    order           = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+
+    @property
+    def total_topics(self):
+        return self.topics.count()
+
+
+class Topic(models.Model):
+    """
+    A single lesson inside a Course, ordered to build on each other.
+    """
+    course      = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='topics')
+    title       = models.CharField(max_length=200)
+    order       = models.IntegerField(default=0)
+    video_file  = models.FileField(upload_to='topics/videos/', blank=True, null=True,
+                                   help_text="Upload the video file (mp4 recommended).")
+    video_url   = models.URLField(blank=True, help_text="OR paste an external video URL (YouTube embed, etc.)")
+    content     = models.TextField(blank=True, help_text="Lesson text / transcript used by Gemini for quiz generation.")
+    points_reward = models.IntegerField(default=50)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"{self.course.title} — {self.title}"
+
+
+class UserProgress(models.Model):
+    """
+    Tracks which topics a user has completed and their quiz score.
+    One row per (user, topic) pair.
+    """
+    user            = models.ForeignKey(User, on_delete=models.CASCADE, related_name='progress')
+    topic           = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='progress')
+    is_completed    = models.BooleanField(default=False)
+    quiz_score      = models.IntegerField(default=0)
+    completed_at    = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ('user', 'topic')
+
+    def __str__(self):
+        status = "✅" if self.is_completed else "⏳"
+        return f"{status} {self.user.username} — {self.topic.title}"
+
+
+class Achievement(models.Model):
+    """
+    Badges that users can earn (e.g., 'Python Pro', '7-Day Streak').
+    """
+    name            = models.CharField(max_length=100)
+    description     = models.TextField()
+    icon_url        = models.URLField(blank=True, help_text="Link to achievement icon (e.g., FontAwesome URL or static img)")
+    requirement_type = models.CharField(max_length=50, choices=[
+        ('points', 'CodePoints Threshold'),
+        ('course', 'Course Completion'),
+        ('challenge', 'Challenges Solved'),
+    ], default='points')
+    requirement_value = models.IntegerField(default=0, help_text="Value needed to unlock (e.g., 500 points)")
+
+    def __str__(self):
+        return self.name
+
+
+class UserAchievement(models.Model):
+    """
+    Connects users to the achievements they have unlocked.
+    """
+    user            = models.ForeignKey(User, on_delete=models.CASCADE, related_name='achievements')
+    achievement     = models.ForeignKey(Achievement, on_delete=models.CASCADE)
+    unlocked_at     = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'achievement')
+
+    def __str__(self):
+        return f"{self.user.username} unlocked {self.achievement.name}"
