@@ -114,7 +114,7 @@
             content: '';
             position: absolute;
             inset: -4px;
-            background: linear-gradient(45deg, #6366f1, #a855f7, #ec4899, #6366f1);
+            background: linear-gradient(45deg, #0ea5e9, #2dd4bf, #0284c7, #0ea5e9);
             background-size: 400%;
             border-radius: 50%;
             z-index: -1;
@@ -139,7 +139,7 @@
 
         .progressive-badge:hover .badge-orb {
             transform: translateY(-5px) scale(1.08);
-            box-shadow: 0 15px 35px -10px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 15px 35px -10px rgba(14, 165, 233, 0.3);
         }
 
         .badge-orb img,
@@ -185,7 +185,7 @@
 
         .arc-star.filled {
             color: #fbbf24;
-            text-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+            text-shadow: 0 0 12px rgba(251, 191, 36, 0.6);
         }
 
         .arc-star.empty {
@@ -228,7 +228,7 @@
                         class="hidden sm:flex items-center gap-2 px-3.5 py-1.5 bg-amber-50 rounded-full border border-amber-200/60 shadow-sm hover:shadow transition-all group cursor-default">
                         <div
                             class="w-5 h-5 bg-amber-400 rounded-full flex items-center justify-center shadow-inner group-hover:rotate-12 transition-transform">
-                            <i class="fa-solid fa-copyright text-[10px] text-white"></i>
+                            <i class="fa-solid fa-star text-[10px] text-white"></i>
                         </div>
                         <span class="font-black text-sm text-amber-700">{{ profile.code_points|default:"0" }} <span
                                 class="text-[10px] uppercase tracking-wider text-amber-500/80 ml-0.5">pts</span></span>
