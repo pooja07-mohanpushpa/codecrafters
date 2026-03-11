@@ -22,3 +22,7 @@ To encourage continuous learning and healthy competition, the platform also feat
 The main goal of this platform is to create a **fast, accessible, and engaging way to learn programming concepts** by combining structured written tutorials with instant knowledge assessment through quizzes.
 
 This project aims to make programming education more **interactive, competitive, and accessible** for learners who prefer reading-based learning over video-based instruction.
+
+## Feature Update
+
+Working on Wildcard Entry Quiz feature which allows experienced learners to skip previous lessons by passing an eligibility quiz.
