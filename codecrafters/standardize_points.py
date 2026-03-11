@@ -1,7 +1,7 @@
 import os
 import django
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'codecrafters.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pathmind.settings')
 django.setup()
 
 from courses.models import Course, Topic
@@ -17,7 +17,7 @@ for c in courses:
     
     # Whatever the formula, let's look at what the user wants: "assign correct code points with similar structures"
     # Actually, in dashboard we just show `course.points_available`.
-    # Let's dynamically calculate `c.points_available` based on how many CodePoints are actually earnable.
+    # Let's dynamically calculate `c.points_available` based on how many PathPoints are actually earnable.
     
     # Let's set topic.points_reward = 50 for all topics.
     for t in c.topics.all():
@@ -36,4 +36,4 @@ for c in courses:
         c.points_available = correct_points
         c.save()
 
-print("CodePoints structure standardized across all courses!")
+print("PathPoints structure standardized across all courses!")

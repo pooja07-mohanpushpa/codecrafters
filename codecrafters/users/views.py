@@ -59,7 +59,7 @@ def register_view(request):
             # Create user and log in
             user = User.objects.create_user(username=username, email=email, password=password)
             login(request, user)
-            messages.success(request, f"Account created! Welcome to CodeCrafters, {username}! 🎉")
+            messages.success(request, f"Account created! Welcome to PathMind, {username}! 🎉")
             return redirect('dashboard')
 
     return render(request, 'users/register.html')

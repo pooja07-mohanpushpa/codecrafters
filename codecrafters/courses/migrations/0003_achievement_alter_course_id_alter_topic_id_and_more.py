@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=100)),
                 ('description', models.TextField()),
                 ('icon_url', models.URLField(blank=True, help_text='Link to achievement icon (e.g., FontAwesome URL or static img)')),
-                ('requirement_type', models.CharField(choices=[('points', 'CodePoints Threshold'), ('course', 'Course Completion'), ('challenge', 'Challenges Solved')], default='points', max_length=50)),
+                ('requirement_type', models.CharField(choices=[('points', 'PathPoints Threshold'), ('course', 'Course Completion'), ('challenge', 'Challenges Solved')], default='points', max_length=50)),
                 ('requirement_value', models.IntegerField(default=0, help_text='Value needed to unlock (e.g., 500 points)')),
             ],
         ),

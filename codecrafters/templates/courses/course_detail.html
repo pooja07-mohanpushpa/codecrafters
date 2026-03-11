@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}{{ course.title }} | CodeCrafters{% endblock %}
+{% block title %}{{ course.title }} | PathMind{% endblock %}
 
 {% block sidebar %}{% endblock %}
 
@@ -251,7 +251,7 @@
                 <i class="fa-solid fa-map-pin mr-1"></i> {{ course.total_topics }} Stops
             </span>
             <span class="px-4 py-1.5 bg-amber-50 text-amber-600 rounded-full text-sm font-bold border border-amber-100">
-                <i class="fa-solid fa-coins mr-1"></i> {{ course.points_available }} CodePoints
+                <i class="fa-solid fa-coins mr-1"></i> {{ course.points_available }} PathPoints
             </span>
             {% if certificate %}
             <a href="{% url 'download_certificate' certificate.certificate_id %}" target="_blank" class="px-4 py-1.5 bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white rounded-full text-sm font-bold border border-emerald-600 shadow-md transition-all flex items-center gap-2 relative overflow-hidden group">
@@ -299,7 +299,7 @@
                         <div class="flex items-center gap-3 mt-0.5">
                             <span class="tile-points flex items-center gap-1">
                                 <i class="fa-solid fa-star text-amber-400 text-[11px]"></i>
-                                {{ item.topic.points_reward }} CodePoints
+                                {{ item.topic.points_reward }} PathPoints
                             </span>
                         </div>
                     </div>

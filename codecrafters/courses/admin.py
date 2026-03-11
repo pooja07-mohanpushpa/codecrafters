@@ -41,6 +41,6 @@ class UserAchievementAdmin(admin.ModelAdmin):
 
 @admin.register(QuizAttempt)
 class QuizAttemptAdmin(admin.ModelAdmin):
-    list_display = ('user', 'topic', 'score', 'codepoints_earned', 'attempted_at')
+    list_display = ('user', 'topic', 'score', 'pathpoints_earned', 'attempted_at')
     list_filter = ('score', 'topic__course')
     search_fields = ('user__username', 'topic__title')

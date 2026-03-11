@@ -1,7 +1,7 @@
 import os
 import django
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'codecrafters.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pathmind.settings')
 django.setup()
 
 from courses.models import Topic

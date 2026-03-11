@@ -1,7 +1,7 @@
 import os
 import django
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'codecrafters.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pathmind.settings')
 django.setup()
 
 from django.contrib.auth import get_user_model
@@ -12,7 +12,7 @@ User = get_user_model()
 def generate_demo_user():
     # 1. Create or get Demo User
     user, created = User.objects.get_or_create(username='demouser', defaults={
-        'email': 'demo@codecrafters.com',
+        'email': 'demo@pathmind.com',
         'first_name': 'Demo',
         'last_name': 'Student'
     })

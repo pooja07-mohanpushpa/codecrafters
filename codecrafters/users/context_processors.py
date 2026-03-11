@@ -1,6 +1,6 @@
 """
 Context processor: injects the logged-in user's UserProfile into every template.
-This allows the navbar to show real CodePoints without touching individual views.
+This allows the navbar to show real PathPoints without touching individual views.
 """
 from users.models import UserProfile
 

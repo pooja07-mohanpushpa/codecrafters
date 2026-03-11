@@ -103,7 +103,7 @@ class Achievement(models.Model):
     description     = models.TextField()
     icon_url        = models.URLField(blank=True, help_text="Link to achievement icon (e.g., FontAwesome URL or static img)")
     requirement_type = models.CharField(max_length=50, choices=[
-        ('points', 'CodePoints Threshold'),
+        ('points', 'PathPoints Threshold'),
         ('course', 'Course Completion'),
         ('challenge', 'Challenges Solved'),
     ], default='points')
@@ -135,7 +135,7 @@ class QuizAttempt(models.Model):
     user            = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quiz_attempts')
     topic           = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='quiz_attempts')
     score           = models.IntegerField(default=0) # 0 to 5
-    codepoints_earned = models.IntegerField(default=0)
+    pathpoints_earned = models.IntegerField(default=0)
     attempted_at    = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

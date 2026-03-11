@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Rewards & Certificates | CodeCrafters{% endblock %}
+{% block title %}Rewards & Certificates | PathMind{% endblock %}
 
 {% block extra_head %}
 {% endblock %}
@@ -90,7 +90,7 @@
                             <i class="fa-solid fa-download"></i> Download PDF
                         </a>
                         
-                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}&summary=I just earned my official Certificate in {{ cert.course.title }} from CodeCrafters!" target="_blank"
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}&summary=I just earned my official Certificate in {{ cert.course.title }} from PathMind!" target="_blank"
                            class="w-full py-3 share-btn font-black text-xs uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-900/10">
                             <i class="fa-brands fa-linkedin-in text-base"></i> Share to LinkedIn
                         </a>
@@ -144,7 +144,7 @@
                     <h3 class="text-xl font-black text-slate-900 mb-1">{{ badge.course.title }}</h3>
                     <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mb-8">{{ badge.pct }}% Completed</p>
                     
-                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}&summary=I earned {{ badge.stars }} stars in {{ badge.course.title }} on CodeCrafters!" target="_blank"
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}&summary=I earned {{ badge.stars }} stars in {{ badge.course.title }} on PathMind!" target="_blank"
                        class="w-full py-3.5 share-btn font-black text-xs uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-900/10">
                         <i class="fa-brands fa-linkedin-in text-base"></i> Share Badge
                     </a>

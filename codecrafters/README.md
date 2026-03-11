@@ -34,15 +34,15 @@ Each topic includes a short **AI-generated lecture video**. A virtual AI teacher
 ### 3. 🤔 Interactive Coding Sessions
 A dedicated arena to solve programming-related questions in real-time.
 - 💻 **Integrated Code Editor:** Practice directly in the browser with an interactive code editor, similar to platforms like HackerRank, complete with syntax highlighting and instant code execution/validation.
-- 🎁 **Reward system:** Earn **CodePoints** for successfully passing all test cases on a coding problem!
+- 🎁 **Reward system:** Earn **PathPoints** for successfully passing all test cases on a coding problem!
 
 ### 4. 📝 Interactive Quiz Section
 A separate quiz module allows users to test their knowledge using targeted multiple-choice questions (MCQs).
 - 🧠 **Dynamic Generation:** Quizzes are generated on-the-fly using the **Google Gemini API**, adapting to the lesson content to provide fresh, relevant questions every time.
-- 🎁 **Reward system:** Earn **CodePoints** for correctly answering quiz questions!
+- 🎁 **Reward system:** Earn **PathPoints** for correctly answering quiz questions!
 
 ### 5. 🏆 Global Leaderboard
-Rankings based on total accumulated `CodePoints` earned from both the **Coding Sessions** and the **Quiz Section**. This gamified system creates a competitive learning environment and encourages learners to practice and test their knowledge frequently!
+Rankings based on total accumulated `PathPoints` earned from both the **Coding Sessions** and the **Quiz Section**. This gamified system creates a competitive learning environment and encourages learners to practice and test their knowledge frequently!
 
 ### 6. 📊 Progress & Badges
 Visual progress indicators track your journey for each course. To keep motivation high, we've integrated a **Star Badge System**:
@@ -103,7 +103,7 @@ This approach helps learners stay engaged while developing programming skills ef
 
 2. **Navigate to the directory:**
    ```bash
-   cd codecrafters
+   cd pathmind
    ```
 
 3. **Create a virtual environment:**

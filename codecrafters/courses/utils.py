@@ -70,7 +70,7 @@ def generate_certificate_pdf(certificate):
     from django.conf import settings
     # Build complete URL. Assuming local development for now, or using a domain if in prod.
     # To be perfectly safe across environments without request object, we construct a relative path to the profile.
-    # In a real deployed app, you'd use a full domain name (e.g., https://codecrafters.com/profile/username)
+    # In a real deployed app, you'd use a full domain name (e.g., https://pathmind.com/profile/username)
     profile_url = f"http://127.0.0.1:8000/users/profile/{certificate.user.username}/"
 
     qr = qrcode.QRCode(

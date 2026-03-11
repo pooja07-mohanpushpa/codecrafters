@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Coding Arena | CodeCrafters{% endblock %}
+{% block title %}Coding Arena | PathMind{% endblock %}
 
 {% block extra_head %}
 <!-- Monaco Editor & Pyodide -->
@@ -336,7 +336,7 @@
                 <div class="flex items-center gap-3 mb-4 flex-wrap">
                     <span class="difficulty-{{ problem.difficulty }} font-black text-xs px-2.5 py-1 bg-slate-50 border border-slate-100 rounded-lg shadow-sm">{{ problem.difficulty }}</span>
                     <span class="px-2.5 py-1 bg-amber-50 border border-amber-100/50 rounded-lg text-amber-700 text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
-                        <i class="fa-solid fa-coins"></i> {{ problem.points_reward }} CodePoints
+                        <i class="fa-solid fa-coins"></i> {{ problem.points_reward }} PathPoints
                     </span>
                 </div>
                 <h1 class="text-2xl font-black text-slate-900 mb-5 leading-tight">{{ problem.title }}</h1>

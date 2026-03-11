@@ -49,7 +49,7 @@ def dashboard_view(request):
             'empty_range':  range(5 - stars),
         })
 
-    # ── Global Leaderboard (top 3 by CodePoints for Home page) ────────────
+    # ── Global Leaderboard (top 3 by PathPoints for Home page) ────────────
     leaderboard = (
         UserProfile.objects
         .select_related('user')
@@ -290,7 +290,7 @@ def submit_quiz(request, topic_id):
             user=request.user,
             topic=topic,
             score=score,
-            codepoints_earned=points_earned
+            pathpoints_earned=points_earned
         )
         
         # 2. Topic Completion & Course Progress Tracking

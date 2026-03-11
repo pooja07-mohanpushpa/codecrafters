@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('score', models.IntegerField(default=0)),
-                ('codepoints_earned', models.IntegerField(default=0)),
+                ('pathpoints_earned', models.IntegerField(default=0)),
                 ('attempted_at', models.DateTimeField(auto_now_add=True)),
                 ('topic', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='quiz_attempts', to='courses.topic')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='quiz_attempts', to=settings.AUTH_USER_MODEL)),

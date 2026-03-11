@@ -239,12 +239,12 @@ class Command(BaseCommand):
                 "title": "17. Vowel Counter (Strings)",
                 "difficulty": "Easy",
                 "description": "Given a string, count and print the total number of vowels (a, e, i, o, u) present in it. Ignore case.",
-                "example_input": "CodeCrafters",
+                "example_input": "PathMind",
                 "example_output": "4",
                 "constraints": "Print the integer count.",
                 "points_reward": 50,
                 "test_cases": [
-                    {"in": "CodeCrafters", "out": "4"},
+                    {"in": "PathMind", "out": "4"},
                     {"in": "Python", "out": "1"},
                     {"in": "bcdfg", "out": "0"}
                 ]

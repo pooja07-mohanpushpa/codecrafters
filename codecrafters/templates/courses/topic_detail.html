@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ topic.title }} | CodeCrafters{% endblock %}
+{% block title %}{{ topic.title }} | PathMind{% endblock %}
 
 {% block extra_head %}
 <style>
@@ -59,7 +59,7 @@
                         class="fa-solid fa-file-video text-6xl mb-4 group-hover:scale-110 group-hover:text-brand-400 transition-all duration-500"></i>
                     <p class="font-bold tracking-widest uppercase text-sm mb-2 text-white">No Video Available</p>
                     <p class="text-xs text-slate-400 text-center px-8 max-w-sm leading-relaxed">
-                        Admins can upload a local .mp4 file or provide a YouTube URL in the CodeCrafters admin panel.
+                        Admins can upload a local .mp4 file or provide a YouTube URL in the PathMind admin panel.
                     </p>
                 </div>
                 {% endif %}
@@ -151,7 +151,7 @@
                 class="bg-gradient-to-br from-brand-500 to-indigo-600 p-8 rounded-3xl text-white shadow-xl shadow-brand-500/20">
                 <h3 class="text-lg font-bold mb-2">Ready for the Quiz?</h3>
                 <p class="text-brand-100 text-sm mb-6 leading-relaxed">
-                    Master this topic and earn up to 50 CodePoints by passing our AI-generated quiz.
+                    Master this topic and earn up to 50 PathPoints by passing our AI-generated quiz.
                 </p>
 
                 {% if progress.is_completed %}
@@ -327,7 +327,7 @@
                             Final Score: <strong class="text-slate-800" x-text="finalScore + '/5'"></strong>
                         </p>
 
-                        <!-- CodePoints Reward Card -->
+                        <!-- PathPoints Reward Card -->
                         <div class="max-w-sm mx-auto bg-gradient-to-b from-brand-50 to-white p-8 rounded-[2rem] border border-brand-100/50 shadow-xl shadow-brand-500/10 mb-10 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-500">
                             <div class="absolute -right-10 -top-10 text-brand-500/5 text-[150px] rotate-12 transition-transform duration-700 group-hover:rotate-45">
                                 <i class="fa-solid fa-coins"></i>
@@ -338,7 +338,7 @@
                                     <span class="text-5xl font-black text-brand-600" x-text="'+' + pointsEarned"></span>
                                     <i class="fa-solid fa-coins text-3xl text-amber-400 drop-shadow-md pb-1"></i>
                                 </div>
-                                <div class="text-sm font-bold text-slate-500 mt-2">CodePoints Added to Profile</div>
+                                <div class="text-sm font-bold text-slate-500 mt-2">PathPoints Added to Profile</div>
                             </div>
                         </div>
 
