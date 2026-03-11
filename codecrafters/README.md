@@ -2,12 +2,12 @@
   <img src="https://img.shields.io/badge/Progress-Hackathon_Idea-brightgreen?style=for-the-badge" alt="Hackathon Project" />
 </div>
 
-# 🧠 AI-Powered Programming E-Learning Platform
+# 🧠 PathMind - AI-Powered Programming E-Learning Platform
 
-[![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)](https://reactjs.org/)
+[![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)](https://www.python.org/)
+[![Django](https://img.shields.io/badge/django-%23092e20.svg?style=for-the-badge&logo=django&logoColor=white)](https://www.djangoproject.com/)
 [![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)](https://expressjs.com/)
+[![Google Gemini](https://img.shields.io/badge/Google_Gemini-8E75B2?style=for-the-badge&logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
 
 > **"Learn to Code Smarter, Not Harder – With AI Tutors and Gamified Practice!"**
 
@@ -47,6 +47,7 @@ Rankings based on total accumulated `PathPoints` earned from both the **Coding S
 ### 6. 📊 Progress & Badges
 Visual progress indicators track your journey for each course. To keep motivation high, we've integrated a **Star Badge System**:
 - Earn a ⭐ **Star Badge** for every **20%** of the course you complete (20%, 40%, 60%, 80%).
+- **Premium UI Experience:** Enjoy a high-end, responsive portal with glassmorphism, animated glowing orbs, and perfectly aligned layouts.
 - *Example: 📈 Python Course: 40% Completed -> ⭐⭐*
 
 ### 7. 🎓 Certificate Generation
@@ -103,7 +104,7 @@ This approach helps learners stay engaged while developing programming skills ef
 
 2. **Navigate to the directory:**
    ```bash
-   cd pathmind
+   cd codecrafters
    ```
 
 3. **Create a virtual environment:**
