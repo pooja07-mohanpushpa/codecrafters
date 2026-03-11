@@ -10,21 +10,23 @@
         position: relative;
         overflow: hidden;
     }
+
     .profile-banner::before {
         content: '';
         position: absolute;
         inset: 0;
-        background: 
-            radial-gradient(ellipse at 20% 80%, rgba(255,255,255,0.15) 0%, transparent 50%),
-            radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        background:
+            radial-gradient(ellipse at 20% 80%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
     }
+
     .profile-banner::after {
         content: '{ } function() => { } class Module < > const let async await';
         position: absolute;
         inset: 0;
         font-family: 'Fira Code', monospace;
         font-size: 11px;
-        color: rgba(255,255,255,0.06);
+        color: rgba(255, 255, 255, 0.06);
         line-height: 2.5;
         word-spacing: 40px;
         letter-spacing: 3px;
@@ -40,9 +42,17 @@
         border-radius: 20px;
         animation: ring-pulse 4s ease-in-out infinite;
     }
+
     @keyframes ring-pulse {
-        0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.15); }
-        50% { box-shadow: 0 0 20px 6px rgba(245, 158, 11, 0.2); }
+
+        0%,
+        100% {
+            box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.15);
+        }
+
+        50% {
+            box-shadow: 0 0 20px 6px rgba(245, 158, 11, 0.2);
+        }
     }
 
     /* Streak & Level Bar */
@@ -55,12 +65,14 @@
         align-items: center;
         gap: 32px;
     }
+
     .streak-badge {
         display: flex;
         align-items: center;
         gap: 10px;
         flex-shrink: 0;
     }
+
     .streak-fire {
         width: 44px;
         height: 44px;
@@ -71,20 +83,35 @@
         justify-content: center;
         font-size: 22px;
     }
+
     .streak-fire.active {
         animation: fire-glow 2s ease-in-out infinite;
     }
+
     @keyframes fire-glow {
-        0%, 100% { box-shadow: 0 0 0 0 rgba(251, 146, 60, 0); }
-        50% { box-shadow: 0 0 16px 4px rgba(251, 146, 60, 0.2); }
+
+        0%,
+        100% {
+            box-shadow: 0 0 0 0 rgba(251, 146, 60, 0);
+        }
+
+        50% {
+            box-shadow: 0 0 16px 4px rgba(251, 146, 60, 0.2);
+        }
     }
-    .xp-bar-track { flex: 1; min-width: 0; }
+
+    .xp-bar-track {
+        flex: 1;
+        min-width: 0;
+    }
+
     .xp-bar-bg {
         height: 10px;
         background: #f1f5f9;
         border-radius: 10px;
         overflow: hidden;
     }
+
     .xp-bar-fill {
         height: 100%;
         border-radius: 10px;
@@ -102,10 +129,12 @@
         overflow: hidden;
         transition: all 0.3s ease;
     }
+
     .stat-pod:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
     }
+
     .stat-pod .stat-icon {
         width: 52px;
         height: 52px;
@@ -114,6 +143,7 @@
         align-items: center;
         justify-content: center;
     }
+
     .stat-pod .stat-value {
         font-size: 36px;
         font-weight: 900;
@@ -129,15 +159,18 @@
         overflow-x: auto;
         padding-bottom: 4px;
     }
+
     .heatmap-grid {
         display: flex;
         gap: 3px;
     }
+
     .heatmap-col {
         display: flex;
         flex-direction: column;
         gap: 3px;
     }
+
     .heatmap-cell {
         width: 13px;
         height: 13px;
@@ -146,11 +179,26 @@
         transition: all 0.15s;
         cursor: default;
     }
-    .heatmap-cell:hover { transform: scale(1.4); }
-    .heatmap-cell.l1 { background: #bfdbfe; }
-    .heatmap-cell.l2 { background: #60a5fa; }
-    .heatmap-cell.l3 { background: #3b82f6; }
-    .heatmap-cell.l4 { background: #1d4ed8; }
+
+    .heatmap-cell:hover {
+        transform: scale(1.4);
+    }
+
+    .heatmap-cell.l1 {
+        background: #bfdbfe;
+    }
+
+    .heatmap-cell.l2 {
+        background: #60a5fa;
+    }
+
+    .heatmap-cell.l3 {
+        background: #3b82f6;
+    }
+
+    .heatmap-cell.l4 {
+        background: #1d4ed8;
+    }
 
     /* Rank Card */
     .rank-card {
@@ -162,6 +210,7 @@
         align-items: center;
         gap: 20px;
     }
+
     .rank-circle {
         width: 72px;
         height: 72px;
@@ -173,6 +222,7 @@
         flex-shrink: 0;
         box-shadow: 0 4px 20px rgba(245, 158, 11, 0.2);
     }
+
     .rank-bar-bg {
         height: 8px;
         background: #e2e8f0;
@@ -180,6 +230,7 @@
         overflow: hidden;
         flex: 1;
     }
+
     .rank-bar-fill {
         height: 100%;
         border-radius: 10px;
@@ -195,6 +246,7 @@
         padding: 14px 0;
         position: relative;
     }
+
     .timeline-item:not(:last-child)::after {
         content: '';
         position: absolute;
@@ -204,6 +256,7 @@
         width: 2px;
         background: #e2e8f0;
     }
+
     .timeline-dot {
         width: 40px;
         height: 40px;
@@ -219,31 +272,37 @@
         width: 72px;
         height: 72px;
         border-radius: 50%;
-        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(14,165,233,0.08) 60%, rgba(99,102,241,0.1));
-        border: 2px solid rgba(14,165,233,0.15);
+        background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(14, 165, 233, 0.08) 60%, rgba(99, 102, 241, 0.1));
+        border: 2px solid rgba(14, 165, 233, 0.15);
         display: flex;
         align-items: center;
         justify-content: center;
         transition: all 0.3s;
         position: relative;
     }
+
     .achievement-orb:hover {
         transform: scale(1.1);
-        box-shadow: 0 0 25px rgba(14,165,233,0.15);
+        box-shadow: 0 0 25px rgba(14, 165, 233, 0.15);
     }
+
     .achievement-orb .orb-glow {
         position: absolute;
         inset: -3px;
         border-radius: 50%;
-        background: conic-gradient(from 0deg, transparent 80%, rgba(14,165,233,0.2));
+        background: conic-gradient(from 0deg, transparent 80%, rgba(14, 165, 233, 0.2));
         animation: orb-spin 6s linear infinite;
     }
-    @keyframes orb-spin { to { transform: rotate(360deg); } }
+
+    @keyframes orb-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
 
     /* Bio Section */
     .bio-form textarea {
         resize: none;
-        border: 1px solid #e2e8f0;
         border-radius: 12px;
         padding: 12px 16px;
         font-size: 14px;
@@ -251,11 +310,104 @@
         transition: border-color 0.2s;
         background: #f8fafc;
     }
+
+    /* Progressive Badge Component */
+    .progressive-badge {
+        width: 80px;
+        height: 80px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .badge-orb {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+        background: white;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        position: relative;
+        z-index: 10;
+    }
+
+    .badge-star-arc {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        top: 0;
+        left: 0;
+    }
+
+    .arc-star {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 1.5px solid white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 20;
+    }
+
+    .arc-star.filled {
+        background: #fbbf24;
+        color: white;
+    }
+
+    .arc-star.empty {
+        background: #e2e8f0;
+        color: #94a3b8;
+    }
+
+    .arc-star i {
+        font-size: 6px;
+    }
+
+    /* Star Positions for Profile Arc */
+    .ps1 {
+        bottom: 10%;
+        left: 0%;
+        transform: rotate(-30deg);
+    }
+
+    .ps2 {
+        bottom: 32%;
+        left: -5%;
+        transform: rotate(-15deg);
+    }
+
+    .ps3 {
+        top: -8%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .ps4 {
+        bottom: 32%;
+        right: -5%;
+        transform: rotate(15deg);
+    }
+
+    .ps5 {
+        bottom: 10%;
+        right: 0%;
+        transform: rotate(30deg);
+    }
+
     .bio-form textarea:focus {
         outline: none;
         border-color: #0ea5e9;
-        box-shadow: 0 0 0 3px rgba(14,165,233,0.08);
+        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.08);
     }
+
     .status-pill {
         padding: 6px 14px;
         border-radius: 20px;
@@ -265,11 +417,15 @@
         background: white;
         font-size: 14px;
     }
-    .status-pill:hover { border-color: #bae6fd; }
+
+    .status-pill:hover {
+        border-color: #bae6fd;
+    }
+
     .status-pill.active {
         border-color: #0ea5e9;
         background: #f0f9ff;
-        box-shadow: 0 0 0 3px rgba(14,165,233,0.08);
+        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.08);
     }
 
     /* Account Section */
@@ -280,7 +436,10 @@
         padding: 14px 0;
         border-bottom: 1px solid #f1f5f9;
     }
-    .account-row:last-child { border-bottom: none; }
+
+    .account-row:last-child {
+        border-bottom: none;
+    }
 
     /* Arena-style Sub-header */
     .profile-subheader {
@@ -291,6 +450,7 @@
         border-bottom: 1px solid #e2e8f0;
         background: white;
     }
+
     .back-circle {
         width: 38px;
         height: 38px;
@@ -305,6 +465,7 @@
         transition: all 0.2s ease;
         text-decoration: none;
     }
+
     .back-circle:hover {
         background: #e2e8f0;
         transform: translateX(-2px);
@@ -328,9 +489,14 @@
     <!-- ═══════════ HERO BANNER ═══════════ -->
     <div class="bg-white rounded-[24px] shadow-sm border border-slate-200 overflow-hidden mb-7">
         <div class="profile-banner">
-            <div class="absolute top-6 right-10 w-20 h-20 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"></div>
-            <div class="absolute bottom-4 right-32 w-10 h-10 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 rotate-12"></div>
-            <div class="absolute top-10 left-1/3 text-white/10 text-xs font-mono font-bold tracking-wider">CodeCrafters.dev</div>
+            <div
+                class="absolute top-6 right-10 w-20 h-20 rounded-full bg-white/5 backdrop-blur-sm border border-white/10">
+            </div>
+            <div
+                class="absolute bottom-4 right-32 w-10 h-10 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 rotate-12">
+            </div>
+            <div class="absolute top-10 left-1/3 text-white/10 text-xs font-mono font-bold tracking-wider">
+                CodeCrafters.dev</div>
         </div>
 
         <!-- Avatar + Info Row -->
@@ -338,12 +504,14 @@
             <div class="relative flex-shrink-0">
                 <div class="avatar-ring">
                     <div class="w-28 h-28 rounded-[16px] bg-white overflow-hidden shadow-lg">
-                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed={{ user.username }}" alt="Avatar" class="w-full h-full p-1">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed={{ user.username }}" alt="Avatar"
+                            class="w-full h-full p-1">
                     </div>
                 </div>
                 <!-- Status Emoji Badge -->
                 {% if profile.status_emoji %}
-                <span class="absolute -bottom-1 -right-1 w-9 h-9 bg-white rounded-full border-2 border-slate-200 flex items-center justify-center text-lg shadow-sm z-10">
+                <span
+                    class="absolute -bottom-1 -right-1 w-9 h-9 bg-white rounded-full border-2 border-slate-200 flex items-center justify-center text-lg shadow-sm z-10">
                     {{ profile.status_emoji }}
                 </span>
                 {% endif %}
@@ -365,15 +533,97 @@
                         {% elif profile.code_points >= 100 %}Active Learner
                         {% else %}Beginner Crafter{% endif %}
                     </span>
-                    <span class="px-3 py-1 bg-slate-50 text-slate-500 text-xs font-bold rounded-full border border-slate-100">
+                    <span
+                        class="px-3 py-1 bg-slate-50 text-slate-500 text-xs font-bold rounded-full border border-slate-100">
                         <i class="fa-regular fa-calendar mr-1"></i>Joined {{ user.date_joined|date:"F Y" }}
                     </span>
-                    <span class="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-full border border-emerald-100">
+                    <span
+                        class="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-full border border-emerald-100">
                         <i class="fa-solid fa-ranking-star mr-1"></i>Rank #{{ profile.global_rank }}
                     </span>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- ═══════════ EDIT BIO & STATUS ═══════════ -->
+    <div class="bg-white rounded-[20px] shadow-sm border border-slate-200 p-7 mb-7" x-data="{ editing: false }">
+        <div class="flex items-center justify-between mb-5">
+            <h2 class="text-lg font-black text-slate-800 flex items-center gap-2.5">
+                <div class="w-8 h-8 bg-violet-50 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-pen-fancy text-violet-500 text-sm"></i>
+                </div>
+                About Me
+            </h2>
+            <button @click="editing = !editing"
+                class="px-3 py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-500 text-xs font-bold rounded-lg border border-slate-200 transition-all">
+                <i class="fa-solid fa-pen text-[10px] mr-1"></i>
+                <span x-text="editing ? 'Cancel' : 'Edit'"></span>
+            </button>
+        </div>
+
+        <!-- Display Mode -->
+        <div x-show="!editing">
+            <div class="flex items-center gap-3 mb-3">
+                <span class="text-2xl">{{ profile.status_emoji|default:"🚀" }}</span>
+                <span class="text-sm font-bold text-slate-600">{{ profile.get_status_emoji_display|default:"Coding"
+                    }}</span>
+            </div>
+            {% if profile.bio %}
+            <p class="text-slate-600 text-sm leading-relaxed mb-4">{{ profile.bio }}</p>
+            {% else %}
+            <p class="text-slate-400 text-sm italic mb-4">No bio yet — click Edit to add one!</p>
+            {% endif %}
+
+            {% if profile.linkedin_url %}
+            <a href="{{ profile.linkedin_url }}" target="_blank"
+                class="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest rounded-lg border border-blue-100 hover:bg-blue-100 transition-all">
+                <i class="fa-brands fa-linkedin-in text-sm"></i> LinkedIn Profile
+            </a>
+            {% else %}
+            <button @click="editing = true"
+                class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-50 text-slate-400 text-[10px] font-bold uppercase tracking-widest rounded-lg border border-slate-200 hover:bg-slate-100 hover:text-slate-600 transition-all group">
+                <i class="fa-brands fa-linkedin text-sm opacity-50 group-hover:opacity-100"></i> Add LinkedIn Profile
+            </button>
+            {% endif %}
+        </div>
+
+        <!-- Edit Mode -->
+        <form x-show="editing" method="POST" class="bio-form" x-cloak>
+            {% csrf_token %}
+            <input type="hidden" name="update_bio" value="1">
+
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Status</p>
+            <div class="flex flex-wrap gap-2 mb-4" x-data="{ selected: '{{ profile.status_emoji|default:" 🚀" }}' }">
+                {% for emoji, label in status_choices %}
+                <label class="status-pill" :class="{ 'active': selected === '{{ emoji }}' }"
+                    @click="selected = '{{ emoji }}'">
+                    <input type="radio" name="status_emoji" value="{{ emoji }}" class="hidden"
+                        :checked="selected === '{{ emoji }}'">
+                    {{ emoji }} <span class="text-xs font-bold text-slate-600 ml-1">{{ label }}</span>
+                </label>
+                {% endfor %}
+            </div>
+
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Bio</p>
+            <textarea name="bio" maxlength="120" rows="2"
+                placeholder="Python enthusiast | Building cool things...">{{ profile.bio }}</textarea>
+
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-4">LinkedIn Profile</p>
+            <div class="relative">
+                <i class="fa-brands fa-linkedin absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input type="url" name="linkedin_url" value="{{ profile.linkedin_url }}"
+                    placeholder="https://www.linkedin.com/in/your-profile"
+                    class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-brand-500 transition-all">
+            </div>
+            <div class="flex items-center justify-between mt-3">
+                <span class="text-[10px] text-slate-400 font-medium">Max 120 characters</span>
+                <button type="submit"
+                    class="px-5 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all flex items-center gap-2 active:scale-95 shadow-sm">
+                    <i class="fa-solid fa-check text-[10px]"></i> Save
+                </button>
+            </div>
+        </form>
     </div>
 
     <!-- ═══════════ STREAK & LEVEL BAR ═══════════ -->
@@ -382,19 +632,25 @@
             <div class="streak-fire {% if streak > 0 %}active{% endif %}">🔥</div>
             <div>
                 <p class="text-2xl font-black text-slate-800 leading-none">{{ streak }}</p>
-                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold mt-0.5">Day{% if streak != 1 %}s{% endif %} Streak</p>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold mt-0.5">Day{% if streak != 1
+                    %}s{% endif %} Streak</p>
             </div>
         </div>
         <div class="xp-bar-track">
             <div class="flex items-center justify-between mb-2">
                 <div class="flex items-center gap-2">
-                    <span class="px-2.5 py-0.5 bg-indigo-50 text-indigo-700 text-[10px] font-black uppercase tracking-wider rounded-full border border-indigo-100">Level {{ xp_level }}</span>
+                    <span
+                        class="px-2.5 py-0.5 bg-indigo-50 text-indigo-700 text-[10px] font-black uppercase tracking-wider rounded-full border border-indigo-100">Level
+                        {{ xp_level }}</span>
                     <span class="text-xs font-bold text-slate-400">{{ xp_in_level }} / {{ xp_per_level }} XP</span>
                 </div>
-                <span class="px-2.5 py-0.5 bg-slate-50 text-slate-400 text-[10px] font-black uppercase tracking-wider rounded-full border border-slate-100">Level {{ xp_level|add:1 }}</span>
+                <span
+                    class="px-2.5 py-0.5 bg-slate-50 text-slate-400 text-[10px] font-black uppercase tracking-wider rounded-full border border-slate-100">Level
+                    {{ xp_level|add:1 }}</span>
             </div>
-            <div class="xp-bar-bg">
-                <div class="xp-bar-fill" style="width: {{ xp_pct }}%"></div>
+            <div class="w-full bg-slate-100 rounded-full h-4 overflow-hidden border border-slate-200/50 shadow-inner">
+                <div class="bg-gradient-to-r from-brand-500 via-brand-400 to-brand-600 h-full rounded-full transition-all duration-700 ease-out shadow-[0_0_12px_rgba(14,165,233,0.3)]"
+                    style="width: {{ xp_pct }}%"></div>
             </div>
         </div>
     </div>
@@ -408,7 +664,8 @@
             <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-2 mb-1">
                     <p class="text-lg font-black text-slate-800">Leaderboard Position</p>
-                    <span class="px-2 py-0.5 bg-amber-50 text-amber-600 text-[9px] font-black uppercase tracking-wider rounded-full border border-amber-100">
+                    <span
+                        class="px-2 py-0.5 bg-amber-50 text-amber-600 text-[9px] font-black uppercase tracking-wider rounded-full border border-amber-100">
                         Top {{ profile.rank_percentile }}%
                     </span>
                 </div>
@@ -417,9 +674,11 @@
                 </p>
                 <div class="flex items-center gap-3">
                     <span class="text-[10px] font-bold text-slate-300">You</span>
-                    <div class="rank-bar-bg">
-                        <div class="rank-bar-fill" style="width: {% if top_points > 0 %}{{ profile.code_points|floatformat:0 }}{% else %}0{% endif %}%"
-                             data-my="{{ profile.code_points }}" data-top="{{ top_points }}"></div>
+                    <div
+                        class="w-full bg-slate-100 rounded-full h-4 overflow-hidden border border-slate-200/50 shadow-inner">
+                        <div class="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 h-full rounded-full transition-all duration-1000"
+                            style="width: {% if top_points > 0 %}{% widthratio profile.code_points top_points 100 %}{% else %}0{% endif %}%"
+                            data-my="{{ profile.code_points }}" data-top="{{ top_points }}"></div>
                     </div>
                     <span class="text-[10px] font-bold text-slate-300">#1</span>
                 </div>
@@ -428,11 +687,13 @@
 
         <!-- Quick Stats Summary -->
         <div class="lg:col-span-2 grid grid-cols-2 gap-3">
-            <div class="bg-white border border-slate-200 rounded-[16px] p-4 flex flex-col items-center justify-center text-center">
+            <div
+                class="bg-white border border-slate-200 rounded-[16px] p-4 flex flex-col items-center justify-center text-center">
                 <p class="text-2xl font-black text-brand-500 leading-none" data-count="{{ total_active_days }}">0</p>
                 <p class="text-[9px] text-slate-400 uppercase tracking-widest font-black mt-1">Active Days</p>
             </div>
-            <div class="bg-white border border-slate-200 rounded-[16px] p-4 flex flex-col items-center justify-center text-center">
+            <div
+                class="bg-white border border-slate-200 rounded-[16px] p-4 flex flex-col items-center justify-center text-center">
                 <p class="text-2xl font-black text-emerald-500 leading-none" data-count="{{ courses_completed }}">0</p>
                 <p class="text-[9px] text-slate-400 uppercase tracking-widest font-black mt-1">Courses Done</p>
             </div>
@@ -459,15 +720,109 @@
             <div class="relative z-10">
                 <div class="stat-icon bg-blue-50 mb-3"><i class="fa-solid fa-terminal text-brand-500 text-xl"></i></div>
                 <p class="text-[10px] text-slate-400 uppercase tracking-widest font-black mb-1">Challenges</p>
-                <p class="stat-value" data-count="{{ profile.challenges_solved }}" style="background:linear-gradient(135deg,#0ea5e9,#6366f1);-webkit-background-clip:text;background-clip:text;">0</p>
+                <p class="stat-value" data-count="{{ profile.challenges_solved }}"
+                    style="background:linear-gradient(135deg,#0ea5e9,#6366f1);-webkit-background-clip:text;background-clip:text;">
+                    0</p>
             </div>
         </div>
         <div class="stat-pod">
             <div class="relative z-10">
-                <div class="stat-icon bg-emerald-50 mb-3"><i class="fa-solid fa-book-open text-emerald-500 text-xl"></i></div>
+                <div class="stat-icon bg-emerald-50 mb-3"><i class="fa-solid fa-book-open text-emerald-500 text-xl"></i>
+                </div>
                 <p class="text-[10px] text-slate-400 uppercase tracking-widest font-black mb-1">Topics Done</p>
-                <p class="stat-value" data-count="{{ total_topics_done }}" style="background:linear-gradient(135deg,#10b981,#059669);-webkit-background-clip:text;background-clip:text;">0</p>
+                <p class="stat-value" data-count="{{ total_topics_done }}"
+                    style="background:linear-gradient(135deg,#10b981,#059669);-webkit-background-clip:text;background-clip:text;">
+                    0</p>
             </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ COURSE PROGRESS & CERTIFICATES ═══════════ -->
+    <div class="mb-7">
+        <h2 class="text-lg font-black text-slate-800 flex items-center gap-2.5 mb-5">
+            <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-graduation-cap text-indigo-500 text-sm"></i>
+            </div>
+            Course Progress
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% for cdata in course_data %}
+            <div class="bg-white rounded-[20px] shadow-sm border border-slate-200 p-5 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <!-- Progressive Badge (Hexagon) -->
+                            <div class="progressive-badge sm">
+                                <div
+                                    class="badge-orb bg-gradient-to-br {{ cdata.course.gradient_from }} {{ cdata.course.gradient_to }}">
+                                    {% if cdata.course.icon_url %}
+                                    <img src="{{ cdata.course.icon_url }}" class="w-6 h-6 drop-shadow-sm">
+                                    {% else %}
+                                    <i class="fa-solid fa-code text-white text-[10px]"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="badge-star-arc">
+                                    <div class="arc-star {% if cdata.stars >= 1 %}filled{% else %}empty{% endif %}"><i
+                                            class="fa-solid fa-star"></i></div>
+                                    <div class="arc-star {% if cdata.stars >= 2 %}filled{% else %}empty{% endif %}"><i
+                                            class="fa-solid fa-star"></i></div>
+                                    <div class="arc-star {% if cdata.stars >= 3 %}filled{% else %}empty{% endif %}"><i
+                                            class="fa-solid fa-star"></i></div>
+                                    <div class="arc-star {% if cdata.stars >= 4 %}filled{% else %}empty{% endif %}"><i
+                                            class="fa-solid fa-star"></i></div>
+                                    <div class="arc-star {% if cdata.stars >= 5 %}filled{% else %}empty{% endif %}"><i
+                                            class="fa-solid fa-star"></i></div>
+                                </div>
+                            </div>
+                            <h3 class="font-black text-slate-800 tracking-tight">{{ cdata.course.title }}</h3>
+                        </div>
+
+                        {% if cdata.stars > 0 %}
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}&summary=I earned {{ cdata.stars }} stars in {{ cdata.course.title }}!"
+                            target="_blank"
+                            class="h-9 px-4 flex items-center justify-center bg-[#0077b5] text-white rounded-xl font-bold text-[10px] uppercase tracking-wider hover:bg-[#005582] transition-all shadow-md active:scale-95">
+                            <i class="fa-brands fa-linkedin-in mr-2"></i> Share
+                        </a>
+                        {% endif %}
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="mb-1 flex justify-between items-center">
+                        <span class="text-[10px] font-black uppercase tracking-wider text-slate-400">{{ cdata.done }} /
+                            {{ cdata.total }} Topics</span>
+                        <span class="text-xs font-black text-brand-600">{{ cdata.pct }}%</span>
+                    </div>
+                    <div
+                        class="w-full bg-slate-100 rounded-full h-4 overflow-hidden border border-slate-200/50 shadow-inner mb-4">
+                        <div class="bg-gradient-to-r from-brand-500 via-brand-400 to-brand-600 h-full rounded-full transition-all duration-1000 shadow-[0_0_10px_rgba(14,165,233,0.2)]"
+                            style="width: {{ cdata.pct }}%"></div>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                {% if cdata.certificate %}
+                <a href="{% url 'download_certificate' cdata.certificate.certificate_id %}" target="_blank"
+                    class="w-full py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-black rounded-xl transition-colors flex items-center justify-center gap-2 border border-emerald-200">
+                    <i class="fa-solid fa-certificate text-emerald-500"></i> Download Certificate
+                </a>
+                {% elif cdata.pct > 0 %}
+                <a href="{% url 'course_detail' cdata.course.id %}"
+                    class="w-full py-2.5 bg-brand-50 hover:bg-brand-100 text-brand-700 text-xs font-black rounded-xl transition-colors flex items-center justify-center gap-2 border border-brand-200">
+                    <i class="fa-solid fa-play text-[10px]"></i> Continue Course
+                </a>
+                {% else %}
+                <a href="{% url 'course_detail' cdata.course.id %}"
+                    class="w-full py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-500 text-xs font-black rounded-xl transition-colors flex items-center justify-center gap-2 border border-slate-200">
+                    Start Learning
+                </a>
+                {% endif %}
+            </div>
+            {% empty %}
+            <div
+                class="col-span-1 md:col-span-2 text-center py-10 opacity-50 bg-white rounded-[20px] shadow-sm border border-slate-200">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">No courses found</p>
+            </div>
+            {% endfor %}
         </div>
     </div>
 
@@ -494,7 +849,8 @@
             <div class="heatmap-grid" id="heatmapGrid"></div>
         </div>
         <p class="text-xs text-slate-400 font-medium mt-3">
-            <span class="font-bold text-slate-600">{{ total_active_days }}</span> active day{{ total_active_days|pluralize }} in the last year
+            <span class="font-bold text-slate-600">{{ total_active_days }}</span> active day{{
+            total_active_days|pluralize }} in the last year
         </p>
     </div>
 
@@ -523,7 +879,8 @@
                     </div>
                 </div>
                 {% if act.type == 'arena' %}
-                <span class="px-2 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-full
+                <span
+                    class="px-2 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-full
                     {% if 'Solved' in act.text %}bg-emerald-50 text-emerald-600 border border-emerald-100{% else %}bg-red-50 text-red-400 border border-red-100{% endif %}">
                     {% if 'Solved' in act.text %}Passed{% else %}Failed{% endif %}
                 </span>
@@ -556,7 +913,8 @@
                     <div class="orb-glow"></div>
                     <i class="fa-solid fa-award text-brand-500 text-2xl relative z-10"></i>
                 </div>
-                <span class="text-[10px] font-bold text-slate-500 text-center max-w-[70px] truncate">{{ ua.achievement.name }}</span>
+                <span class="text-[10px] font-bold text-slate-500 text-center max-w-[70px] truncate">{{
+                    ua.achievement.name }}</span>
             </div>
             {% endfor %}
         </div>
@@ -571,59 +929,7 @@
         {% endif %}
     </div>
 
-    <!-- ═══════════ EDIT BIO & STATUS ═══════════ -->
-    <div class="bg-white rounded-[20px] shadow-sm border border-slate-200 p-7 mb-7" x-data="{ editing: false }">
-        <div class="flex items-center justify-between mb-5">
-            <h2 class="text-lg font-black text-slate-800 flex items-center gap-2.5">
-                <div class="w-8 h-8 bg-violet-50 rounded-lg flex items-center justify-center">
-                    <i class="fa-solid fa-pen-fancy text-violet-500 text-sm"></i>
-                </div>
-                About Me
-            </h2>
-            <button @click="editing = !editing" class="px-3 py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-500 text-xs font-bold rounded-lg border border-slate-200 transition-all">
-                <i class="fa-solid fa-pen text-[10px] mr-1"></i>
-                <span x-text="editing ? 'Cancel' : 'Edit'"></span>
-            </button>
-        </div>
 
-        <!-- Display Mode -->
-        <div x-show="!editing">
-            <div class="flex items-center gap-3 mb-3">
-                <span class="text-2xl">{{ profile.status_emoji|default:"🚀" }}</span>
-                <span class="text-sm font-bold text-slate-600">{{ profile.get_status_emoji_display|default:"Coding" }}</span>
-            </div>
-            {% if profile.bio %}
-            <p class="text-slate-600 text-sm leading-relaxed">{{ profile.bio }}</p>
-            {% else %}
-            <p class="text-slate-400 text-sm italic">No bio yet — click Edit to add one!</p>
-            {% endif %}
-        </div>
-
-        <!-- Edit Mode -->
-        <form x-show="editing" method="POST" class="bio-form" x-cloak>
-            {% csrf_token %}
-            <input type="hidden" name="update_bio" value="1">
-
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Status</p>
-            <div class="flex flex-wrap gap-2 mb-4" x-data="{ selected: '{{ profile.status_emoji|default:"🚀" }}' }">
-                {% for emoji, label in status_choices %}
-                <label class="status-pill" :class="{ 'active': selected === '{{ emoji }}' }" @click="selected = '{{ emoji }}'">
-                    <input type="radio" name="status_emoji" value="{{ emoji }}" class="hidden" :checked="selected === '{{ emoji }}'">
-                    {{ emoji }} <span class="text-xs font-bold text-slate-600 ml-1">{{ label }}</span>
-                </label>
-                {% endfor %}
-            </div>
-
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Bio</p>
-            <textarea name="bio" maxlength="120" rows="2" placeholder="Python enthusiast | Building cool things...">{{ profile.bio }}</textarea>
-            <div class="flex items-center justify-between mt-3">
-                <span class="text-[10px] text-slate-400 font-medium">Max 120 characters</span>
-                <button type="submit" class="px-5 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all flex items-center gap-2 active:scale-95 shadow-sm">
-                    <i class="fa-solid fa-check text-[10px]"></i> Save
-                </button>
-            </div>
-        </form>
-    </div>
 
     <!-- ═══════════ ACCOUNT SETTINGS ═══════════ -->
     <div class="bg-white rounded-[20px] shadow-sm border border-slate-200 p-7">
@@ -654,7 +960,8 @@
                 </div>
                 <form method="POST" action="{% url 'logout' %}">
                     {% csrf_token %}
-                    <button type="submit" class="px-5 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-black uppercase tracking-wider rounded-xl border border-red-200 transition-all flex items-center gap-2 active:scale-95">
+                    <button type="submit"
+                        class="px-5 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-black uppercase tracking-wider rounded-xl border border-red-200 transition-all flex items-center gap-2 active:scale-95">
                         <i class="fa-solid fa-right-from-bracket text-[10px]"></i> Logout
                     </button>
                 </form>
@@ -665,39 +972,40 @@
 
 <!-- Scripts -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // ── Animated Stat Counters ──
-    const counters = document.querySelectorAll('[data-count]');
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-                const el = entry.target;
-                const target = parseInt(el.getAttribute('data-count'), 10) || 0;
-                if (target === 0) { el.textContent = '0'; observer.unobserve(el); return; }
-                const duration = 1200;
-                const start = performance.now();
-                function tick(now) {
-                    const elapsed = now - start;
-                    const progress = Math.min(elapsed / duration, 1);
-                    const eased = 1 - Math.pow(1 - progress, 3);
-                    el.textContent = Math.round(eased * target);
-                    if (progress < 1) requestAnimationFrame(tick);
+    document.addEventListener('DOMContentLoaded', function () {
+        // ── Animated Stat Counters ──
+        const counters = document.querySelectorAll('[data-count]');
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.getAttribute('data-count'), 10) || 0;
+                    if (target === 0) { el.textContent = '0'; observer.unobserve(el); return; }
+                    const duration = 1200;
+                    const start = performance.now();
+                    function tick(now) {
+                        const elapsed = now - start;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        el.textContent = Math.round(eased * target);
+                        if (progress < 1) requestAnimationFrame(tick);
+                    }
+                    requestAnimationFrame(tick);
+                    observer.unobserve(el);
                 }
-                requestAnimationFrame(tick);
-                observer.unobserve(el);
-            }
-        });
-    }, { threshold: 0.3 });
-    counters.forEach(function(c) { observer.observe(c); });
+            });
+        }, { threshold: 0.3 });
+        counters.forEach(function (c) { observer.observe(c); });
 
-    // ── Activity Heatmap ──
-    const heatmapData = {{ heatmap_json|safe }};
+        // ── Activity Heatmap ──
+        const heatmapData = {{ heatmap_json| safe
+    }};
     const grid = document.getElementById('heatmapGrid');
     if (grid && heatmapData.length) {
         // Group into weeks (columns)
         let weeks = [];
         let currentWeek = [];
-        heatmapData.forEach(function(d, i) {
+        heatmapData.forEach(function (d, i) {
             currentWeek.push(d);
             if (d.dow === 6 || i === heatmapData.length - 1) {
                 weeks.push(currentWeek);
@@ -705,7 +1013,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        weeks.forEach(function(week) {
+        weeks.forEach(function (week) {
             const col = document.createElement('div');
             col.className = 'heatmap-col';
             // Pad first week if it doesn't start on Monday
@@ -717,7 +1025,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     col.appendChild(spacer);
                 }
             }
-            week.forEach(function(d) {
+            week.forEach(function (d) {
                 const cell = document.createElement('div');
                 cell.className = 'heatmap-cell';
                 if (d.count >= 4) cell.classList.add('l4');

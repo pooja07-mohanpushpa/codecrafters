@@ -23,6 +23,7 @@ class UserProfile(models.Model):
     challenges_solved = models.IntegerField(default=0)
     bio            = models.CharField(max_length=120, blank=True, default='', help_text='Short bio (max 120 chars)')
     status_emoji   = models.CharField(max_length=4, blank=True, default='🚀', choices=STATUS_CHOICES)
+    linkedin_url   = models.URLField(max_length=255, blank=True, default='', help_text='Link to your LinkedIn profile')
 
     def __str__(self):
         return f"{self.user.username} — {self.code_points} pts"

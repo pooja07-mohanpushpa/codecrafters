@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% block title %}Rewards & Certificates | CodeCrafters{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block sidebar %}
+    <!-- ─── Left Sidebar Navigation ──────────────────────────────────── -->
+    <aside class="w-72 flex-shrink-0 hidden md:block border-r border-slate-200 bg-white">
+        <nav class="space-y-8 h-[calc(100vh-4rem)] flex flex-col justify-between py-8 px-4 overflow-y-auto scrollbar-none">
+            <div class="space-y-1">
+                <p class="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 pl-3 mb-5">Menu</p>
+                
+                <a href="{% url 'dashboard' %}"
+                    class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
+                    <i class="fa-solid fa-house w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
+                    <span>Home</span>
+                </a>
+                
+                <a href="{% url 'arena_home' %}"
+                    class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
+                    <i class="fa-solid fa-terminal w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
+                    <span>Arena</span>
+                </a>
+                
+                <a href="{% url 'courses' %}"
+                    class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
+                    <i class="fa-solid fa-layer-group w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
+                    <span>Courses</span>
+                </a>
+                
+                <a href="{% url 'leaderboard' %}"
+                    class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
+                    <i class="fa-solid fa-trophy w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
+                    <span>Ranks</span>
+                </a>
+                
+                <a href="{% url 'rewards' %}"
+                    class="flex items-center gap-4 px-4 py-3 bg-brand-500 text-white rounded-2xl font-black transition-all shadow-lg shadow-brand-500/25">
+                    <i class="fa-solid fa-gift w-5 text-center text-sm"></i>
+                    <span>Rewards</span>
+                </a>
+            </div>
+
+            <div class="space-y-1">
+                <p class="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 pl-3 mb-5">System</p>
+                <a href="#"
+                    class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
+                    <i class="fa-solid fa-gear w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+{% endblock %}
+
+{% block content %}
+<div class="p-8 w-full">
+    <div class="max-w-6xl mx-auto">
+        
+        <!-- Header Section -->
+        <div class="mb-12">
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight mb-2">My Rewards & Certificates</h1>
+            <p class="text-slate-500 font-medium leading-relaxed max-w-2xl">
+                Celebrate your achievements! Download your official certificates of completion and share your success with your professional network.
+            </p>
+        </div>
+
+        <!-- My Certificates Grid -->
+        <div class="mb-16">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-brand-50 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-award text-brand-600"></i>
+                </div>
+                <h2 class="text-xl font-black text-slate-800 tracking-tight">Your Certificates</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for cert in user_certificates %}
+                <div class="reward-card group">
+                    <div class="cert-icon-bg">
+                        <i class="fa-solid fa-certificate text-3xl text-brand-500"></i>
+                    </div>
+                    <h3 class="text-xl font-black text-slate-900 mb-2">{{ cert.course.title }}</h3>
+                    <p class="text-sm text-slate-400 font-medium mb-6">Issued on {{ cert.issue_date|date:"F d, Y" }}</p>
+                    
+                    <div class="space-y-3">
+                        <a href="{% url 'download_certificate' cert.certificate_id %}" target="_blank" 
+                           class="w-full py-3 bg-slate-50 hover:bg-slate-100 text-slate-700 font-black text-xs uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-2 border border-slate-200">
+                            <i class="fa-solid fa-download"></i> Download PDF
+                        </a>
+                        
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}&summary=I just earned my official Certificate in {{ cert.course.title }} from CodeCrafters!" target="_blank"
+                           class="w-full py-3 share-btn font-black text-xs uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-900/10">
+                            <i class="fa-brands fa-linkedin-in text-base"></i> Share to LinkedIn
+                        </a>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-span-full py-20 bg-white rounded-3xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-center px-6">
+                    <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-lock text-slate-300 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-400 uppercase tracking-widest">No Certificates Yet</h3>
+                    <p class="text-sm text-slate-400 mt-2 max-w-xs">Complete any course to 100% to unlock your official certificate and share it here!</p>
+                    <a href="{% url 'courses' %}" class="mt-6 px-6 py-3 bg-brand-500 text-white font-black text-xs uppercase tracking-widest rounded-xl hover:bg-brand-600 transition-all active:scale-95 shadow-lg shadow-brand-500/20">
+                        Explore Courses
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- My Course Badges -->
+        <div class="mb-16">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-star text-amber-500"></i>
+                </div>
+                <h2 class="text-xl font-black text-slate-800 tracking-tight">Course Progress Badges</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for badge in course_badges %}
+                <div class="reward-card group text-center">
+                    <!-- Premium Progressive Badge -->
+                    <div class="progressive-badge lg">
+                        <div class="badge-orb bg-gradient-to-br {{ badge.course.gradient_from }} {{ badge.course.gradient_to }}">
+                            {% if badge.course.icon_url %}
+                            <img src="{{ badge.course.icon_url }}" class="w-12 h-12 drop-shadow-md">
+                            {% else %}
+                            <i class="fa-solid fa-award text-white text-3xl"></i>
+                            {% endif %}
+                        </div>
+                        <div class="badge-star-arc">
+                            <div class="arc-star {% if badge.stars >= 1 %}filled{% else %}empty{% endif %}"><i class="fa-solid fa-star"></i></div>
+                            <div class="arc-star {% if badge.stars >= 2 %}filled{% else %}empty{% endif %}"><i class="fa-solid fa-star"></i></div>
+                            <div class="arc-star {% if badge.stars >= 3 %}filled{% else %}empty{% endif %}"><i class="fa-solid fa-star"></i></div>
+                            <div class="arc-star {% if badge.stars >= 4 %}filled{% else %}empty{% endif %}"><i class="fa-solid fa-star"></i></div>
+                            <div class="arc-star {% if badge.stars >= 5 %}filled{% else %}empty{% endif %}"><i class="fa-solid fa-star"></i></div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-black text-slate-900 mb-1">{{ badge.course.title }}</h3>
+                    <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mb-8">{{ badge.pct }}% Completed</p>
+                    
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}&summary=I earned {{ badge.stars }} stars in {{ badge.course.title }} on CodeCrafters!" target="_blank"
+                       class="w-full py-3.5 share-btn font-black text-xs uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-900/10">
+                        <i class="fa-brands fa-linkedin-in text-base"></i> Share Badge
+                    </a>
+                </div>
+                {% empty %}
+                <div class="col-span-full py-12 bg-white rounded-3xl border border-slate-100 flex flex-col items-center justify-center text-center px-6">
+                    <p class="text-slate-400 font-medium italic">Complete at least 20% of a course to earn your first star badge!</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Community Showcase Section (Jenny & Mike) -->
+        <div class="mt-12">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-users text-amber-500"></i>
+                </div>
+                <h2 class="text-xl font-black text-slate-800 tracking-tight">Community Achievements</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 opacity-80 grayscale-[0.2]">
+                {% for cert in community_certificates %}
+                <div class="bg-white/50 border border-slate-200/60 rounded-3xl p-6 flex items-center gap-5 transition-all hover:bg-white hover:border-slate-300">
+                    <div class="relative">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed={{ cert.user.username }}" alt="{{ cert.user.username }}" 
+                             class="w-16 h-16 rounded-2xl bg-slate-100 p-1 border border-slate-200">
+                        <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full border border-slate-100 flex items-center justify-center text-[10px] shadow-sm">
+                            {{ cert.user.profile.status_emoji|default:"🚀" }}
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-black text-slate-800 leading-tight mb-0.5">{{ cert.user.username }}</h4>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-tighter mb-2">Completed {{ cert.course.title }}</p>
+                        <div class="flex items-center gap-1.5">
+                            <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[9px] font-black tracking-widest uppercase rounded flex items-center gap-1">
+                                <i class="fa-solid fa-check-double scale-75"></i> Verified
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

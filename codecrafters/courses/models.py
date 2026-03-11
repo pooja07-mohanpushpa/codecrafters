@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import uuid
 
 
 class Course(models.Model):
@@ -34,6 +35,7 @@ class Topic(models.Model):
     video_url   = models.URLField(blank=True, help_text="OR paste an external video URL (YouTube embed, etc.)")
     content     = models.TextField(blank=True, help_text="Lesson text / transcript used by Gemini for quiz generation.")
     points_reward = models.IntegerField(default=50)
+    predefined_quiz = models.JSONField(blank=True, null=True, help_text="AI-generated fallback quiz questions.")
 
     class Meta:
         ordering = ['order']
@@ -51,6 +53,7 @@ class UserProgress(models.Model):
     topic           = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='progress')
     is_completed    = models.BooleanField(default=False)
     quiz_score      = models.IntegerField(default=0)
+    highest_quiz_score = models.IntegerField(default=0)
     completed_at    = models.DateTimeField(null=True, blank=True)
 
     class Meta:
@@ -59,6 +62,37 @@ class UserProgress(models.Model):
     def __str__(self):
         status = "✅" if self.is_completed else "⏳"
         return f"{status} {self.user.username} — {self.topic.title}"
+
+
+class CourseProgress(models.Model):
+    """
+    Tracks a user's overall progress and star badges for a specific course.
+    """
+    user                = models.ForeignKey(User, on_delete=models.CASCADE, related_name='course_progress')
+    course              = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='user_progress')
+    topics_completed    = models.IntegerField(default=0)
+    progress_percentage = models.FloatField(default=0.0)
+    stars_earned        = models.IntegerField(default=0)
+    last_updated        = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('user', 'course')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.course.title} ({self.progress_percentage}%)"
+
+
+class Certificate(models.Model):
+    """
+    Generated PDF certificates for 100% course completion.
+    """
+    certificate_id  = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    user            = models.ForeignKey(User, on_delete=models.CASCADE, related_name='certificates')
+    course          = models.ForeignKey(Course, on_delete=models.CASCADE)
+    issue_date      = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"Cert {self.certificate_id} - {self.user.username} - {self.course.title}"
 
 
 class Achievement(models.Model):

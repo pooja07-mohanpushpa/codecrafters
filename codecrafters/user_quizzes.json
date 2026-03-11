@@ -1,0 +1,272 @@
+{
+  "Introduction": [
+    {
+      "question": "What is Python primarily known for?",
+      "options": ["Low-level programming", "Readability and simplicity", "Hardware programming", "Mobile-only development"],
+      "answer": "Readability and simplicity"
+    },
+    {
+      "question": "Which command runs a Python script from the terminal?",
+      "options": ["run filename.py", "python filename.py", "execute filename.py", "start filename.py"],
+      "answer": "python filename.py"
+    },
+    {
+      "question": "Python is which type of language?",
+      "options": ["Compiled only", "Interpreted", "Assembly", "Machine language"],
+      "answer": "Interpreted"
+    },
+    {
+      "question": "What is the file extension of Python files?",
+      "options": [".pt", ".py", ".pyt", ".python"],
+      "answer": ".py"
+    },
+    {
+      "question": "Who created Python?",
+      "options": ["James Gosling", "Guido van Rossum", "Dennis Ritchie", "Bjarne Stroustrup"],
+      "answer": "Guido van Rossum"
+    }
+  ],
+  "Variables": [
+    {
+      "question": "What is a variable in Python?",
+      "options": ["A constant value", "A storage location for data", "A keyword", "A loop"],
+      "answer": "A storage location for data"
+    },
+    {
+      "question": "Which of the following is a valid variable name?",
+      "options": ["2value", "value_1", "value-1", "class"],
+      "answer": "value_1"
+    },
+    {
+      "question": "Variables are created using:",
+      "options": ["var keyword", "int keyword", "Assignment operator", "define keyword"],
+      "answer": "Assignment operator"
+    },
+    {
+      "question": "What will be printed?\n x = 5\n print(x)",
+      "options": ["x", "5", "error", "none"],
+      "answer": "5"
+    },
+    {
+      "question": "Python variables are:",
+      "options": ["Statically typed", "Dynamically typed", "Not typed", "Fixed typed"],
+      "answer": "Dynamically typed"
+    }
+  ],
+  "Data Types": [
+    {
+      "question": "Which of the following is a numeric data type?",
+      "options": ["int", "list", "dict", "set"],
+      "answer": "int"
+    },
+    {
+      "question": "Which data type is used for text?",
+      "options": ["int", "float", "str", "bool"],
+      "answer": "str"
+    },
+    {
+      "question": "Which function checks the type of a variable?",
+      "options": ["check()", "typeof()", "type()", "datatype()"],
+      "answer": "type()"
+    },
+    {
+      "question": "True or False values belong to which type?",
+      "options": ["bool", "str", "float", "list"],
+      "answer": "bool"
+    },
+    {
+      "question": "Which of these is a floating point number?",
+      "options": ["10", "10.5", "\"10.5\"", "True"],
+      "answer": "10.5"
+    }
+  ],
+  "Type Casting": [
+    {
+      "question": "What is type casting?",
+      "options": ["Converting one data type to another", "Creating variables", "Deleting variables", "Sorting data"],
+      "answer": "Converting one data type to another"
+    },
+    {
+      "question": "Which function converts a value to integer?",
+      "options": ["str()", "int()", "float()", "bool()"],
+      "answer": "int()"
+    },
+    {
+      "question": "What does int(\"10\") return?",
+      "options": ["\"10\"", "10", "error", "none"],
+      "answer": "10"
+    },
+    {
+      "question": "Which function converts number to string?",
+      "options": ["str()", "int()", "float()", "bool()"],
+      "answer": "str()"
+    },
+    {
+      "question": "Which conversion is valid?",
+      "options": ["int(\"5\")", "int(\"hello\")", "int(\"5.5\")", "int(True, False)"],
+      "answer": "int(\"5\")"
+    }
+  ],
+  "Input and Output": [
+    {
+      "question": "Which function takes user input?",
+      "options": ["print()", "scan()", "input()", "read()"],
+      "answer": "input()"
+    },
+    {
+      "question": "Which function prints output?",
+      "options": ["display()", "show()", "print()", "output()"],
+      "answer": "print()"
+    },
+    {
+      "question": "Default return type of input()?",
+      "options": ["int", "float", "string", "bool"],
+      "answer": "string"
+    },
+    {
+      "question": "What does print(\"Hello Python\") display?",
+      "options": ["Error", "Hello Python", "python", "none"],
+      "answer": "Hello Python"
+    },
+    {
+      "question": "Correct syntax for input?",
+      "options": ["input \"Enter\"", "input(\"Enter\")", "scan(\"Enter\")", "read(\"Enter\")"],
+      "answer": "input(\"Enter\")"
+    }
+  ],
+  "Lists": [
+    {
+      "question": "Lists are defined using:",
+      "options": ["()", "[]", "{}", "<>"],
+      "answer": "[]"
+    },
+    {
+      "question": "Lists are:",
+      "options": ["immutable", "mutable", "fixed", "static"],
+      "answer": "mutable"
+    },
+    {
+      "question": "Which method adds element to a list?",
+      "options": ["add()", "append()", "insertItem()", "push()"],
+      "answer": "append()"
+    },
+    {
+      "question": "What is the output?\n a=[1,2,3]\n a[0]",
+      "options": ["0", "1", "2", "error"],
+      "answer": "1"
+    },
+    {
+      "question": "Lists can store:",
+      "options": ["single type only", "multiple types", "numbers only", "strings only"],
+      "answer": "multiple types"
+    }
+  ],
+  "Tuples": [
+    {
+      "question": "Tuples are defined using:",
+      "options": ["[]", "{}", "()", "<>"],
+      "answer": "()"
+    },
+    {
+      "question": "Tuples are:",
+      "options": ["mutable", "immutable", "dynamic", "temporary"],
+      "answer": "immutable"
+    },
+    {
+      "question": "Example: t=(1,2,3) is a:",
+      "options": ["list", "tuple", "set", "dictionary"],
+      "answer": "tuple"
+    },
+    {
+      "question": "Which is generally faster?",
+      "options": ["list", "tuple", "dictionary", "set"],
+      "answer": "tuple"
+    },
+    {
+      "question": "Can tuple values be modified?",
+      "options": ["yes", "no", "sometimes", "only integers"],
+      "answer": "no"
+    }
+  ],
+  "Functions": [
+    {
+      "question": "Keyword to define a function?",
+      "options": ["func", "define", "def", "function"],
+      "answer": "def"
+    },
+    {
+      "question": "Functions improve:",
+      "options": ["code reuse", "organization", "modularity", "all of these"],
+      "answer": "all of these"
+    },
+    {
+      "question": "Which keyword returns value?",
+      "options": ["output", "return", "break", "print"],
+      "answer": "return"
+    },
+    {
+      "question": "Function call syntax?",
+      "options": ["name()", "call()", "run()", "exec()"],
+      "answer": "name()"
+    },
+    {
+      "question": "Functions are used to:",
+      "options": ["repeat code", "structure code", "reduce duplication", "all of these"],
+      "answer": "all of these"
+    }
+  ],
+  "Strings": [
+    {
+      "question": "Strings are enclosed in:",
+      "options": ["quotes", "brackets", "braces", "none"],
+      "answer": "quotes"
+    },
+    {
+      "question": "Strings are:",
+      "options": ["mutable", "immutable", "dynamic", "temporary"],
+      "answer": "immutable"
+    },
+    {
+      "question": "Which method converts string to lowercase?",
+      "options": ["lower()", "small()", "case()", "down()"],
+      "answer": "lower()"
+    },
+    {
+      "question": "Output of \"Hello\"[0]?",
+      "options": ["H", "e", "Hello", "error"],
+      "answer": "H"
+    },
+    {
+      "question": "Strings support:",
+      "options": ["indexing", "slicing", "concatenation", "all of these"],
+      "answer": "all of these"
+    }
+  ],
+  "File Handling": [
+    {
+      "question": "Which function opens a file?",
+      "options": ["open()", "file()", "read()", "start()"],
+      "answer": "open()"
+    },
+    {
+      "question": "Which mode reads a file?",
+      "options": ["w", "r", "a", "x"],
+      "answer": "r"
+    },
+    {
+      "question": "Which method reads the entire file?",
+      "options": ["read()", "readfile()", "get()", "load()"],
+      "answer": "read()"
+    },
+    {
+      "question": "Which mode appends data?",
+      "options": ["r", "w", "a", "x"],
+      "answer": "a"
+    },
+    {
+      "question": "After file operations we should:",
+      "options": ["close file", "delete file", "rename file", "print file"],
+      "answer": "close file"
+    }
+  ]
+}

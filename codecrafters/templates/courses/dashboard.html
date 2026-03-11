@@ -2,47 +2,54 @@
 {% block title %}Dashboard | CodeCrafters{% endblock %}
 
 {% block sidebar %}
-    <!-- ─── Left Sidebar Navigation ──────────────────────────────────── -->
-    <aside class="w-72 flex-shrink-0 hidden md:block border-r border-slate-200 bg-white">
-        <nav class="space-y-8 h-[calc(100vh-4rem)] flex flex-col justify-between py-8 px-4 overflow-y-auto scrollbar-none">
-            <div class="space-y-1">
-                <p class="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 pl-3 mb-5">Menu</p>
-                
-                <a href="{% url 'dashboard' %}"
-                    class="flex items-center gap-4 px-4 py-3 bg-brand-500 text-white rounded-2xl font-black transition-all shadow-lg shadow-brand-500/25">
-                    <i class="fa-solid fa-house w-5 text-center text-sm"></i>
-                    <span>Home</span>
-                </a>
-                
-                <a href="{% url 'arena_home' %}"
-                    class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
-                    <i class="fa-solid fa-terminal w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
-                    <span>Arena</span>
-                </a>
-                
-                <a href="{% url 'courses' %}"
-                    class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
-                    <i class="fa-solid fa-layer-group w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
-                    <span>Courses</span>
-                </a>
-                
-                <a href="{% url 'leaderboard' %}"
-                    class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
-                    <i class="fa-solid fa-trophy w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
-                    <span>Ranks</span>
-                </a>
-            </div>
+<!-- ─── Left Sidebar Navigation ──────────────────────────────────── -->
+<aside class="w-72 flex-shrink-0 hidden md:block border-r border-slate-200 bg-white">
+    <nav class="space-y-8 h-[calc(100vh-4rem)] flex flex-col justify-between py-8 px-4 overflow-y-auto scrollbar-none">
+        <div class="space-y-1">
+            <p class="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 pl-3 mb-5">Menu</p>
 
-            <div class="space-y-1">
-                <p class="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 pl-3 mb-5">System</p>
-                <a href="#"
-                    class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
-                    <i class="fa-solid fa-gear w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
-                    <span>Settings</span>
-                </a>
-            </div>
-        </nav>
-    </aside>
+            <a href="{% url 'dashboard' %}"
+                class="flex items-center gap-4 px-4 py-3 bg-brand-500 text-white rounded-2xl font-black transition-all shadow-lg shadow-brand-500/25">
+                <i class="fa-solid fa-house w-5 text-center text-sm"></i>
+                <span>Home</span>
+            </a>
+
+            <a href="{% url 'arena_home' %}"
+                class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
+                <i class="fa-solid fa-terminal w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
+                <span>Arena</span>
+            </a>
+
+            <a href="{% url 'courses' %}"
+                class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
+                <i
+                    class="fa-solid fa-layer-group w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
+                <span>Courses</span>
+            </a>
+
+            <a href="{% url 'leaderboard' %}"
+                class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
+                <i class="fa-solid fa-trophy w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
+                <span>Ranks</span>
+            </a>
+
+            <a href="{% url 'rewards' %}"
+                class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
+                <i class="fa-solid fa-gift w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
+                <span>Rewards</span>
+            </a>
+        </div>
+
+        <div class="space-y-1">
+            <p class="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 pl-3 mb-5">System</p>
+            <a href="#"
+                class="flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-bold transition-all group">
+                <i class="fa-solid fa-gear w-5 text-center text-sm text-slate-400 group-hover:text-brand-500"></i>
+                <span>Settings</span>
+            </a>
+        </div>
+    </nav>
+</aside>
 {% endblock %}
 
 {% block content %}
@@ -61,68 +68,110 @@
                     <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Active Path</span>
                 </div>
 
-                {% if current_course %}
-                <div class="grid grid-cols-1">
-                    <div class="group relative bg-white rounded-[32px] border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-2xl hover:border-brand-200/50 transition-all duration-500 transform hover:-translate-y-1.5 flex flex-col md:flex-row">
+                {% if enrolled_courses %}
+                <div class="grid grid-cols-1 gap-6">
+                    {% for current_course in enrolled_courses %}
+                    <div
+                        class="group relative bg-white rounded-[32px] border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-2xl hover:border-brand-200/50 transition-all duration-500 transform hover:-translate-y-1.5 flex flex-col md:flex-row">
                         <!-- Left Image/Gradient Part -->
-                        <div class="w-full md:w-64 h-48 md:h-auto bg-gradient-to-br {{ current_course.course.gradient_from }} {{ current_course.course.gradient_to }} flex items-center justify-center relative overflow-hidden flex-shrink-0">
-                            <div class="absolute inset-0 bg-black/5"></div>
-                            <img src="{{ current_course.course.icon_url }}" alt="{{ current_course.course.title }}"
-                                class="h-24 w-24 drop-shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-transform duration-700 z-10">
-                            <!-- Background Accent -->
-                            <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+                        <div
+                            class="w-full lg:w-48 bg-gradient-to-br {{ current_course.course.gradient_from }} {{ current_course.course.gradient_to }} p-10 flex items-center justify-center relative overflow-hidden">
+                            <div class="progressive-badge md">
+                                <div class="badge-orb">
+                                    <img src="{{ current_course.course.icon_url }}"
+                                        alt="{{ current_course.course.title }}" class="h-10 w-10 drop-shadow-lg">
+                                </div>
+                                <div class="badge-star-arc">
+                                    <div
+                                        class="arc-star {% if current_course.stars >= 1 %}filled{% else %}empty{% endif %}">
+                                        <i class="fa-solid fa-star"></i></div>
+                                    <div
+                                        class="arc-star {% if current_course.stars >= 2 %}filled{% else %}empty{% endif %}">
+                                        <i class="fa-solid fa-star"></i></div>
+                                    <div
+                                        class="arc-star {% if current_course.stars >= 3 %}filled{% else %}empty{% endif %}">
+                                        <i class="fa-solid fa-star"></i></div>
+                                    <div
+                                        class="arc-star {% if current_course.stars >= 4 %}filled{% else %}empty{% endif %}">
+                                        <i class="fa-solid fa-star"></i></div>
+                                    <div
+                                        class="arc-star {% if current_course.stars >= 5 %}filled{% else %}empty{% endif %}">
+                                        <i class="fa-solid fa-star"></i></div>
+                                </div>
+                            </div>
+                            <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl">
+                            </div>
                         </div>
 
                         <!-- Content Part -->
                         <div class="p-8 flex-1 flex flex-col justify-between">
                             <div>
                                 <div class="flex items-center justify-between mb-2">
-                                    <span class="px-2.5 py-1 bg-brand-50 text-brand-600 rounded-lg text-[10px] font-black uppercase tracking-wider border border-brand-100/50">Free Beginner</span>
-                                    <div class="flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 rounded-lg border border-amber-100/50">
+                                    <span
+                                        class="px-2.5 py-1 bg-brand-50 text-brand-600 rounded-lg text-[10px] font-black uppercase tracking-wider border border-brand-100/50">Free
+                                        Beginner</span>
+                                    <div
+                                        class="flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 rounded-lg border border-amber-100/50">
                                         <i class="fa-solid fa-coins text-amber-500 text-[10px]"></i>
-                                        <span class="text-[10px] font-black text-amber-700">{{ current_course.course.points_available }} PTS</span>
+                                        <span class="text-[10px] font-black text-amber-700">{{
+                                            current_course.course.points_available }} PTS</span>
                                     </div>
                                 </div>
-                                <h3 class="text-2xl font-black text-slate-900 mb-1 leading-tight group-hover:text-brand-600 transition-colors">{{ current_course.course.title }}</h3>
-                                <p class="text-slate-500 text-sm font-medium">{{ current_course.done }} of {{ current_course.total }} topics mastered</p>
+                                <h3
+                                    class="text-2xl font-black text-slate-900 mb-1 leading-tight group-hover:text-brand-600 transition-colors">
+                                    {{ current_course.course.title }}</h3>
+                                <p class="text-slate-500 text-sm font-medium">{{ current_course.done }} of {{
+                                    current_course.total }} topics mastered</p>
                             </div>
 
                             <div class="mt-8 space-y-4">
                                 <div class="space-y-2">
                                     <div class="flex justify-between items-end">
-                                        <span class="text-xs font-black text-slate-900 uppercase tracking-widest">Current Progress</span>
+                                        <span
+                                            class="text-xs font-black text-slate-900 uppercase tracking-widest">Current
+                                            Progress</span>
                                         <span class="text-xl font-black text-brand-600">{{ current_course.pct }}%</span>
                                     </div>
-                                    <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden p-0.5 border border-slate-200/50">
-                                        <div class="bg-gradient-to-r from-brand-400 to-brand-600 h-full rounded-full transition-all duration-1000 ease-out"
+                                    <div
+                                        class="w-full bg-slate-100 rounded-full h-4 overflow-hidden border border-slate-200/50 shadow-inner">
+                                        <div class="bg-gradient-to-r from-brand-500 via-brand-400 to-brand-600 h-full rounded-full transition-all duration-700 ease-out shadow-[0_0_12px_rgba(14,165,233,0.3)]"
                                             style="width:{{ current_course.pct }}%"></div>
                                     </div>
                                 </div>
 
                                 <div class="flex items-center gap-4">
-                                    <a href="{% url 'course_detail' current_course.course.id %}" class="flex-1 py-3.5 bg-slate-900 text-white rounded-[20px] font-black text-center shadow-lg shadow-slate-900/20 hover:shadow-xl hover:bg-slate-800 transition-all active:scale-95 flex items-center justify-center gap-2">
+                                    <a href="{% url 'course_detail' current_course.course.id %}"
+                                        class="flex-1 py-3.5 bg-slate-900 text-white rounded-[20px] font-black text-center shadow-lg shadow-slate-900/20 hover:shadow-xl hover:bg-slate-800 transition-all active:scale-95 flex items-center justify-center gap-2">
                                         Resume Learning <i class="fa-solid fa-arrow-right text-xs"></i>
                                     </a>
-                                    <div class="flex -space-x-1.5">
-                                        {% for s in current_course.stars_range %}
-                                            <div class="w-8 h-8 rounded-full bg-amber-50 border-2 border-white flex items-center justify-center shadow-sm">
-                                                <i class="fa-solid fa-star text-amber-400 text-[10px]"></i>
-                                            </div>
-                                        {% endfor %}
+                                    <div class="flex items-center gap-4 ml-auto">
+                                        <!-- Share Achievement -->
+                                        {% if current_course.stars > 0 %}
+                                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}&summary=I earned {{ current_course.stars }} stars in {{ current_course.course.title }}!"
+                                            target="_blank"
+                                            class="h-11 px-5 flex items-center justify-center bg-[#0077b5] text-white rounded-[20px] font-black text-xs uppercase tracking-widest hover:bg-[#005582] transition-all shadow-lg shadow-blue-900/10 active:scale-95"
+                                            title="Share to LinkedIn">
+                                            <i class="fa-brands fa-linkedin-in mr-2"></i> Share Badge
+                                        </a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
                 {% else %}
                 <div class="p-12 text-center bg-white rounded-[32px] border border-slate-200 border-dashed">
-                    <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-4 text-slate-300">
+                    <div
+                        class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-4 text-slate-300">
                         <i class="fa-solid fa-book-open text-2xl"></i>
                     </div>
                     <h3 class="text-lg font-black text-slate-900 mb-2">No active courses</h3>
-                    <p class="text-slate-500 mb-6 max-w-xs mx-auto">Explore our curriculum and start your first coding journey today!</p>
-                    <a href="{% url 'courses' %}" class="inline-flex items-center gap-2 px-6 py-3 bg-brand-600 text-white rounded-xl font-black shadow-lg shadow-brand-600/20 hover:bg-brand-700 transition-all">
+                    <p class="text-slate-500 mb-6 max-w-xs mx-auto">Explore our curriculum and start your first coding
+                        journey today!</p>
+                    <a href="{% url 'courses' %}"
+                        class="inline-flex items-center gap-2 px-6 py-3 bg-brand-600 text-white rounded-xl font-black shadow-lg shadow-brand-600/20 hover:bg-brand-700 transition-all">
                         Browse Courses <i class="fa-solid fa-compass"></i>
                     </a>
                 </div>
@@ -133,51 +182,68 @@
             <div class="space-y-8">
 
                 <!-- Leaderboard Card -->
-                <div class="bg-white rounded-[28px] border border-slate-200/60 shadow-sm overflow-hidden flex flex-col h-fit">
+                <div
+                    class="bg-white rounded-[28px] border border-slate-200/60 shadow-sm overflow-hidden flex flex-col h-fit">
                     <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
                         <h2 class="font-black text-slate-900 flex items-center gap-2 text-sm uppercase tracking-widest">
                             <i class="fa-solid fa-ranking-star text-amber-500"></i> Global Rank
                         </h2>
-                        <a href="{% url 'leaderboard' %}" class="text-[10px] font-black text-brand-600 uppercase tracking-wider hover:text-brand-800">Full View</a>
+                        <a href="{% url 'leaderboard' %}"
+                            class="text-[10px] font-black text-brand-600 uppercase tracking-wider hover:text-brand-800">Full
+                            View</a>
                     </div>
-                    
+
                     {% if leaderboard %}
                     <div class="p-2 space-y-1">
                         {% for entry in leaderboard %}
-                        <div class="flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 {% if entry.user == user %}bg-brand-600 text-white shadow-lg shadow-brand-600/30 scale-[1.02] z-10{% else %}hover:bg-slate-50{% endif %}">
+                        <div
+                            class="flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 {% if entry.user == user %}bg-brand-600 text-white shadow-lg shadow-brand-600/30 scale-[1.02] z-10{% else %}hover:bg-slate-50{% endif %}">
                             <!-- Rank -->
                             <div class="w-8 flex-shrink-0 flex justify-center">
                                 {% if forloop.counter == 1 %}
-                                    <div class="w-6 h-6 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center text-xs font-black shadow-sm">1</div>
+                                <div
+                                    class="w-6 h-6 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center text-xs font-black shadow-sm">
+                                    1</div>
                                 {% elif forloop.counter == 2 %}
-                                    <div class="w-6 h-6 bg-slate-100 text-slate-600 rounded-lg flex items-center justify-center text-xs font-black shadow-sm">2</div>
+                                <div
+                                    class="w-6 h-6 bg-slate-100 text-slate-600 rounded-lg flex items-center justify-center text-xs font-black shadow-sm">
+                                    2</div>
                                 {% elif forloop.counter == 3 %}
-                                    <div class="w-6 h-6 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center text-xs font-black shadow-sm">3</div>
+                                <div
+                                    class="w-6 h-6 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center text-xs font-black shadow-sm">
+                                    3</div>
                                 {% else %}
-                                    <span class="text-xs font-bold {% if entry.user == user %}text-white{% else %}text-slate-400{% endif %}">#{{ forloop.counter }}</span>
+                                <span
+                                    class="text-xs font-bold {% if entry.user == user %}text-white{% else %}text-slate-400{% endif %}">#{{
+                                    forloop.counter }}</span>
                                 {% endif %}
                             </div>
-                            
+
                             <!-- Avatar -->
                             <div class="relative flex-shrink-0">
                                 <img src="https://api.dicebear.com/7.x/bottts/svg?seed={{ entry.user.username }}" alt=""
                                     class="h-9 w-9 rounded-xl {% if entry.user == user %}bg-white/20 p-0.5{% else %}bg-slate-100{% endif %}">
                                 {% if forloop.counter == 1 %}
-                                    <div class="absolute -top-1 -right-1 text-[10px] drop-shadow-md">👑</div>
+                                <div class="absolute -top-1 -right-1 text-[10px] drop-shadow-md">👑</div>
                                 {% endif %}
                             </div>
 
                             <!-- Username -->
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-black truncate {% if entry.user == user %}text-white{% else %}text-slate-900{% endif %}">
+                                <p
+                                    class="text-sm font-black truncate {% if entry.user == user %}text-white{% else %}text-slate-900{% endif %}">
                                     {{ entry.user.username }}
                                 </p>
                             </div>
 
                             <!-- Points -->
                             <div class="text-right">
-                                <p class="text-sm font-black {% if entry.user == user %}text-white{% else %}text-brand-600{% endif %}">{{ entry.code_points }}</p>
-                                <p class="text-[9px] font-black uppercase tracking-tighter {% if entry.user == user %}text-white/70{% else %}text-slate-400{% endif %}">PTS</p>
+                                <p
+                                    class="text-sm font-black {% if entry.user == user %}text-white{% else %}text-brand-600{% endif %}">
+                                    {{ entry.code_points }}</p>
+                                <p
+                                    class="text-[9px] font-black uppercase tracking-tighter {% if entry.user == user %}text-white/70{% else %}text-slate-400{% endif %}">
+                                    PTS</p>
                             </div>
                         </div>
                         {% endfor %}
@@ -191,27 +257,34 @@
                 </div>
 
                 <!-- Modern Practice Card -->
-                <div class="group relative bg-[#1c1c1e] rounded-[32px] overflow-hidden shadow-2xl p-7 transition-all duration-500 hover:scale-[1.02]">
+                <div
+                    class="group relative bg-[#1c1c1e] rounded-[32px] overflow-hidden shadow-2xl p-7 transition-all duration-500 hover:scale-[1.02]">
                     <!-- Abstract Background -->
-                    <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-48 h-48 bg-brand-500 rounded-full blur-[80px] opacity-20 pointer-events-none"></div>
-                    
+                    <div
+                        class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-48 h-48 bg-brand-500 rounded-full blur-[80px] opacity-20 pointer-events-none">
+                    </div>
+
                     <div class="relative z-10 flex flex-col h-full">
                         <div class="flex items-center justify-between mb-6">
-                            <span class="bg-brand-500/10 text-brand-400 text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest border border-brand-500/20 backdrop-blur-sm">
+                            <span
+                                class="bg-brand-500/10 text-brand-400 text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest border border-brand-500/20 backdrop-blur-sm">
                                 Daily Challenge
                             </span>
-                            <div class="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500/10 rounded-full border border-orange-500/20">
+                            <div
+                                class="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500/10 rounded-full border border-orange-500/20">
                                 <i class="fa-solid fa-fire text-orange-500 text-xs"></i>
                                 <span class="text-xs font-black text-orange-100">STREAK: 3</span>
                             </div>
                         </div>
 
-                        <h3 class="text-2xl font-black text-white mb-2 leading-tight">Master Python<br/>Complex Loops</h3>
+                        <h3 class="text-2xl font-black text-white mb-2 leading-tight">Master Python<br />Complex Loops
+                        </h3>
                         <p class="text-slate-400 text-sm mb-8 leading-relaxed">
                             Maintain your momentum. Complete today's special session to unlock extra rewards!
                         </p>
 
-                        <a href="#" class="w-full py-4 bg-brand-600 text-white rounded-2xl font-black shadow-lg shadow-brand-600/30 hover:bg-brand-500 hover:shadow-brand-600/50 transition-all active:scale-95 flex items-center justify-center gap-2">
+                        <a href="#"
+                            class="w-full py-4 bg-brand-600 text-white rounded-2xl font-black shadow-lg shadow-brand-600/30 hover:bg-brand-500 hover:shadow-brand-600/50 transition-all active:scale-95 flex items-center justify-center gap-2">
                             Start Session <i class="fa-solid fa-play text-[10px]"></i>
                         </a>
                     </div>

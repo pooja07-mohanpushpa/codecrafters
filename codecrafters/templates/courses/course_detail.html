@@ -105,40 +105,30 @@
 
     /* The glowing fiber-optic SVG path */
     .fiber-path {
-        stroke: url(#fiberGradient);
-        stroke-width: 3;
+        stroke: #ffffff;
+        stroke-width: 4;
         fill: none;
         stroke-linecap: round;
-        filter: drop-shadow(0 0 6px rgba(14,165,233,0.3));
+        filter: drop-shadow(0 0 8px rgba(255,255,255,0.5));
     }
     .fiber-path-bg {
-        stroke: #e2e8f0;
-        stroke-width: 3;
+        stroke: #222222; /* Dark road surface */
+        stroke-width: 24; /* Make the road wider */
         fill: none;
         stroke-linecap: round;
-    }
-    .fiber-path-glow {
-        stroke: rgba(14,165,233,0.15);
-        stroke-width: 12;
-        fill: none;
-        stroke-linecap: round;
-        filter: blur(4px);
     }
 
     /* 3D Isometric Topic Tile */
     .topic-tile {
         position: absolute;
         width: 320px;
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.9);
-        border-radius: 20px;
+        background: #ffffff;
+        border-radius: 16px;
         padding: 24px 28px;
-        box-shadow:
-            0 20px 50px rgba(14, 165, 233, 0.06),
-            0 8px 16px rgba(0,0,0,0.04),
-            0 1px 3px rgba(0,0,0,0.02);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: default;
+        z-index: 5;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: default;
         z-index: 5;
@@ -153,36 +143,31 @@
     }
 
     .topic-tile.completed {
-        border-color: rgba(16, 185, 129, 0.25);
+        border-bottom: 3px solid #10b981;
     }
     .topic-tile.completed:hover {
-        border-color: rgba(16, 185, 129, 0.4);
-        box-shadow:
-            0 30px 70px rgba(16, 185, 129, 0.1),
-            0 15px 30px rgba(0,0,0,0.06);
+        transform: translateY(-8px) scale(1.02);
     }
 
     /* Tile Number Badge */
     .tile-number {
-        width: 40px;
-        height: 40px;
-        border-radius: 12px;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: 900;
-        font-size: 16px;
+        font-weight: 800;
+        font-size: 15px;
         flex-shrink: 0;
     }
     .tile-number.pending {
-        background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+        background: #e0f2fe;
         color: #0ea5e9;
-        border: 2px solid rgba(14, 165, 233, 0.15);
     }
     .tile-number.done {
-        background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+        background: #d1fae5;
         color: #059669;
-        border: 2px solid rgba(16, 185, 129, 0.2);
     }
 
     /* Start Button */
@@ -190,8 +175,8 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 10px 22px;
-        border-radius: 14px;
+        padding: 8px 24px;
+        border-radius: 10px;
         font-weight: 800;
         font-size: 13px;
         text-transform: uppercase;
@@ -200,18 +185,17 @@
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .tile-start-btn.start {
-        background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+        background: #0ea5e9;
         color: white;
-        box-shadow: 0 8px 24px rgba(14, 165, 233, 0.3), 0 2px 6px rgba(14, 165, 233, 0.2);
     }
     .tile-start-btn.start:hover {
+        background: #0284c7;
         transform: translateY(-2px);
-        box-shadow: 0 12px 32px rgba(14, 165, 233, 0.4), 0 4px 10px rgba(14, 165, 233, 0.25);
+        box-shadow: 0 8px 16px rgba(14, 165, 233, 0.3);
     }
     .tile-start-btn.done {
         background: #f0fdf4;
         color: #059669;
-        border: 1px solid rgba(16, 185, 129, 0.15);
         cursor: default;
     }
 
@@ -250,12 +234,15 @@
 
     <!-- Course Header -->
     <div class="course-header">
-        <div class="course-icon-orb bg-gradient-to-br {{ course.gradient_from }} {{ course.gradient_to }}">
-            {% if course.icon_url %}
-            <img src="{{ course.icon_url }}" alt="{{ course.title }}" class="w-12 h-12 drop-shadow-lg">
-            {% else %}
-            <i class="fa-solid fa-code text-white text-3xl"></i>
-            {% endif %}
+        <!-- Premium Progressive Badge (Orb Only) -->
+        <div class="progressive-badge lg mx-auto mb-8">
+            <div class="badge-orb bg-gradient-to-br {{ course.gradient_from }} {{ course.gradient_to }}">
+                {% if course.icon_url %}
+                <img src="{{ course.icon_url }}" alt="{{ course.title }}" class="w-12 h-12 drop-shadow-lg">
+                {% else %}
+                <i class="fa-solid fa-code text-white text-3xl"></i>
+                {% endif %}
+            </div>
         </div>
         <h1 class="text-4xl font-black text-slate-900 tracking-tight">{{ course.title }}</h1>
         <p class="text-slate-400 text-lg font-medium mt-2 max-w-xl mx-auto">{{ course.description }}</p>
@@ -266,151 +253,273 @@
             <span class="px-4 py-1.5 bg-amber-50 text-amber-600 rounded-full text-sm font-bold border border-amber-100">
                 <i class="fa-solid fa-coins mr-1"></i> {{ course.points_available }} CodePoints
             </span>
+            {% if certificate %}
+            <a href="{% url 'download_certificate' certificate.certificate_id %}" target="_blank" class="px-4 py-1.5 bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white rounded-full text-sm font-bold border border-emerald-600 shadow-md transition-all flex items-center gap-2 relative overflow-hidden group">
+                <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 left-0 right-0"></div>
+                <i class="fa-solid fa-file-pdf relative z-10"></i> <span class="relative z-10">Download Certificate</span>
+            </a>
+            {% endif %}
         </div>
     </div>
 
-    <!-- The Antigravity Road -->
-    <div class="road-container" id="roadContainer">
-        <!-- SVG Winding Path (drawn dynamically by JS) -->
-        <svg id="roadSvg" class="absolute inset-0 w-full h-full" style="pointer-events: none; z-index: 1;">
-            <defs>
-                <linearGradient id="fiberGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#0ea5e9" />
-                    <stop offset="50%" stop-color="#6366f1" />
-                    <stop offset="100%" stop-color="#0ea5e9" />
-                </linearGradient>
-            </defs>
-        </svg>
+    <!-- Course Content / Coming Soon -->
+    {% if course.title == 'Python Masterclass' or course.title == 'C Programming' %}
+        <!-- The Antigravity Road -->
+        <div class="road-container" id="roadContainer">
+            <!-- SVG Winding Path (drawn dynamically by JS) -->
+            <svg id="roadSvg" class="absolute inset-0 w-full h-full" style="pointer-events: none; z-index: 1;">
+                <defs>
+                    <linearGradient id="fiberGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#0ea5e9" />
+                        <stop offset="50%" stop-color="#6366f1" />
+                        <stop offset="100%" stop-color="#0ea5e9" />
+                    </linearGradient>
+                </defs>
+            </svg>
 
-        <!-- Topic Tiles (positioned via JS) -->
-        {% for item in topics %}
-        <div class="topic-tile {% if item.is_completed %}completed{% endif %}"
-             id="tile-{{ forloop.counter0 }}"
-             data-index="{{ forloop.counter0 }}"
-             style="opacity: 0; transform: translateY(30px);">
+            <!-- Topic Tiles (positioned via JS) -->
+            {% for item in topics %}
+            <div class="topic-tile {% if item.is_completed %}completed{% endif %}"
+                 id="tile-{{ forloop.counter0 }}"
+                 data-index="{{ forloop.counter0 }}"
+                 style="opacity: 0; transform: translateY(30px);">
 
-            <div class="flex items-center gap-4 mb-3">
-                <div class="tile-number {% if item.is_completed %}done{% else %}pending{% endif %}">
-                    {% if item.is_completed %}
-                    <i class="fa-solid fa-check"></i>
-                    {% else %}
-                    {{ forloop.counter }}
-                    {% endif %}
-                </div>
-                <div class="flex-1 min-w-0">
-                    <h3 class="font-bold text-[15px] {% if item.is_completed %}text-slate-400{% else %}text-slate-800{% endif %} truncate">
-                        {{ item.topic.title }}
-                    </h3>
-                    <div class="flex items-center gap-3 mt-0.5">
-                        <span class="tile-points flex items-center gap-1">
-                            <i class="fa-solid fa-star text-amber-400 text-[11px]"></i>
-                            {{ item.topic.points_reward }} CodePoints
-                        </span>
+                <div class="flex items-center gap-4 mb-3">
+                    <div class="tile-number {% if item.is_completed %}done{% else %}pending{% endif %}">
+                        {% if item.is_completed %}
+                        <i class="fa-solid fa-check"></i>
+                        {% else %}
+                        {{ forloop.counter }}
+                        {% endif %}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="font-bold text-[15px] {% if item.is_completed %}text-slate-400{% else %}text-slate-800{% endif %} truncate">
+                            {{ item.topic.title }}
+                        </h3>
+                        <div class="flex items-center gap-3 mt-0.5">
+                            <span class="tile-points flex items-center gap-1">
+                                <i class="fa-solid fa-star text-amber-400 text-[11px]"></i>
+                                {{ item.topic.points_reward }} CodePoints
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="flex items-center justify-end">
-                {% if item.is_completed %}
-                <span class="tile-start-btn done">
-                    <i class="fa-solid fa-circle-check text-sm"></i> Completed
-                </span>
-                {% else %}
-                <a href="{% url 'topic_detail' item.topic.id %}" class="tile-start-btn start">
-                    <i class="fa-solid fa-play text-[10px]"></i> Start
-                </a>
-                {% endif %}
+                <div class="flex items-center justify-end">
+                    {% if item.is_completed %}
+                    <span class="tile-start-btn done">
+                        <i class="fa-solid fa-circle-check text-sm"></i> Completed
+                    </span>
+                    {% elif item.is_locked %}
+                    <span class="tile-start-btn" style="background: #e2e8f0; color: #64748b; cursor: not-allowed; box-shadow: none;">
+                        <i class="fa-solid fa-lock text-[10px]"></i> Locked
+                    </span>
+                    {% else %}
+                    <a href="{% url 'topic_detail' item.topic.id %}" class="tile-start-btn start">
+                        <i class="fa-solid fa-play text-[10px]"></i> Start
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-20">
+                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-route text-3xl text-slate-300"></i>
+                </div>
+                <p class="text-slate-400 font-bold">No stops on this path yet.</p>
+            </div>
+            {% endfor %}
+            
+            <!-- Certificate Unlock Section -->
+            <div class="topic-tile relative overflow-hidden" 
+                 id="tile-certificate"
+                 style="opacity: 0; transform: translateY(30px); width: 340px; margin: 0 auto; margin-top: 60px;">
+                
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 to-amber-600"></div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 mx-auto bg-amber-50 rounded-2xl flex items-center justify-center mb-4 border border-amber-100/50 shadow-inner">
+                        <i class="fa-solid fa-file-pdf text-3xl text-amber-500 drop-shadow-sm"></i>
+                    </div>
+                    
+                    <h3 class="font-black text-xl text-slate-800 mb-2">Course Certificate</h3>
+                    
+                    {% if certificate %}
+                    <p class="text-sm font-medium text-slate-500 mb-6">You've mastered all topics! Claim your reward.</p>
+                    <a href="{% url 'download_certificate' certificate.certificate_id %}" target="_blank"
+                       class="w-full py-3.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white rounded-xl font-black shadow-lg shadow-amber-500/30 transition-all active:scale-95 flex items-center justify-center gap-2 group">
+                        Unlock Certificate <i class="fa-solid fa-unlock group-hover:rotate-12 transition-transform"></i>
+                    </a>
+                    {% else %}
+                    <p class="text-sm font-medium text-slate-400 mb-6 px-4">Complete all stops on this path to unlock your official certificate.</p>
+                    <div class="w-full py-3.5 bg-slate-50 text-slate-400 rounded-xl font-bold border border-slate-200 cursor-not-allowed flex items-center justify-center gap-2 opacity-80">
+                        <i class="fa-solid fa-lock"></i> Locked
+                    </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
-        {% empty %}
-        <div class="text-center py-20">
-            <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fa-solid fa-route text-3xl text-slate-300"></i>
+    {% else %}
+        <!-- Coming Soon State -->
+        <div class="max-w-2xl mx-auto mt-20 text-center pb-32 relative z-10">
+            <div class="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-slate-100 to-white rounded-3xl shadow-xl border border-slate-200 flex items-center justify-center rotate-3 transform hover:-rotate-3 transition-transform duration-500">
+                <i class="fa-solid fa-rocket text-5xl text-brand-400"></i>
             </div>
-            <p class="text-slate-400 font-bold">No stops on this path yet.</p>
+            <h2 class="text-3xl font-black text-slate-800 mb-4">Coming Soon</h2>
+            <p class="text-slate-500 text-lg">We're actively crafting the learning path for <b>{{ course.title }}</b>. Our instructors are recording high-definition lessons and building interactive coding challenges specifically for this track. Check back soon!</p>
+            <a href="{% url 'courses' %}" class="inline-block mt-8 px-8 py-3 bg-white border border-slate-200 text-slate-700 font-bold rounded-full shadow-sm hover:shadow-md hover:border-brand-300 hover:text-brand-600 transition-all">
+                Explore Available Courses
+            </a>
         </div>
-        {% endfor %}
-    </div>
+    {% endif %}
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('roadContainer');
     const svg = document.getElementById('roadSvg');
-    const tiles = document.querySelectorAll('.topic-tile');
+    // Get regular topic tiles and the certificate tile
+    const topicTiles = Array.from(document.querySelectorAll('.topic-tile:not(#tile-certificate)'));
+    const certTile = document.getElementById('tile-certificate');
+    
+    // Combine them to run through the same layout logic
+    const tiles = [...topicTiles];
+    if (certTile) {
+        tiles.push(certTile);
+    }
+    
     const count = tiles.length;
     if (count === 0) return;
 
     const containerWidth = container.offsetWidth;
-    const tileW = Math.min(320, containerWidth * 0.42);
-    const vertGap = 140;
-    const padTop = 40;
+    const isMobile = window.innerWidth < 768;
+    const tileW = isMobile ? Math.min(300, containerWidth * 0.85) : Math.min(340, containerWidth * 0.42);
+    const verticalPadding = isMobile ? 100 : 130; // Gap between tiles
+    let currentY = 40; // Initial top padding
 
-    // Position tiles in a zig-zag pattern
+    // Position tiles in a gentle zig-zag down the center
     const positions = [];
     tiles.forEach(function(tile, i) {
+        // Set width and position first so it flows correctly for measurement
         tile.style.width = tileW + 'px';
-        const isLeft = (i % 2 === 0);
-        const x = isLeft
-            ? containerWidth * 0.08
-            : containerWidth - tileW - containerWidth * 0.08;
-        const y = padTop + i * vertGap;
-
         tile.style.position = 'absolute';
+        
+        const actualHeight = Math.max(100, tile.offsetHeight || 120);
+        
+        const isLeft = (i % 2 === 0);
+        
+        // Stagger gently around the center instead of pushing to edges
+        const centerX = containerWidth / 2;
+        const staggerAmount = isMobile ? 25 : 100; // Wider stagger on desktop
+        const x = isLeft 
+            ? centerX - (tileW / 2) - staggerAmount 
+            : centerX - (tileW / 2) + staggerAmount;
+            
+        const y = currentY;
+
         tile.style.left = x + 'px';
         tile.style.top = y + 'px';
 
         positions.push({
-            x: isLeft ? x + tileW + 10 : x - 10,
-            y: y + 45,
-            cx: x + tileW / 2,
+            x: x,                // Actual left position
+            y: y,                // Actual top position
+            w: tileW,            // Width
+            h: actualHeight,     // Read true height
+            cx: x + tileW / 2,   // Center point X
+            cy: y + (actualHeight / 2), // Center point Y
+            isLeft: isLeft
         });
+        
+        currentY += actualHeight + verticalPadding;
     });
 
     // Set container height
-    const totalH = padTop + count * vertGap + 160;
+    const totalH = currentY + 120;
     container.style.height = totalH + 'px';
     container.style.position = 'relative';
     svg.setAttribute('viewBox', '0 0 ' + containerWidth + ' ' + totalH);
     svg.style.width = containerWidth + 'px';
     svg.style.height = totalH + 'px';
 
-    // Draw fiber-optic connecting path
+    // Draw smooth, winding S-curve connecting path resembling a road
     if (positions.length > 1) {
-        let pathD = 'M ' + positions[0].cx + ' ' + positions[0].y;
+        // Start from the bottom center of the first tile
+        let startX = positions[0].cx;
+        let startY = positions[0].y + positions[0].h + 10;
+        let pathD = `M ${startX} ${startY}`;
+
         for (let i = 1; i < positions.length; i++) {
             const prev = positions[i - 1];
             const curr = positions[i];
-            const midY = (prev.y + curr.y) / 2;
-            pathD += ' C ' + prev.cx + ' ' + midY + ', ' + curr.cx + ' ' + midY + ', ' + curr.cx + ' ' + curr.y;
+            
+            // Connect from the BOTTOM of the previous tile...
+            const pX = prev.cx;
+            const pY = prev.y + prev.h + 15;
+            
+            // ...to the TOP center of the current tile
+            const cX = curr.cx;
+            const cY = curr.y - 15;
+
+            // Use Cubic Bezier (C) to create a beautiful sweeping 'S' shape.
+            // Control point 1: pull heavily DOWN from previous tile
+            const cp1X = pX;
+            const cp1Y = pY + ((cY - pY) * 0.6);
+            
+            // Control point 2: pull heavily UP from current tile
+            const cp2X = cX;
+            const cp2Y = cY - ((cY - pY) * 0.6);
+
+            // If it's not the first one, draw the line to the start point of this segment
+            if (i === 1) {
+                // Already started at pX, pY
+            } else {
+                pathD += ` L ${pX} ${pY}`;
+            }
+
+            pathD += ` C ${cp1X} ${cp1Y}, ${cp2X} ${cp2Y}, ${cX} ${cY}`;
         }
 
-        // Background path
+        // Draw a final short line down from the absolute very last tile
+        const last = positions[positions.length - 1];
+        pathD += ` M ${last.cx} ${last.y + last.h + 15} l 0 20`;
+
+        // Background path (the 'road' base)
         const bgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         bgPath.setAttribute('d', pathD);
         bgPath.setAttribute('class', 'fiber-path-bg');
+        bgPath.style.strokeWidth = '24'; // Make road wider
+        bgPath.style.stroke = '#222222'; // Dark pavement
         svg.appendChild(bgPath);
 
-        // Glow path
-        const glowPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        glowPath.setAttribute('d', pathD);
-        glowPath.setAttribute('class', 'fiber-path-glow');
-        svg.appendChild(glowPath);
-
-        // Main colored path
+        // Main colored path (the inner stripe)
         const mainPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         mainPath.setAttribute('d', pathD);
         mainPath.setAttribute('class', 'fiber-path');
+        mainPath.style.strokeWidth = '4';
+        mainPath.style.strokeDasharray = '16 12'; // Dashed line to look like a road stripe
+        mainPath.style.stroke = '#ffffff'; // White striped line
         svg.appendChild(mainPath);
 
-        // Dots at each node
+        // Dots at each node (optional)
         positions.forEach(function(p, i) {
-            const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            dot.setAttribute('cx', p.cx);
-            dot.setAttribute('cy', p.y);
-            dot.setAttribute('r', '6');
-            dot.setAttribute('class', 'path-dot' + (tiles[i].classList.contains('completed') ? ' completed' : ''));
-            svg.appendChild(dot);
+            // Draw entry dot
+            if(i !== 0) {
+                const dotIn = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                dotIn.setAttribute('cx', p.cx);
+                dotIn.setAttribute('cy', p.y - 15);
+                dotIn.setAttribute('r', '5');
+                dotIn.setAttribute('class', 'path-dot' + (tiles[i].classList.contains('completed') ? ' completed' : ''));
+                svg.appendChild(dotIn);
+            }
+            // Draw exit dot (unless it's very last)
+            if(i !== positions.length - 1) {
+                const dotOut = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                dotOut.setAttribute('cx', p.cx);
+                dotOut.setAttribute('cy', p.y + p.h + 15);
+                dotOut.setAttribute('r', '5');
+                dotOut.setAttribute('class', 'path-dot' + (tiles[i].classList.contains('completed') ? ' completed' : ''));
+                svg.appendChild(dotOut);
+            }
         });
     }
 

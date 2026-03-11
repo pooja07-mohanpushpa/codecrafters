@@ -24,27 +24,16 @@ def arena_home(request):
 def problem_detail(request, slug):
     problem = get_object_or_404(CodingProblem, slug=slug)
     problems = CodingProblem.objects.all()
+    
+    test_cases_list = list(problem.test_cases.values('input_data', 'expected_output'))
+    
     context = {
         'problem': problem,
         'problems': problems,
+        'test_cases_json': json.dumps(test_cases_list)
     }
     return render(request, 'arena/arena.html', context)
 
-@login_required
-def run_code(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        code = data.get('code')
-        lang = data.get('language')
-        input_data = data.get('input', '')
-
-        # Mock execution logic
-        # In a real app, this would use a sandbox API (Piston, Judge0, etc.)
-        if lang == 'python':
-            output, error = execute_python(code, input_data)
-            return JsonResponse({'output': output, 'error': error})
-        else:
-            return JsonResponse({'output': f"Execution for {lang} is mocked in this demo environment.\nOutput: Success!", 'error': ''})
 
 @login_required
 def submit_code(request):
@@ -54,42 +43,15 @@ def submit_code(request):
         lang = data.get('language')
         problem_id = data.get('problem_id')
         
-        problem = get_object_or_404(CodingProblem, id=problem_id)
-        test_cases = problem.test_cases.all()
+        # New frontend-driven fields
+        passed = data.get('passed', 0)
+        total = data.get('total', 0)
+        status = data.get('status', 'Failed')
+        results = data.get('results', [])
         
-        passed = 0
-        total = test_cases.count()
-        results = []
-
-        # Simplified judging for demo
-        for tc in test_cases:
-            if lang == 'python':
-                output, error = execute_python(code, tc.input_data)
-                # Clean up output for comparison
-                cleaned_output = output.strip().replace("'", '"')
-                expected = tc.expected_output.strip().replace("'", '"')
-                
-                status = "Passed" if cleaned_output == expected else "Failed"
-                if status == "Passed":
-                    passed += 1
-                results.append({
-                    'input': tc.input_data,
-                    'expected': tc.expected_output,
-                    'actual': output,
-                    'status': status
-                })
-            else:
-                # Mock pass for other languages if code is present
-                passed += 1
-                results.append({
-                    'input': tc.input_data,
-                    'expected': tc.expected_output,
-                    'actual': tc.expected_output,
-                    'status': "Passed"
-                })
+        problem = get_object_or_404(CodingProblem, id=problem_id)
 
         # Save submission
-        status = "Passed" if passed == total else "Failed"
         submission = UserSubmission.objects.create(
             user=request.user,
             problem=problem,
@@ -108,12 +70,13 @@ def submit_code(request):
 
         if status == "Passed" and not already_passed:
             profile = request.user.profile
-            profile.code_points += problem.points_reward
+            # Arena points disabled per user request — Points now come only from Quizzes
+            # profile.code_points += problem.points_reward
             profile.challenges_solved += 1
             profile.save()
             return JsonResponse({
                 'status': 'Passed',
-                'message': f'Congratulations! You passed all test cases and earned {problem.points_reward} CodePoints.',
+                'message': 'Congratulations! You passed all test cases. (Points are now earned from Quizzes only)',
                 'results': results
             })
         elif status == "Passed" and already_passed:
@@ -129,32 +92,3 @@ def submit_code(request):
                 'results': results
             })
 
-
-def execute_python(code, input_data):
-    """
-    EXTREMELY INSECURE - USE ONLY FOR LOCAL DEMO.
-    Runs python code using exec() and captures output.
-    """
-    old_stdout = sys.stdout
-    redirected_output = sys.stdout = StringIO()
-    
-    # Mock input() for simple scripts
-    # This is a crude way to handle inputs in exec()
-    mock_vars = {'input_data': input_data}
-    
-    try:
-        # We try to inject a simple input override for specific problems
-        # Or just append the input data to a variable the user might use
-        # For 'Two Sum', user might expect nums and target as variables
-        # Since we can't easily parse arbitrary test case formats into variables,
-        # we'll assume the problem descriptions define how to read input.
-        
-        exec(code, {}, mock_vars)
-        output = redirected_output.getvalue()
-    except Exception:
-        output = traceback.format_exc()
-        return "", output
-    finally:
-        sys.stdout = old_stdout
-        
-    return output, ""

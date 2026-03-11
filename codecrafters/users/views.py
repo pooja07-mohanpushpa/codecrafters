@@ -88,8 +88,10 @@ def profile_view(request):
     if request.method == 'POST' and 'update_bio' in request.POST:
         bio_text = request.POST.get('bio', '').strip()[:120]
         status = request.POST.get('status_emoji', '🚀')
+        linkedin = request.POST.get('linkedin_url', '').strip()
         profile.bio = bio_text
         profile.status_emoji = status
+        profile.linkedin_url = linkedin
         profile.save()
         messages.success(request, "Profile updated! ✨")
         return redirect('profile')
@@ -99,6 +101,11 @@ def profile_view(request):
     total_topics_done = 0
     courses_started = 0
     courses_completed = 0
+
+    # Fetch Certificates
+    from courses.models import Certificate
+    certificates = Certificate.objects.filter(user=user).select_related('course')
+    cert_map = {cert.course.id: cert for cert in certificates}
 
     for course in all_courses:
         total = course.topics.count()
@@ -116,8 +123,10 @@ def profile_view(request):
             'total':       total,
             'done':        done,
             'pct':         pct,
+            'stars':       stars,
             'stars_range': range(stars),
             'empty_range': range(5 - stars),
+            'certificate': cert_map.get(course.id),
         })
 
     # Achievements

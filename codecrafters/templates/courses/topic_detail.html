@@ -104,20 +104,32 @@
                 {% endif %}
 
                 {% if next_topic %}
-                <a href="{% url 'topic_detail' next_topic.id %}"
-                    class="flex-1 px-6 py-4 bg-white border border-slate-200 rounded-2xl hover:border-brand-500 hover:shadow-lg transition-all group flex items-center justify-between gap-4 text-right">
-                    <div class="flex-1">
-                        <div class="text-[10px] font-black uppercase text-slate-400 mb-1">Next Topic</div>
+                    {% if progress.is_completed %}
+                    <a href="{% url 'topic_detail' next_topic.id %}"
+                        class="flex-1 px-6 py-4 bg-white border border-slate-200 rounded-2xl hover:border-brand-500 hover:shadow-lg transition-all group flex items-center justify-between gap-4 text-right">
+                        <div class="flex-1">
+                            <div class="text-[10px] font-black uppercase text-slate-400 mb-1">Next Topic</div>
+                            <div
+                                class="font-bold text-slate-800 text-sm group-hover:text-brand-600 transition-colors line-clamp-1">
+                                {{ next_topic.title }}</div>
+                        </div>
                         <div
-                            class="font-bold text-slate-800 text-sm group-hover:text-brand-600 transition-colors line-clamp-1">
-                            {{ next_topic.title }}</div>
+                            class="w-10 h-10 rounded-full bg-slate-50 group-hover:bg-brand-50 flex items-center justify-center transition-colors flex-shrink-0">
+                            <i
+                                class="fa-solid fa-arrow-right text-slate-400 group-hover:text-brand-500 transition-colors"></i>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="flex-1 px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-between gap-4 text-right opacity-60 cursor-not-allowed">
+                        <div class="flex-1">
+                            <div class="text-[10px] font-black uppercase text-slate-400 mb-1">Next Topic Locked</div>
+                            <div class="font-bold text-slate-500 text-sm line-clamp-1">Complete Quiz to Unlock</div>
+                        </div>
+                        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-lock text-slate-400"></i>
+                        </div>
                     </div>
-                    <div
-                        class="w-10 h-10 rounded-full bg-slate-50 group-hover:bg-brand-50 flex items-center justify-center transition-colors flex-shrink-0">
-                        <i
-                            class="fa-solid fa-arrow-right text-slate-400 group-hover:text-brand-500 transition-colors"></i>
-                    </div>
-                </a>
+                    {% endif %}
                 {% else %}
                 <div
                     class="flex-1 px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-between gap-4 text-right opacity-60">
@@ -174,96 +186,167 @@
         </div>
     </div>
 
-    <!-- QUIZ MODAL -->
+    <!-- 🏆 PREMIUM QUIZ MODAL -->
     <template x-teleport="body">
         <div x-show="quizOpen" x-transition:enter="transition ease-out duration-300"
-            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm" x-cloak>
+            x-transition:enter-start="opacity-0 backdrop-blur-none" x-transition:enter-end="opacity-100 backdrop-blur-md"
+            x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 backdrop-blur-md"
+            x-transition:leave-end="opacity-0 backdrop-blur-none"
+            class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-slate-900/60" x-cloak>
 
-            <div class="w-full max-w-2xl glass-modal rounded-[40px] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300"
+            <!-- Modal Container (Refined & Compacted) -->
+            <div class="w-full max-w-3xl max-h-[90vh] bg-white/95 backdrop-blur-xl border border-white/40 rounded-[2.5rem] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 flex flex-col"
                 @click.away="!loading && closeQuiz()">
 
-                <!-- Header -->
-                <div class="px-10 pt-10 flex justify-between items-center">
-                    <div>
-                        <div class="text-[10px] font-black uppercase tracking-widest text-brand-600 mb-1"
-                            x-text="'Question ' + (currentIndex + 1) + ' of 5'"></div>
-                        <h2 class="text-2xl font-black text-slate-900">AI Logic Check</h2>
+                <!-- 🌟 Header with Timer -->
+                <div class="px-5 sm:px-6 pt-5 pb-3 flex justify-between items-start border-b border-slate-100/50">
+                    <div x-show="!resultView">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 text-brand-600 mb-2">
+                            <span class="relative flex h-2 w-2">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+                            </span>
+                            <span class="text-[10px] font-black uppercase tracking-widest"
+                                x-text="'Question ' + (currentIndex + 1) + ' of 5'"></span>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-black text-slate-800 tracking-tight">AI Knowledge Check</h2>
+                    </div>
+
+                    <!-- Timer Display -->
+                    <div x-show="!resultView && !loading" class="flex flex-col items-end mr-4 animate-in fade-in duration-500 delay-300">
+                        <div class="flex items-center gap-2 font-bold px-3 py-1.5 rounded-xl border transition-colors shadow-sm"
+                             :class="timeLeft <= 10 ? 'bg-rose-50 text-rose-600 border-rose-200 animate-pulse' : 'bg-slate-50 text-slate-600 border-slate-200'">
+                            <i class="fa-regular fa-clock" :class="timeLeft <= 10 ? 'animate-bounce' : ''"></i>
+                            <span x-text="formatTime(timeLeft)" class="font-mono text-sm sm:text-base"></span>
+                        </div>
+                    </div>
+
+                    <div x-show="resultView">
+                        <h2 class="text-xl sm:text-2xl font-black text-slate-800 tracking-tight">Mission Report</h2>
                     </div>
                     <button @click="closeQuiz"
-                        class="w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-400 transition-colors">
-                        <i class="fa-solid fa-xmark"></i>
+                        class="w-10 h-10 rounded-full bg-slate-50 hover:bg-slate-200 hover:text-slate-900 flex items-center justify-center text-slate-400 transition-all flex-shrink-0">
+                        <i class="fa-solid fa-xmark text-lg"></i>
                     </button>
                 </div>
 
-                <!-- Quiz Content -->
-                <div class="p-10">
-                    <div x-show="loading" class="py-20 text-center">
-                        <div class="relative w-24 h-24 mx-auto mb-6">
-                            <div class="absolute inset-0 border-4 border-brand-100 rounded-full"></div>
-                            <div
-                                class="absolute inset-0 border-4 border-brand-500 rounded-full border-t-transparent animate-spin">
-                            </div>
+                <!-- 🚀 Progress Bar -->
+                <div class="h-1 bg-slate-100 w-full" x-show="!loading && !resultView">
+                    <div class="h-full bg-gradient-to-r from-brand-400 to-indigo-500 transition-all duration-700 ease-out"
+                        :style="'width: ' + ((currentIndex + 1) * 20) + '%'"></div>
+                </div>
+
+                <!-- 🧠 Quiz Content Area -->
+                <div class="p-5 sm:p-6 flex-1 overflow-y-auto">
+                    
+                    <!-- Loading State -->
+                    <div x-show="loading" class="py-12 flex flex-col items-center justify-center animate-in fade-in duration-500">
+                        <div class="relative w-16 h-16 sm:w-20 sm:h-20 mb-6">
+                            <div class="absolute inset-0 border-4 border-slate-100 rounded-full"></div>
+                            <div class="absolute inset-0 border-4 border-brand-500 rounded-full border-t-transparent animate-spin"></div>
+                            <i class="fa-solid fa-robot absolute inset-0 flex items-center justify-center text-brand-500 text-xl sm:text-2xl animate-pulse"></i>
                         </div>
-                        <p class="font-bold text-slate-500 animate-pulse">Gemini is thinking...</p>
+                        <h3 class="font-black text-lg sm:text-xl text-slate-800 mb-2">Analyzing Topic Content...</h3>
+                        <p class="font-medium text-slate-400 text-xs sm:text-sm">Gemini is synthesizing custom logic checks.</p>
                     </div>
 
-                    <div x-show="!loading && !resultView" class="space-y-8">
-                        <div class="min-h-[80px]">
-                            <p class="text-lg font-bold text-slate-800 leading-tight"
+                    <!-- Error View -->
+                    <div x-show="!loading && quizError" class="py-12 flex flex-col items-center justify-center animate-in fade-in duration-500">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 mb-6 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-3xl sm:text-4xl">
+                             <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <h3 class="font-black text-lg sm:text-xl text-slate-800 mb-2">Mission Scrubbed</h3>
+                        <p class="font-medium text-slate-500 text-center max-w-sm mb-6 text-sm sm:text-base" x-text="quizError"></p>
+                        <button @click="closeQuiz"
+                            class="px-8 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold transition-colors shadow-sm">
+                            Abort Mission
+                        </button>
+                    </div>
+
+                    <!-- Active Question View -->
+                    <div x-show="!loading && !resultView && !quizError" class="space-y-4 sm:space-y-5 animate-in slide-in-from-right-4 duration-500">
+                        <!-- The Question -->
+                        <div class="min-h-[40px] sm:min-h-[60px]">
+                            <p class="text-[17px] sm:text-[20px] font-semibold text-slate-800 leading-snug"
                                 x-text="questions[currentIndex]?.question"></p>
                         </div>
 
-                        <div class="grid grid-cols-1 gap-4">
+                        <!-- The Options -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                             <template x-for="(option, index) in questions[currentIndex]?.options" :key="index">
                                 <button @click="selectOption(index)"
-                                    class="p-5 rounded-3xl border-2 text-left transition-all duration-300 group flex items-center gap-4"
-                                    :class="selectedOption === index ? 'bg-brand-50 border-brand-500' : 'bg-white border-slate-100 hover:border-slate-300'">
-                                    <div class="w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs transition-colors"
-                                        :class="selectedOption === index ? 'bg-brand-500 text-white' : 'bg-slate-100 text-slate-400 group-hover:bg-brand-100 group-hover:text-brand-600'"
-                                        x-text="String.fromCharCode(65 + index)"></div>
-                                    <span class="font-bold text-slate-700" x-text="option"></span>
+                                    class="relative w-full p-3 sm:p-4 rounded-xl border-2 text-left transition-all duration-300 group flex items-center gap-3 overflow-hidden"
+                                    :class="selectedOption === index ? 'bg-brand-50/50 border-brand-500 shadow-[0_0_15px_rgba(59,130,246,0.15)] transform scale-[1.01]' : 'bg-white border-slate-100 hover:border-brand-200 hover:bg-slate-50 hover:shadow-sm'">
+                                    
+                                    <!-- Option Letter / Checkbox -->
+                                    <div class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm transition-all duration-300 flex-shrink-0 relative z-10"
+                                        :class="selectedOption === index ? 'bg-brand-500 text-white shadow-md' : 'bg-slate-100 text-slate-400 group-hover:bg-brand-100 group-hover:text-brand-600'">
+                                        <span x-show="selectedOption !== index" x-text="String.fromCharCode(65 + index)"></span>
+                                        <i x-show="selectedOption === index" class="fa-solid fa-check animate-in zoom-in duration-200"></i>
+                                    </div>
+                                    
+                                    <!-- Option Text -->
+                                    <span class="font-semibold text-slate-700 relative z-10 text-base sm:text-lg" 
+                                          :class="selectedOption === index ? 'text-brand-900' : ''"
+                                          x-text="option"></span>
+                                          
+                                    <!-- Selection Highlight Background -->
+                                    <div class="absolute inset-0 bg-gradient-to-r from-brand-50 to-transparent opacity-0 transition-opacity duration-300"
+                                         :class="selectedOption === index ? 'opacity-100' : ''"></div>
                                 </button>
                             </template>
                         </div>
 
-                        <div class="flex justify-end pt-4">
+                        <!-- footer Actions -->
+                        <div class="flex justify-between items-center pt-4 mt-2 border-t border-slate-100">
+                            <div class="text-sm font-medium text-slate-400">
+                                Select one answer
+                            </div>
                             <button @click="nextQuestion" :disabled="selectedOption === null"
-                                class="px-10 py-4 bg-slate-900 text-white rounded-2xl font-black shadow-xl disabled:opacity-20 disabled:scale-100 hover:scale-105 active:scale-95 transition-all">
-                                <span x-text="currentIndex === 4 ? 'Finish Quiz' : 'Next Question'"></span>
+                                class="px-8 py-3.5 bg-slate-900 text-white rounded-xl font-black shadow-lg shadow-slate-900/20 disabled:opacity-30 disabled:shadow-none hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all flex items-center gap-2 group">
+                                <span x-text="currentIndex === 4 ? 'Submit Answers' : 'Next'"></span>
+                                <i class="fa-solid fa-arrow-right text-sm transition-transform group-hover:translate-x-1" x-show="currentIndex < 4"></i>
+                                <i class="fa-solid fa-flag-checkered text-sm" x-show="currentIndex === 4"></i>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Result View -->
-                    <div x-show="resultView" class="text-center py-10">
-                        <div
-                            class="w-24 h-24 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">
-                            <i class="fa-solid fa-circle-check"></i>
+                    <!-- 🏆 Result View -->
+                    <div x-show="resultView" class="text-center py-8 animate-in zoom-in-95 fill-mode-both duration-700">
+                        
+                        <!-- Success Icon Animation -->
+                        <div class="relative w-28 h-28 mx-auto mb-8">
+                            <div class="absolute inset-0 bg-green-400 rounded-full animate-ping opacity-20"></div>
+                            <div class="relative w-full h-full bg-gradient-to-tr from-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-2xl shadow-green-500/40 text-white text-5xl">
+                                <i class="fa-solid fa-check animate-in zoom-in spin-in-12 duration-500 delay-150"></i>
+                            </div>
                         </div>
-                        <h2 class="text-3xl font-black text-slate-900 mb-2">Quiz Complete!</h2>
-                        <p class="text-slate-500 font-bold text-lg mb-8"
-                            x-text="'You scored ' + finalScore + ' out of 5'"></p>
 
-                        <div class="max-w-xs mx-auto bg-brand-50 p-6 rounded-3xl border border-brand-100 mb-10">
-                            <div class="text-[10px] font-black uppercase text-brand-600 mb-1">Points Earned</div>
-                            <div class="text-4xl font-black text-brand-900" x-text="'+' + pointsEarned"></div>
-                            <div class="text-[10px] font-bold text-brand-500 uppercase mt-1">CodePoints</div>
+                        <h2 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight mb-2">Assessment Complete!</h2>
+                        <p class="text-slate-500 font-medium text-lg mb-10 flex items-center justify-center gap-2">
+                            Final Score: <strong class="text-slate-800" x-text="finalScore + '/5'"></strong>
+                        </p>
+
+                        <!-- CodePoints Reward Card -->
+                        <div class="max-w-sm mx-auto bg-gradient-to-b from-brand-50 to-white p-8 rounded-[2rem] border border-brand-100/50 shadow-xl shadow-brand-500/10 mb-10 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-500">
+                            <div class="absolute -right-10 -top-10 text-brand-500/5 text-[150px] rotate-12 transition-transform duration-700 group-hover:rotate-45">
+                                <i class="fa-solid fa-coins"></i>
+                            </div>
+                            <div class="relative z-10">
+                                <div class="text-[11px] font-black uppercase tracking-[0.2em] text-brand-600 mb-3">Reward Minted</div>
+                                <div class="flex items-center justify-center gap-2">
+                                    <span class="text-5xl font-black text-brand-600" x-text="'+' + pointsEarned"></span>
+                                    <i class="fa-solid fa-coins text-3xl text-amber-400 drop-shadow-md pb-1"></i>
+                                </div>
+                                <div class="text-sm font-bold text-slate-500 mt-2">CodePoints Added to Profile</div>
+                            </div>
                         </div>
 
                         <button @click="window.location.reload()"
-                            class="px-12 py-5 bg-slate-900 text-white rounded-2xl font-black shadow-xl hover:scale-105 transition-all">
-                            Continue Journey
+                            class="w-full sm:w-auto px-12 py-4 bg-slate-900 text-white rounded-xl font-black text-lg shadow-xl shadow-slate-900/20 hover:-translate-y-1 hover:shadow-2xl active:translate-y-0 transition-all flex items-center justify-center gap-3 mx-auto">
+                            Return to Journey <i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
-                </div>
-
-                <!-- Progress Bar -->
-                <div class="h-1.5 bg-slate-100 w-full" x-show="!loading && !resultView">
-                    <div class="h-full bg-brand-500 transition-all duration-500"
-                        :style="'width: ' + ((currentIndex + 1) * 20) + '%'"></div>
                 </div>
             </div>
         </div>
@@ -281,6 +364,26 @@
             selectedOption: null,
             finalScore: 0,
             pointsEarned: 0,
+            timeLeft: 60, // 60 seconds to finish
+            timerInterval: null,
+            quizError: null,
+
+            formatTime(seconds) {
+                const m = Math.floor(seconds / 60);
+                const s = seconds % 60;
+                return `${m}:${s.toString().padStart(2, '0')}`;
+            },
+
+            startTimer() {
+                this.timerInterval = setInterval(() => {
+                    if (this.timeLeft > 0) {
+                        this.timeLeft--;
+                    } else {
+                        clearInterval(this.timerInterval);
+                        this.submitResults(); // Time's up! Force submit.
+                    }
+                }, 1000);
+            },
 
             async startQuiz() {
                 this.quizOpen = true;
@@ -289,13 +392,23 @@
                 this.selectedOption = null;
                 this.finalScore = 0;
                 this.resultView = false;
+                this.quizError = null;
+                this.timeLeft = 60;
+                clearInterval(this.timerInterval);
 
                 try {
                     const response = await fetch('{% url "generate_quiz" topic.id %}');
                     const data = await response.json();
-                    this.questions = data.questions;
+                    
+                    if (data.error) {
+                        this.quizError = data.error;
+                    } else {
+                        this.questions = data.questions;
+                        this.startTimer();
+                    }
                 } catch (e) {
                     console.error("Quiz generation failed", e);
+                    this.quizError = "An unexpected error occurred while communicating with the server.";
                 } finally {
                     this.loading = false;
                 }
@@ -304,6 +417,7 @@
             closeQuiz() {
                 if (confirm("Are you sure you want to exit the quiz? Progress won't be saved.")) {
                     this.quizOpen = false;
+                    clearInterval(this.timerInterval);
                 }
             },
 
@@ -312,7 +426,7 @@
             },
 
             nextQuestion() {
-                if (this.selectedOption === this.questions[this.currentIndex].correct) {
+                if (this.selectedOption !== null && this.selectedOption === this.questions[this.currentIndex].correct) {
                     this.finalScore++;
                 }
 
@@ -325,6 +439,7 @@
             },
 
             async submitResults() {
+                clearInterval(this.timerInterval);
                 this.loading = true;
                 try {
                     const response = await fetch('{% url "submit_quiz" topic.id %}', {
